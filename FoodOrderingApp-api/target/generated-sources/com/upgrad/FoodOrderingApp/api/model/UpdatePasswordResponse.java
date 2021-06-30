@@ -28,10 +28,10 @@ public class UpdatePasswordResponse   {
   }
 
   /**
-   * uuid of the customer with updated password
+   * uuid of the Customer with updated password
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid of the customer with updated password")
+  @ApiModelProperty(required = true, value = "uuid of the Customer with updated password")
   @NotNull
 
 
@@ -49,10 +49,10 @@ public class UpdatePasswordResponse   {
   }
 
   /**
-   * message showing the status of the customer
+   * message showing the status of the Customer
    * @return status
   **/
-  @ApiModelProperty(required = true, value = "message showing the status of the customer")
+  @ApiModelProperty(required = true, value = "message showing the status of the Customer")
   @NotNull
 
 

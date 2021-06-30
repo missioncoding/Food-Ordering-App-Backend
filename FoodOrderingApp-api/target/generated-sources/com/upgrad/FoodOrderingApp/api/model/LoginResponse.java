@@ -40,10 +40,10 @@ public class LoginResponse   {
   }
 
   /**
-   * uuid for the customer authentication after he signs in.
+   * uuid for the Customer authentication after he signs in.
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid for the customer authentication after he signs in.")
+  @ApiModelProperty(required = true, value = "uuid for the Customer authentication after he signs in.")
   @NotNull
 
 
@@ -61,10 +61,10 @@ public class LoginResponse   {
   }
 
   /**
-   * message to show the status of the signed in customer
+   * message to show the status of the signed in Customer
    * @return message
   **/
-  @ApiModelProperty(required = true, value = "message to show the status of the signed in customer")
+  @ApiModelProperty(required = true, value = "message to show the status of the signed in Customer")
   @NotNull
 
 
@@ -82,10 +82,10 @@ public class LoginResponse   {
   }
 
   /**
-   * First name of the new customer
+   * First name of the new Customer
    * @return firstName
   **/
-  @ApiModelProperty(required = true, value = "First name of the new customer")
+  @ApiModelProperty(required = true, value = "First name of the new Customer")
   @NotNull
 
 
@@ -103,10 +103,10 @@ public class LoginResponse   {
   }
 
   /**
-   * Last name of the new customer
+   * Last name of the new Customer
    * @return lastName
   **/
-  @ApiModelProperty(required = true, value = "Last name of the new customer")
+  @ApiModelProperty(required = true, value = "Last name of the new Customer")
   @NotNull
 
 
@@ -124,10 +124,10 @@ public class LoginResponse   {
   }
 
   /**
-   * Email address of the new customer
+   * Email address of the new Customer
    * @return emailAddress
   **/
-  @ApiModelProperty(required = true, value = "Email address of the new customer")
+  @ApiModelProperty(required = true, value = "Email address of the new Customer")
   @NotNull
 
 
@@ -145,10 +145,10 @@ public class LoginResponse   {
   }
 
   /**
-   * Contact Number of the new customer
+   * Contact Number of the new Customer
    * @return contactNumber
   **/
-  @ApiModelProperty(required = true, value = "Contact Number of the new customer")
+  @ApiModelProperty(required = true, value = "Contact Number of the new Customer")
   @NotNull
 
 

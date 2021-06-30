@@ -37,10 +37,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * First name of the new customer
+   * First name of the new Customer
    * @return firstName
   **/
-  @ApiModelProperty(required = true, value = "First name of the new customer")
+  @ApiModelProperty(required = true, value = "First name of the new Customer")
   @NotNull
 
 
@@ -58,10 +58,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Last name of the new customer
+   * Last name of the new Customer
    * @return lastName
   **/
-  @ApiModelProperty(value = "Last name of the new customer")
+  @ApiModelProperty(value = "Last name of the new Customer")
 
 
   public String getLastName() {
@@ -78,10 +78,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Email address of the new customer
+   * Email address of the new Customer
    * @return emailAddress
   **/
-  @ApiModelProperty(required = true, value = "Email address of the new customer")
+  @ApiModelProperty(required = true, value = "Email address of the new Customer")
   @NotNull
 
 
@@ -99,10 +99,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Contact Number of the new customer
+   * Contact Number of the new Customer
    * @return contactNumber
   **/
-  @ApiModelProperty(required = true, value = "Contact Number of the new customer")
+  @ApiModelProperty(required = true, value = "Contact Number of the new Customer")
   @NotNull
 
 
@@ -120,10 +120,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Password of the new customer
+   * Password of the new Customer
    * @return password
   **/
-  @ApiModelProperty(required = true, value = "Password of the new customer")
+  @ApiModelProperty(required = true, value = "Password of the new Customer")
   @NotNull
 
 

@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * CouponNotFoundException is thrown when there is no coupon found by the name provided by the customer.
+ * CouponNotFoundException is thrown when there is no coupon found by the name provided by the Customer.
  */
 public class CouponNotFoundException extends Exception {
     private final String code;
