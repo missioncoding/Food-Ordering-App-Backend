@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * Created by Madhuri on 06/30/21.
  */
-public class Customer implements Serializable {
+public class CustomerEntity implements Serializable {
 
     @Id
     @Column(name="id")

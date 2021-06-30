@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @Table(name = "customer_auth", schema = "public")
 
 
-public class Customer_Auth implements Serializable {
+public class Customer_AuthEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -25,7 +25,7 @@ public class Customer_Auth implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "Customer_id")
-    private Customer customer;
+    private CustomerEntity customer;
 
     @Column(name="access_token")
     @Size(max=500)
@@ -57,11 +57,11 @@ public class Customer_Auth implements Serializable {
         this.uuid = uuid;
     }
 
-    public Customer getCustomer() {
+    public CustomerEntity getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(CustomerEntity customer) {
         this.customer = customer;
     }
 
