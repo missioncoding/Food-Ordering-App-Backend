@@ -1,15 +1,13 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
-import com.upgrad.FoodOrderingApp.api.model.LoginResponse;
-import com.upgrad.FoodOrderingApp.api.model.LogoutResponse;
-import com.upgrad.FoodOrderingApp.api.model.SignupCustomerRequest;
-import com.upgrad.FoodOrderingApp.api.model.SignupCustomerResponse;
+import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerBusinessService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.Customer_AuthEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
+import com.upgrad.FoodOrderingApp.service.exception.UpdateCustomerException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpHeaders;
@@ -92,6 +90,29 @@ public class CustomerController {
 
         LogoutResponse logoutResponse = new LogoutResponse().id(customer_authEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
         return new ResponseEntity<LogoutResponse>(logoutResponse, HttpStatus.OK);
+
+    }
+
+
+    @RequestMapping(method = RequestMethod.PUT,
+            path = "/customer" ,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,final UpdateCustomerRequest updateCustomerRequest)
+            throws UpdateCustomerException,AuthorizationFailedException {
+        String[] bearerToken = authorization.split("Bearer ");
+
+
+        final CustomerEntity updatedCustomerEntity = new CustomerEntity();
+        updatedCustomerEntity.setFirstName(updateCustomerRequest.getFirstName());
+        updatedCustomerEntity.setLastName(updateCustomerRequest.getLastName());
+
+        CustomerEntity customerEntity = customerBusinessService.updateCustomer(bearerToken[1],updatedCustomerEntity);
+
+
+        UpdateCustomerResponse updateCustomerResponse = new UpdateCustomerResponse().id(customerEntity.getUuid())
+                                                             .status("USER DETAILS SUCCESSFULLY UPDATED");
+        return new ResponseEntity<UpdateCustomerResponse>(updateCustomerResponse, HttpStatus.OK);
 
     }
 

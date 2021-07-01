@@ -17,4 +17,8 @@ public class CustomerBusinessService {
     public Customer_AuthEntity logout(String customerName){
         return new Customer_AuthEntity();}
 
+
+    public CustomerEntity updateCustomer(String autorization, CustomerEntity updatedCustomer){
+        return new CustomerEntity();}
+
 }
