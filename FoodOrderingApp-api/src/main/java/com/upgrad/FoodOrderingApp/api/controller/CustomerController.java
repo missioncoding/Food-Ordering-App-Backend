@@ -116,4 +116,27 @@ public class CustomerController {
 
     }
 
+
+    @RequestMapping(method = RequestMethod.PUT,
+            path = "/customer/password" ,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization,final UpdatePasswordRequest updatePasswordRequest)
+            throws UpdateCustomerException,AuthorizationFailedException {
+        String[] bearerToken = authorization.split("Bearer ");
+
+        String oldPassword = updatePasswordRequest.getOldPassword();
+        String newPassword = updatePasswordRequest.getNewPassword();
+
+
+
+        CustomerEntity customerEntity = customerBusinessService.updatePassword(bearerToken[1],oldPassword,newPassword);
+
+
+        UpdatePasswordResponse updatePasswordResponse = new UpdatePasswordResponse().id(customerEntity.getUuid())
+                .status("USER PASSWORD SUCCESSFULLY UPDATED");
+        return new ResponseEntity<UpdatePasswordResponse>(updatePasswordResponse, HttpStatus.OK);
+
+    }
+
     }

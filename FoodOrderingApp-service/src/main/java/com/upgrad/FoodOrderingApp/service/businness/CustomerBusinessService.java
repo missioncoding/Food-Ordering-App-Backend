@@ -21,4 +21,8 @@ public class CustomerBusinessService {
     public CustomerEntity updateCustomer(String autorization, CustomerEntity updatedCustomer){
         return new CustomerEntity();}
 
+
+    public CustomerEntity updatePassword(String autorization,String oldpsw, String newpsw){
+        return new CustomerEntity();}
+
 }
