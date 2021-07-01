@@ -1,12 +1,14 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.LoginResponse;
+import com.upgrad.FoodOrderingApp.api.model.LogoutResponse;
 import com.upgrad.FoodOrderingApp.api.model.SignupCustomerRequest;
 import com.upgrad.FoodOrderingApp.api.model.SignupCustomerResponse;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerBusinessService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.Customer_AuthEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
+import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -78,6 +80,19 @@ public class CustomerController {
         headers.add("access-token", customerAuthEntity.getAccessToken());
 
         return new ResponseEntity<LoginResponse>(loginResponse,headers,HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST,
+            path = "/customer/logout" ,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<LogoutResponse> customerLogout(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
+        String[] bearerToken = authorization.split("Bearer ");
+        Customer_AuthEntity customer_authEntity = customerBusinessService.logout(bearerToken[1]);
+
+
+        LogoutResponse logoutResponse = new LogoutResponse().id(customer_authEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
+        return new ResponseEntity<LogoutResponse>(logoutResponse, HttpStatus.OK);
+
     }
 
     }

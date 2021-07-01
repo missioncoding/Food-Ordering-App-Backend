@@ -14,4 +14,7 @@ public class CustomerBusinessService {
     public Customer_AuthEntity login(String customerName ,String password){
         return new Customer_AuthEntity();}
 
+    public Customer_AuthEntity logout(String customerName){
+        return new Customer_AuthEntity();}
+
 }
