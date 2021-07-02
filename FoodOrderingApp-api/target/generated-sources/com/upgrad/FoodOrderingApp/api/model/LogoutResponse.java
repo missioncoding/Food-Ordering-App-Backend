@@ -28,10 +28,10 @@ public class LogoutResponse   {
   }
 
   /**
-   * uuid of the customer who is signed out
+   * uuid of the Customer who is signed out
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid of the customer who is signed out")
+  @ApiModelProperty(required = true, value = "uuid of the Customer who is signed out")
   @NotNull
 
 
@@ -49,10 +49,10 @@ public class LogoutResponse   {
   }
 
   /**
-   * message to show the status of the signed out customer
+   * message to show the status of the signed out Customer
    * @return message
   **/
-  @ApiModelProperty(required = true, value = "message to show the status of the signed out customer")
+  @ApiModelProperty(required = true, value = "message to show the status of the signed out Customer")
   @NotNull
 
 

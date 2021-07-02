@@ -38,10 +38,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Unique identifier of the customer in a standard UUID format
+   * Unique identifier of the Customer in a standard UUID format
    * @return id
   **/
-  @ApiModelProperty(value = "Unique identifier of the customer in a standard UUID format")
+  @ApiModelProperty(value = "Unique identifier of the Customer in a standard UUID format")
 
   @Valid
 
@@ -59,10 +59,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * First name of the new customer
+   * First name of the new Customer
    * @return firstName
   **/
-  @ApiModelProperty(value = "First name of the new customer")
+  @ApiModelProperty(value = "First name of the new Customer")
 
 
   public String getFirstName() {
@@ -79,10 +79,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Last name of the new customer
+   * Last name of the new Customer
    * @return lastName
   **/
-  @ApiModelProperty(value = "Last name of the new customer")
+  @ApiModelProperty(value = "Last name of the new Customer")
 
 
   public String getLastName() {
@@ -99,10 +99,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Email address of the new customer
+   * Email address of the new Customer
    * @return emailAddress
   **/
-  @ApiModelProperty(value = "Email address of the new customer")
+  @ApiModelProperty(value = "Email address of the new Customer")
 
 
   public String getEmailAddress() {
@@ -119,10 +119,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Contact Number of the new customer
+   * Contact Number of the new Customer
    * @return contactNumber
   **/
-  @ApiModelProperty(value = "Contact Number of the new customer")
+  @ApiModelProperty(value = "Contact Number of the new Customer")
 
 
   public String getContactNumber() {
