@@ -14,7 +14,7 @@ import java.time.ZonedDateTime;
 @Table(name = "customer_auth", schema = "public")
 
 
-public class Customer_AuthEntity implements Serializable {
+public class CustomerAuthEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
