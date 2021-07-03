@@ -75,7 +75,7 @@ public class RestaurantService {
             throw new CategoryNotFoundException("CNF-001","Category id field should not be empty");
         }
         // get the category entity by the id
-        CategoryEntity categoryEntity = categoryDao.getCategoryByUuid(categoryId);
+        CategoryEntity categoryEntity = categoryDao.fetchByUuid(categoryId);
         if(categoryEntity == null){
             throw new CategoryNotFoundException("CNF-002","No category by this id");
         }

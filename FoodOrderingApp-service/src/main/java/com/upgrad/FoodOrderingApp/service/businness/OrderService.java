@@ -62,8 +62,8 @@ public class OrderService {
      * @return
      */
     public List<OrdersEntity> getOrdersByCustomers(String customerUuid) {
-        CustomerEntity customerEntity = customerDao.getCustomerByUuid(customerUuid);
-        List<OrdersEntity> ordersEntities = orderDao.getOrdersByCustomers(customerEntity);
+        CustomerEntity customerEntity = customerDao.fetchByUuid(customerUuid);
+        List<OrdersEntity> ordersEntities = orderDao.fetchCustomerOrders(customerEntity);
         return ordersEntities;
     }
 
@@ -73,7 +73,7 @@ public class OrderService {
      * @return
      */
     public List<OrderItemEntity> getOrderItemsByOrder(OrdersEntity ordersEntity) {
-        List<OrderItemEntity> orderItemEntities = orderItemDao.getOrderItemsByOrder(ordersEntity);
+        List<OrderItemEntity> orderItemEntities = orderItemDao.fetchByOrder(ordersEntity);
         return orderItemEntities;
     }
 }
