@@ -1,51 +1,60 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Collection;
 
+/**
+ * @author zeelani
+ * Entity class respresenting customer table
+ */
+
+@NamedQueries({
+    @NamedQuery(name = "customer.fetchByContactNumber", query = "SELECT c from CustomerEntity c where c.contactNumber = :contact_number"),
+    @NamedQuery(name = "customer.fetchByUuid", query = "SELECT c from CustomerEntity c where c.uuid = :uuid")
+})
 
 @Entity
-@Table(name = "customer", schema = "public")
-/**
- * Created by Madhuri on 06/30/21.
- */
+@Table(name = "customer", uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid","contact_number"})})
 public class CustomerEntity implements Serializable {
-
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="uuid")
+    @Column(name = "uuid")
     @Size(max = 200)
+    @NotNull
     private String uuid;
 
-    @Column(name="firstname")
+    @Column(name = "firstname")
     @Size(max = 30)
+    @NotNull
     private String firstName;
 
-    @Column(name="lastname")
+    @Column(name = "lastname")
     @Size(max = 30)
     private String lastName;
 
-    @Column(name="email")
+    @Column(name = "contact_number")
+    @Size(max = 30)
+    @NotNull
+    private String contactNumber;
+
+    @Column(name = "email")
     @Size(max = 50)
     private String email;
 
-    @Column(name="contact_number")
-    @Size(max = 30)
-    private String contactNumber;
-
-    @Column(name="password")
+    @Column(name = "password")
     @Size(max = 255)
+    @NotNull
     private String password;
 
-    @Column(name="salt")
+    @Column(name = "salt")
     @Size(max = 255)
+    @NotNull
     private String salt;
-
 
     public Integer getId() {
         return id;
@@ -79,6 +88,14 @@ public class CustomerEntity implements Serializable {
         this.lastName = lastName;
     }
 
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -102,15 +119,4 @@ public class CustomerEntity implements Serializable {
     public void setSalt(String salt) {
         this.salt = salt;
     }
-
-    public String getContactNumber() {
-        return contactNumber;
-    }
-
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
-
-
-
 }
