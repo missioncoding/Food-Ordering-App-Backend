@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * UpdatePasswordRequest
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:49.663+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:09.892+05:30")
 
 public class UpdatePasswordRequest   {
   @JsonProperty("old_password")
@@ -28,10 +28,10 @@ public class UpdatePasswordRequest   {
   }
 
   /**
-   * Existing password of the Customer
+   * Existing password of the customer
    * @return oldPassword
   **/
-  @ApiModelProperty(value = "Existing password of the Customer")
+  @ApiModelProperty(value = "Existing password of the customer")
 
 
   public String getOldPassword() {
@@ -48,10 +48,10 @@ public class UpdatePasswordRequest   {
   }
 
   /**
-   * New password by Customer
+   * New password by customer
    * @return newPassword
   **/
-  @ApiModelProperty(value = "New password by Customer")
+  @ApiModelProperty(value = "New password by customer")
 
 
   public String getNewPassword() {

@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * LogoutResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:49.663+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:09.892+05:30")
 
 public class LogoutResponse   {
   @JsonProperty("id")
@@ -28,10 +28,10 @@ public class LogoutResponse   {
   }
 
   /**
-   * uuid of the Customer who is signed out
+   * uuid of the customer who is signed out
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid of the Customer who is signed out")
+  @ApiModelProperty(required = true, value = "uuid of the customer who is signed out")
   @NotNull
 
 
@@ -49,10 +49,10 @@ public class LogoutResponse   {
   }
 
   /**
-   * message to show the status of the signed out Customer
+   * message to show the status of the signed out customer
    * @return message
   **/
-  @ApiModelProperty(required = true, value = "message to show the status of the signed out Customer")
+  @ApiModelProperty(required = true, value = "message to show the status of the signed out customer")
   @NotNull
 
 

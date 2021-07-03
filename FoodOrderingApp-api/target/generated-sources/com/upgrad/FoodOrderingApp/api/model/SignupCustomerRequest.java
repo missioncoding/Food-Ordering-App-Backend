@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * SignupCustomerRequest
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:49.663+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:09.892+05:30")
 
 public class SignupCustomerRequest   {
   @JsonProperty("first_name")
@@ -37,10 +37,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * First name of the new Customer
+   * First name of the new customer
    * @return firstName
   **/
-  @ApiModelProperty(required = true, value = "First name of the new Customer")
+  @ApiModelProperty(required = true, value = "First name of the new customer")
   @NotNull
 
 
@@ -58,10 +58,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Last name of the new Customer
+   * Last name of the new customer
    * @return lastName
   **/
-  @ApiModelProperty(value = "Last name of the new Customer")
+  @ApiModelProperty(value = "Last name of the new customer")
 
 
   public String getLastName() {
@@ -78,10 +78,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Email address of the new Customer
+   * Email address of the new customer
    * @return emailAddress
   **/
-  @ApiModelProperty(required = true, value = "Email address of the new Customer")
+  @ApiModelProperty(required = true, value = "Email address of the new customer")
   @NotNull
 
 
@@ -99,10 +99,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Contact Number of the new Customer
+   * Contact Number of the new customer
    * @return contactNumber
   **/
-  @ApiModelProperty(required = true, value = "Contact Number of the new Customer")
+  @ApiModelProperty(required = true, value = "Contact Number of the new customer")
   @NotNull
 
 
@@ -120,10 +120,10 @@ public class SignupCustomerRequest   {
   }
 
   /**
-   * Password of the new Customer
+   * Password of the new customer
    * @return password
   **/
-  @ApiModelProperty(required = true, value = "Password of the new Customer")
+  @ApiModelProperty(required = true, value = "Password of the new customer")
   @NotNull
 
 

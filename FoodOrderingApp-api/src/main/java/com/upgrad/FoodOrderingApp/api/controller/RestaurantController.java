@@ -44,7 +44,17 @@ public class RestaurantController {
             restaurantDetailsResponse.setCustomerRating(q.getCustomer_rating());
             restaurantDetailsResponse.setAveragePrice(q.getAverage_price_for_two());
             restaurantDetailsResponse.setNumberCustomersRated(q.getNumber_of_customers_rated());
-
+            restaurantDetailsResponse.address(new RestaurantDetailsResponseAddress()
+                    .id(UUID.fromString(q.getAddressEntity().getUuid()))
+                    .flatBuildingName(q.getAddressEntity().getFlat_buil_number())
+                    .locality(q.getAddressEntity().getLocality())
+                    .city(q.getAddressEntity().getCity())
+                    .pincode(q.getAddressEntity().getPincode())
+                    .state(new RestaurantDetailsResponseAddressState()
+                            .id(UUID.fromString(q.getAddressEntity().getStateEntity().getUuid()))
+                            .stateName(q.getAddressEntity().getStateEntity().getState_name())
+                    )
+            );
             restaurantDetailsResponseList.add(restaurantDetailsResponse);
         }
         return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantDetailsResponseList, HttpStatus.OK);
@@ -70,7 +80,17 @@ public class RestaurantController {
             restaurantFoundResponse.setCustomerRating(q.getCustomer_rating());
             restaurantFoundResponse.setAveragePrice(q.getAverage_price_for_two());
             restaurantFoundResponse.setNumberCustomersRated(q.getNumber_of_customers_rated());
-
+            restaurantFoundResponse.address(new RestaurantDetailsResponseAddress()
+                    .id(UUID.fromString(q.getAddressEntity().getUuid()))
+                    .flatBuildingName(q.getAddressEntity().getFlat_buil_number())
+                    .locality(q.getAddressEntity().getLocality())
+                    .city(q.getAddressEntity().getCity())
+                    .pincode(q.getAddressEntity().getPincode())
+                    .state(new RestaurantDetailsResponseAddressState()
+                            .id(UUID.fromString(q.getAddressEntity().getStateEntity().getUuid()))
+                            .stateName(q.getAddressEntity().getStateEntity().getState_name())
+                    )
+            );
             restaurantFoundResponseList.add(restaurantFoundResponse);
         }
         if (restaurantFoundResponseList.isEmpty()) {
@@ -100,7 +120,17 @@ public class RestaurantController {
         restaurantFoundResponse.setCustomerRating(restaurantEntities.getCustomer_rating());
         restaurantFoundResponse.setAveragePrice(restaurantEntities.getAverage_price_for_two());
         restaurantFoundResponse.setNumberCustomersRated(restaurantEntities.getNumber_of_customers_rated());
-
+        restaurantFoundResponse.address(new RestaurantDetailsResponseAddress()
+                .id(UUID.fromString(restaurantEntities.getAddressEntity().getUuid()))
+                .flatBuildingName(restaurantEntities.getAddressEntity().getFlat_buil_number())
+                .locality(restaurantEntities.getAddressEntity().getLocality())
+                .city(restaurantEntities.getAddressEntity().getCity())
+                .pincode(restaurantEntities.getAddressEntity().getPincode())
+                .state(new RestaurantDetailsResponseAddressState()
+                        .id(UUID.fromString(restaurantEntities.getAddressEntity().getStateEntity().getUuid()))
+                        .stateName(restaurantEntities.getAddressEntity().getStateEntity().getState_name())
+                )
+        );
         restaurantDetailsResponseList.add(restaurantFoundResponse);
 
         if (restaurantDetailsResponseList.isEmpty()) {

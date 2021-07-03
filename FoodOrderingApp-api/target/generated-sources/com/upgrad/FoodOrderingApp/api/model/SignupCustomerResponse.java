@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * SignupCustomerResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:49.663+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:09.892+05:30")
 
 public class SignupCustomerResponse   {
   @JsonProperty("id")
@@ -28,10 +28,10 @@ public class SignupCustomerResponse   {
   }
 
   /**
-   * uuid of the signed up Customer
+   * uuid of the signed up customer
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid of the signed up Customer")
+  @ApiModelProperty(required = true, value = "uuid of the signed up customer")
   @NotNull
 
 
@@ -49,10 +49,10 @@ public class SignupCustomerResponse   {
   }
 
   /**
-   * message showing the status of the signed up Customer
+   * message showing the status of the signed up customer
    * @return status
   **/
-  @ApiModelProperty(required = true, value = "message showing the status of the signed up Customer")
+  @ApiModelProperty(required = true, value = "message showing the status of the signed up customer")
   @NotNull
 
 
