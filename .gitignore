@@ -9,3 +9,5 @@ target/
  *.sw*
 *.iml
 */*.iml
+.idea/*.xml
+
