@@ -3,7 +3,7 @@ package com.upgrad.FoodOrderingApp.api.controller;
 import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerBusinessService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.entity.Customer_AuthEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
@@ -65,7 +65,7 @@ public class CustomerController {
         String decodedText = new String(decode);
         String[] decodedArray = decodedText.split(":");
 
-        Customer_AuthEntity customerAuthEntity = customerBusinessService.login(decodedArray[0], decodedArray[1]);
+        CustomerAuthEntity customerAuthEntity = customerBusinessService.login(decodedArray[0], decodedArray[1]);
         CustomerEntity user_entity = customerAuthEntity.getCustomer();
         LoginResponse loginResponse = new LoginResponse().id(user_entity.getUuid())
                                                           .firstName(user_entity.getFirstName())
@@ -85,7 +85,7 @@ public class CustomerController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<LogoutResponse> customerLogout(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
         String[] bearerToken = authorization.split("Bearer ");
-        Customer_AuthEntity customer_authEntity = customerBusinessService.logout(bearerToken[1]);
+        CustomerAuthEntity customer_authEntity = customerBusinessService.logout(bearerToken[1]);
 
 
         LogoutResponse logoutResponse = new LogoutResponse().id(customer_authEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");

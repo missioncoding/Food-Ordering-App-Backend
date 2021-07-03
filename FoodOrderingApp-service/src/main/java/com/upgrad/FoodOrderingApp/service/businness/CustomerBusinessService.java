@@ -1,21 +1,23 @@
 package com.upgrad.FoodOrderingApp.service.businness;
 
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.entity.Customer_AuthEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by murarka on 06/30/21.
  */
+@Service
 public class CustomerBusinessService {
 
     public CustomerEntity signUp(CustomerEntity customerEntity){
     return new CustomerEntity();}
 
-    public Customer_AuthEntity login(String customerName ,String password){
-        return new Customer_AuthEntity();}
+    public CustomerAuthEntity login(String customerName , String password){
+        return new CustomerAuthEntity();}
 
-    public Customer_AuthEntity logout(String customerName){
-        return new Customer_AuthEntity();}
+    public CustomerAuthEntity logout(String customerName){
+        return new CustomerAuthEntity();}
 
 
     public CustomerEntity updateCustomer(String autorization, CustomerEntity updatedCustomer){
