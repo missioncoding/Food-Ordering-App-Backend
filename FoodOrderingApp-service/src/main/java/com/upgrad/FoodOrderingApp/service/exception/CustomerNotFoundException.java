@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * CustomerNotFoundException is thrown when the customer is not found in the database.
+ * CustomerNotFoundException is thrown when the Customer is not found in the database.
  */
 public class CustomerNotFoundException extends Exception {
     private final String code;

@@ -34,10 +34,10 @@ public class UpdateCustomerResponse   {
   }
 
   /**
-   * uuid of the customer with updated details
+   * uuid of the Customer with updated details
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid of the customer with updated details")
+  @ApiModelProperty(required = true, value = "uuid of the Customer with updated details")
   @NotNull
 
 
@@ -55,10 +55,10 @@ public class UpdateCustomerResponse   {
   }
 
   /**
-   * message showing the status of the customer
+   * message showing the status of the Customer
    * @return status
   **/
-  @ApiModelProperty(required = true, value = "message showing the status of the customer")
+  @ApiModelProperty(required = true, value = "message showing the status of the Customer")
   @NotNull
 
 
@@ -76,10 +76,10 @@ public class UpdateCustomerResponse   {
   }
 
   /**
-   * First name of the new customer
+   * First name of the new Customer
    * @return firstName
   **/
-  @ApiModelProperty(required = true, value = "First name of the new customer")
+  @ApiModelProperty(required = true, value = "First name of the new Customer")
   @NotNull
 
 
@@ -97,10 +97,10 @@ public class UpdateCustomerResponse   {
   }
 
   /**
-   * Last name of the new customer
+   * Last name of the new Customer
    * @return lastName
   **/
-  @ApiModelProperty(value = "Last name of the new customer")
+  @ApiModelProperty(value = "Last name of the new Customer")
 
 
   public String getLastName() {

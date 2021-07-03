@@ -28,10 +28,10 @@ public class UpdateCustomerRequest   {
   }
 
   /**
-   * First name of the new customer
+   * First name of the new Customer
    * @return firstName
   **/
-  @ApiModelProperty(value = "First name of the new customer")
+  @ApiModelProperty(value = "First name of the new Customer")
 
 
   public String getFirstName() {
@@ -48,10 +48,10 @@ public class UpdateCustomerRequest   {
   }
 
   /**
-   * Last name of the new customer
+   * Last name of the new Customer
    * @return lastName
   **/
-  @ApiModelProperty(value = "Last name of the new customer")
+  @ApiModelProperty(value = "Last name of the new Customer")
 
 
   public String getLastName() {

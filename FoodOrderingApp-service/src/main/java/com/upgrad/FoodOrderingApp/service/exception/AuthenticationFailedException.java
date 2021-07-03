@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * AuthenticationFailedException is thrown when customer credentials didn't match.
+ * AuthenticationFailedException is thrown when Customer credentials didn't match.
  */
 public class AuthenticationFailedException extends Exception {
     private final String code;

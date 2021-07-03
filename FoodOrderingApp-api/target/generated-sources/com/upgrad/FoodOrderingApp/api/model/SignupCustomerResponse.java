@@ -28,10 +28,10 @@ public class SignupCustomerResponse   {
   }
 
   /**
-   * uuid of the signed up customer
+   * uuid of the signed up Customer
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid of the signed up customer")
+  @ApiModelProperty(required = true, value = "uuid of the signed up Customer")
   @NotNull
 
 
@@ -49,10 +49,10 @@ public class SignupCustomerResponse   {
   }
 
   /**
-   * message showing the status of the signed up customer
+   * message showing the status of the signed up Customer
    * @return status
   **/
-  @ApiModelProperty(required = true, value = "message showing the status of the signed up customer")
+  @ApiModelProperty(required = true, value = "message showing the status of the signed up Customer")
   @NotNull
 
 

@@ -28,10 +28,10 @@ public class UpdatePasswordRequest   {
   }
 
   /**
-   * Existing password of the customer
+   * Existing password of the Customer
    * @return oldPassword
   **/
-  @ApiModelProperty(value = "Existing password of the customer")
+  @ApiModelProperty(value = "Existing password of the Customer")
 
 
   public String getOldPassword() {
@@ -48,10 +48,10 @@ public class UpdatePasswordRequest   {
   }
 
   /**
-   * New password by customer
+   * New password by Customer
    * @return newPassword
   **/
-  @ApiModelProperty(value = "New password by customer")
+  @ApiModelProperty(value = "New password by Customer")
 
 
   public String getNewPassword() {

@@ -43,7 +43,7 @@ public class OrderList   {
   @JsonProperty("payment")
   private OrderListPayment payment = null;
 
-  @JsonProperty("customer")
+  @JsonProperty("Customer")
   private OrderListCustomer customer = null;
 
   @JsonProperty("address")
@@ -184,8 +184,8 @@ public class OrderList   {
   }
 
   /**
-   * Get customer
-   * @return customer
+   * Get Customer
+   * @return Customer
   **/
   @ApiModelProperty(value = "")
 
@@ -286,7 +286,7 @@ public class OrderList   {
     sb.append("    discount: ").append(toIndentedString(discount)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    payment: ").append(toIndentedString(payment)).append("\n");
-    sb.append("    customer: ").append(toIndentedString(customer)).append("\n");
+    sb.append("    Customer: ").append(toIndentedString(customer)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    itemQuantities: ").append(toIndentedString(itemQuantities)).append("\n");
     sb.append("}");
