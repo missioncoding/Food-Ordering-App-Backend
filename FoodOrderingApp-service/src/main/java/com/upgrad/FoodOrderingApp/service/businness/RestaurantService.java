@@ -20,6 +20,13 @@ public class RestaurantService {
     public List<RestaurantEntity> getAllRestaurant() {
         return  restaurantDao.getAllRestaurants();
     }
+    @Transactional
+    public List<RestaurantEntity> getRestaurant(String restaurantName) throws RestaurantNotFoundException {
+        if (restaurantName == null || restaurantName.isEmpty()) {
+            throw new RestaurantNotFoundException("RNF-003", "Restaurant name field should not be empty");
+        }
 
+        return restaurantDao.getRestaurant(restaurantName);
+    }
 
 }
