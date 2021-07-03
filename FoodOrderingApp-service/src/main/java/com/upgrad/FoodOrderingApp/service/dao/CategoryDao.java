@@ -20,6 +20,19 @@ public class CategoryDao {
     private EntityManager entityManager;
 
     /**
+     * Method to list all the categories
+     * @return
+     */
+    public List<CategoryEntity> fetchAll() {
+        try {
+            List<CategoryEntity> categoryEntities = entityManager.createNamedQuery("category.fetchAll",CategoryEntity.class).getResultList();
+            return categoryEntities;
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    /**
      * Method to retrive the category using the id
      * @param uuid
      * @return
@@ -33,16 +46,4 @@ public class CategoryDao {
         }
     }
 
-    /**
-     * Method to list all the categories
-     * @return
-     */
-    public List<CategoryEntity> fetchAll() {
-        try {
-            List<CategoryEntity> categoryEntities = entityManager.createNamedQuery("category.fetchAll",CategoryEntity.class).getResultList();
-            return categoryEntities;
-        }catch (NoResultException nre){
-            return null;
-        }
-    }
 }

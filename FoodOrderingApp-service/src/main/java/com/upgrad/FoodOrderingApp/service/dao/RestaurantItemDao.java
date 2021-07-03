@@ -9,15 +9,24 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ * @author zeelani
+ * Repository for handling Restaurant item DB operations
+ */
+
 @Repository
 public class RestaurantItemDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //To get the list of RestaurantItemEntity using Restaurant entity if no results then returns null.
+    /**
+     * Fetch all items in the restaurant
+     * @param restaurantEntity
+     * @return
+     */
     public List<RestaurantItemEntity> getItemsByRestaurant(RestaurantEntity restaurantEntity) {
         try {
-            List<RestaurantItemEntity> restaurantItemEntities = entityManager.createNamedQuery("getItemsByRestaurant",RestaurantItemEntity.class).setParameter("restaurant",restaurantEntity).getResultList();
+            List<RestaurantItemEntity> restaurantItemEntities = entityManager.createNamedQuery("restaurant_item.fetchAllItems",RestaurantItemEntity.class).setParameter("restaurant",restaurantEntity).getResultList();
             return restaurantItemEntities;
         }catch (NoResultException nre){
             return null;

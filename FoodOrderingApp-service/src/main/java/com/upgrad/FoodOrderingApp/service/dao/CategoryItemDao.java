@@ -9,7 +9,10 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-//This Class is created to access DB with respect to categoryItem entity
+/**
+ * @author zeelani
+ * Repository class handing category item DB operations
+ */
 
 @Repository
 public class CategoryItemDao {
@@ -18,8 +21,12 @@ public class CategoryItemDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //To get List of CategoryItemEntity by CategoryEntity if no result then null is returned
-    public List<CategoryItemEntity> getItemsByCategory(CategoryEntity categoryEntity) {
+    /**
+     * Method to fetch all category items
+     * @param categoryEntity
+     * @return
+     */
+    public List<CategoryItemEntity> fetchAllCategoryItems(CategoryEntity categoryEntity) {
         try {
             List<CategoryItemEntity> categoryItems = entityManager.createNamedQuery("category_item.fetchAll",CategoryItemEntity.class).
                                                                   setParameter("category",categoryEntity).getResultList();

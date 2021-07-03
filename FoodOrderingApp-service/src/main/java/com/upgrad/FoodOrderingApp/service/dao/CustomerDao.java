@@ -7,41 +7,62 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+/**
+ * @author zeelani
+ * Repository class handling customer related DB operations
+ */
+
 @Repository
 public class CustomerDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //Method to get customer by Contact number, returns null if no results found
-    public CustomerEntity getCustomerByContactNumber (final String contact_number){
-        try{
-            CustomerEntity customer = entityManager.createNamedQuery("customerByContactNumber",CustomerEntity.class).setParameter("contact_number",contact_number).getSingleResult();
-            return customer;
-        }catch (NoResultException nre){
-            return null;
-        }
-    }
-
-    //Method to save new customer entity
-    public CustomerEntity createCustomer(CustomerEntity customerEntity){
-        entityManager.persist(customerEntity);
+    /**
+     * updates the customer entity in database
+     * @param customerEntity
+     * @return
+     */
+    public CustomerEntity updateCustomer(CustomerEntity customerEntity){
+        entityManager.merge(customerEntity);
         return customerEntity;
     }
 
-    //Method to update customer
-    public CustomerEntity updateCustomer(CustomerEntity customerToBeUpdated){
-        entityManager.merge(customerToBeUpdated);
-        return customerToBeUpdated;
-    }
-
-    //Method to find customer by UUID
-    public CustomerEntity getCustomerByUuid (final String uuid){
+    /**
+     * Method to fetch the customer details using the UUID
+     * @param uuid
+     * @return
+     */
+    public CustomerEntity fetchByUuid (final String uuid){
         try {
-            CustomerEntity customer = entityManager.createNamedQuery("customerByUuid",CustomerEntity.class).setParameter("uuid",uuid).getSingleResult();
+            CustomerEntity customer = entityManager.createNamedQuery("customer.fetchByUuid",CustomerEntity.class).setParameter("uuid",uuid).getSingleResult();
             return customer;
         }catch (NoResultException nre){
             return null;
         }
+    }
+
+    /**
+     * Fetch customer details based on contact number
+     * @param contact_number
+     * @return
+     */
+    public CustomerEntity fetchByContactNumber (final String contact_number){
+        try{
+            CustomerEntity customer = entityManager.createNamedQuery("customer.fetchByContactNumber",CustomerEntity.class).setParameter("contact_number",contact_number).getSingleResult();
+            return customer;
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    /**
+     * Creates a customer entry in database
+     * @param customerEntity
+     * @return
+     */
+    public CustomerEntity createCustomer(CustomerEntity customerEntity){
+        entityManager.persist(customerEntity);
+        return customerEntity;
     }
 
 }
