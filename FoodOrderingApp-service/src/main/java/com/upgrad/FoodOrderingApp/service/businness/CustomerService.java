@@ -46,7 +46,7 @@ public class CustomerService {
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity saveCustomer(CustomerEntity customerEntity) throws SignUpRestrictedException {
         //checking whether the customer entry already exists
-        CustomerEntity lookUpEntity = customerDao.getCustomerByContactNumber(customerEntity.getContactNumber());
+        CustomerEntity lookUpEntity = customerDao.fetchByContactNumber(customerEntity.getContactNumber());
         if (lookUpEntity != null) {
             throw new SignUpRestrictedException("SGR-001", "This contact number is already registered! Try other contact number");
         }
@@ -87,7 +87,7 @@ public class CustomerService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerAuthEntity authenticate(String contactNumber, String password) throws AuthenticationFailedException {
-        CustomerEntity customerEntity = customerDao.getCustomerByContactNumber(contactNumber);
+        CustomerEntity customerEntity = customerDao.fetchByContactNumber(contactNumber);
         if (customerEntity == null) {
             throw new AuthenticationFailedException("ATH-001", "This contact number has not been registered!");
         }
@@ -134,7 +134,7 @@ public class CustomerService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity updateCustomer(CustomerEntity customerEntity) throws UpdateCustomerException {
-        CustomerEntity customerToBeUpdated = customerDao.getCustomerByUuid(customerEntity.getUuid());
+        CustomerEntity customerToBeUpdated = customerDao.fetchByUuid(customerEntity.getUuid());
         customerToBeUpdated.setFirstName(customerEntity.getFirstName());
         customerToBeUpdated.setLastName(customerEntity.getLastName());
         CustomerEntity updatedCustomer = customerDao.updateCustomer(customerEntity);
@@ -157,7 +157,7 @@ public class CustomerService {
         }
         String encryptedOldPassword = passwordCryptographyProvider.encrypt(oldPassword, customerEntity.getSalt());
         if (encryptedOldPassword.equals(customerEntity.getPassword())) {
-            CustomerEntity tobeUpdatedCustomerEntity = customerDao.getCustomerByUuid(customerEntity.getUuid());
+            CustomerEntity tobeUpdatedCustomerEntity = customerDao.fetchByUuid(customerEntity.getUuid());
             String[] encryptedPassword = passwordCryptographyProvider.encrypt(newPassword);
             tobeUpdatedCustomerEntity.setSalt(encryptedPassword[0]);
             tobeUpdatedCustomerEntity.setPassword(encryptedPassword[1]);
@@ -186,7 +186,7 @@ public class CustomerService {
      * @throws AuthorizationFailedException
      */
     private CustomerAuthEntity getCustomerAuthEntity(String accessToken) throws AuthorizationFailedException {
-        CustomerAuthEntity customerAuthEntity = customerAuthDao.getCustomerAuthByAccessToken(accessToken);
+        CustomerAuthEntity customerAuthEntity = customerAuthDao.fetchCustomerAuth(accessToken);
         if (customerAuthEntity == null) {
             throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in.");
         }

@@ -13,7 +13,7 @@ import java.sql.Timestamp;
  */
 
 @NamedQueries({
-    @NamedQuery(name = "orders.fetchByCustomers",query = "SELECT o FROM OrdersEntity o WHERE o.customer = :customer ORDER BY o.date DESC "),
+    @NamedQuery(name = "orders.fetchByCustomer",query = "SELECT o FROM OrdersEntity o WHERE o.customer = :customer ORDER BY o.date DESC "),
     @NamedQuery(name = "orders.fetchByRestaurant",query = "SELECT o FROM OrdersEntity o WHERE o.restaurant = :restaurant"),
     @NamedQuery(name = "orders.fetchByAddress",query = "SELECT o FROM OrdersEntity o WHERE o.address = :address")
 })
