@@ -7,30 +7,47 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+/**
+ * @author zeelani
+ * Repository class handling customer auth related DB operations
+ */
+
 @Repository
 public class CustomerAuthDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //Get customer authentication token
-    public CustomerAuthEntity getCustomerAuthByAccessToken(String accessToken){
+    /**
+     * Handle logout operation of customer
+     * @param customerAuthEntity
+     * @return
+     */
+    public CustomerAuthEntity customerLogout (CustomerAuthEntity customerAuthEntity){
+        entityManager.merge(customerAuthEntity);
+        return customerAuthEntity;
+    }
+
+    /**
+     * Fetch customer auth using access token
+     * @param accessToken
+     * @return
+     */
+    public CustomerAuthEntity fetchCustomerAuth(String accessToken){
         try{
-            CustomerAuthEntity customerAuthEntity = entityManager.createNamedQuery("getCustomerAuthByAccessToken",CustomerAuthEntity.class).setParameter("access_Token",accessToken).getSingleResult();
+            CustomerAuthEntity customerAuthEntity = entityManager.createNamedQuery("customer_auth.fetchByAccessToken",CustomerAuthEntity.class).setParameter("access_Token",accessToken).getSingleResult();
             return customerAuthEntity;
         }catch (NoResultException nre){
             return null;
         }
     }
 
-    //Store customer entity
+    /**
+     * persist the customer auth in DB
+     * @param customerAuthEntity
+     * @return
+     */
     public CustomerAuthEntity createCustomerAuth (CustomerAuthEntity customerAuthEntity){
         entityManager.persist(customerAuthEntity);
-        return customerAuthEntity;
-    }
-
-    //Update customer entity
-    public CustomerAuthEntity customerLogout (CustomerAuthEntity customerAuthEntity){
-        entityManager.merge(customerAuthEntity);
         return customerAuthEntity;
     }
 }

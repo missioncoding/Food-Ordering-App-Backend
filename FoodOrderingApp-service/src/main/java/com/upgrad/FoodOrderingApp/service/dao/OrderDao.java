@@ -11,43 +11,64 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ * @author zeelani
+ * Repository class to handle Order related db operations
+ */
+
 @Repository
 public class OrderDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    //To save Order in the db
+    /**
+     * Fetch the orders based on the restaurant
+     * @param restaurantEntity
+     * @return
+     */
+    public List<OrdersEntity> fetchByRestaurant(RestaurantEntity restaurantEntity){
+        try{
+            List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("orders.fetchByRestaurant",OrdersEntity.class).setParameter("restaurant",restaurantEntity).getResultList();
+            return ordersEntities;
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    /**
+     * Fetch the orders by address
+     * @param addressEntity
+     * @return
+     */
+    public List<OrdersEntity> fetchByAddress(AddressEntity addressEntity) {
+        try{
+            List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("orders.fetchByAddress",OrdersEntity.class).setParameter("address",addressEntity).getResultList();
+            return ordersEntities;
+        }catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    /**
+     * Persists the order in DB
+     * @param ordersEntity
+     * @return
+     */
     public OrdersEntity saveOrder(OrdersEntity ordersEntity){
         entityManager.persist(ordersEntity);
         return ordersEntity;
     }
 
-    //To get List of order from the db Corresponding to Customers
-    public List<OrdersEntity> getOrdersByCustomers(CustomerEntity customerEntity) {
+    /**
+     * Fetch all orders of a customer
+     * @param customerEntity
+     * @return
+     */
+    public List<OrdersEntity> fetchCustomerOrders(CustomerEntity customerEntity) {
         try {
-            List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByCustomers",OrdersEntity.class).setParameter("customer",customerEntity).getResultList();
+            List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("orders.fetchByCustomer",OrdersEntity.class).setParameter("customer",customerEntity).getResultList();
             return ordersEntities;
         }catch (NoResultException nre){
-            return null;
-        }
-    }
-
-    //To get list of OrdersEntity by the restaurant if no result then null is returned
-    public List<OrdersEntity> getOrdersByRestaurant(RestaurantEntity restaurantEntity){
-        try{
-            List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByRestaurant",OrdersEntity.class).setParameter("restaurant",restaurantEntity).getResultList();
-            return ordersEntities;
-        }catch (NoResultException nre){
-            return null;
-        }
-    }
-
-    //To get all the order corresponding to the address
-    public List<OrdersEntity> getOrdersByAddress(AddressEntity addressEntity) {
-        try{
-            List<OrdersEntity> ordersEntities = entityManager.createNamedQuery("getOrdersByAddress",OrdersEntity.class).setParameter("address",addressEntity).getResultList();
-            return ordersEntities;
-        }catch (NoResultException nre) {
             return null;
         }
     }

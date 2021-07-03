@@ -9,33 +9,39 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ * @author zeelani
+ * Repository class handling Order item related DB operations
+ */
+
 @Repository
 public class OrderItemDao {
+
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Save the order item in DB
+     * @param orderItemEntity
+     * @return
+     */
+    public OrderItemEntity saveOrderItem(OrderItemEntity orderItemEntity){
+        entityManager.persist(orderItemEntity);
+        return orderItemEntity;
+    }
 
-    //To get the
-    public List<OrderItemEntity> getItemsByOrders(OrdersEntity ordersEntity) {
+    /**
+     * Fetch the order items based on order
+     * @param ordersEntity
+     * @return
+     */
+    public List<OrderItemEntity> fetchByOrder(OrdersEntity ordersEntity) {
         try{
-            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getItemsByOrders", OrderItemEntity.class).setParameter("ordersEntity",ordersEntity).getResultList();
+            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("order_item.fetchByOrder", OrderItemEntity.class).setParameter("ordersEntity",ordersEntity).getResultList();
             return orderItemEntities;
         }catch (NoResultException nre) {
             return null;
         }
     }
 
-    public OrderItemEntity saveOrderItem(OrderItemEntity orderItemEntity){
-        entityManager.persist(orderItemEntity);
-        return orderItemEntity;
-    }
-
-    public List<OrderItemEntity> getOrderItemsByOrder(OrdersEntity ordersEntity) {
-        try {
-            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("getOrderItemsByOrder",OrderItemEntity.class).setParameter("orders",ordersEntity).getResultList();
-            return orderItemEntities;
-        }catch (NoResultException nre){
-            return null;
-        }
-    }
 }
