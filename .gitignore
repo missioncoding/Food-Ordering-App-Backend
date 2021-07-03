@@ -1,0 +1,14 @@
+# ignore the target directory
+target/
+.idea
+*/target/
+
+
+ # Ignore the ide specific files
+ .idea/*
+ .vscode/*
+ *.sw*
+*.iml
+*/*.iml
+.idea/*.xml
+
