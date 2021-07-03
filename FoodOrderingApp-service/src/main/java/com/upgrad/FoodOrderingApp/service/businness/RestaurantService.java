@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class RestaurantService {
@@ -27,6 +26,18 @@ public class RestaurantService {
         }
 
         return restaurantDao.getRestaurant(restaurantName);
+    }
+    @Transactional
+    public RestaurantEntity getRestaurantById(String restaurantUuid)throws RestaurantNotFoundException{
+        if(restaurantUuid == null||restaurantUuid.isEmpty()){
+            throw new RestaurantNotFoundException("RNF-002","Restaurant id field should not be empty");
+        }
+        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantById(restaurantUuid);
+
+        if (restaurantEntity == null){
+            throw new RestaurantNotFoundException("RNF-001","No restaurant by this id");
+        }
+        return restaurantEntity;
     }
 
 }

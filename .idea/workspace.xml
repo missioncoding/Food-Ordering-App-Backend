@@ -7,6 +7,7 @@
     <list default="true" id="bf47725c-dd13-4f9b-a8f6-91ef94baac0f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/RestaurantController.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller/RestaurantController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/exception/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/exception/RestExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/RestaurantService.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/businness/RestaurantService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/RestaurantDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/FoodOrderingApp-service/src/main/java/com/upgrad/FoodOrderingApp/service/dao/RestaurantDao.java" afterDir="false" />
     </list>
@@ -50,41 +51,24 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    56
     <property name="RequestMappingsPanelOrder0" value="0" />
-    57
     <property name="RequestMappingsPanelOrder1" value="1" />
-    58
     <property name="RequestMappingsPanelOrder2" value="2" />
-    59
     <property name="RequestMappingsPanelWidth0" value="75" />
-    60
     <property name="RequestMappingsPanelWidth1" value="75" />
-    61
     <property name="RequestMappingsPanelWidth2" value="75" />
-    62
     <property name="WebServerToolWindowFactoryState" value="false" />
-    63
     <property name="aspect.path.notification.shown" value="true" />
-    64
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1550834160886" />
-    65
     <property name="last_directory_selection" value="$PROJECT_DIR$/FoodOrderingApp-api/src/main/java/com/upgrad/FoodOrderingApp/api/controller" />
-    66
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    67
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    68
     <property name="nodejs_package_manager_path" value="npm" />
-    69
     <property name="project.structure.last.edited" value="Project" />
-    70
     <property name="project.structure.proportion" value="0.15" />
-    71
     <property name="project.structure.side.proportion" value="0.2" />
-    72
+    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    73
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">

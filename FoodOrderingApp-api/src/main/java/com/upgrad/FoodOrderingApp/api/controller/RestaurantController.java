@@ -79,5 +79,35 @@ public class RestaurantController {
             return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantFoundResponseList, HttpStatus.OK);
         }
     }
+    /**
+     * GET method for handling get restaurant based on restaurant id request
+     * @param restaurant_id
+     * @return restaurantDetailsResponseList
+     */
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/api/restaurant/{restaurant_id}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<RestaurantDetailsResponse>> getRestaurantById(
+            @PathVariable("restaurant_id") final String restaurant_id)
+            throws RestaurantNotFoundException {
+
+        RestaurantEntity restaurantEntities = restaurantService.getRestaurantById(restaurant_id);
+        List<RestaurantDetailsResponse> restaurantDetailsResponseList = new ArrayList<>();
+        RestaurantDetailsResponse restaurantFoundResponse = new RestaurantDetailsResponse();
+        restaurantFoundResponse.setRestaurantName(restaurantEntities.getRestaurant_name());
+        restaurantFoundResponse.setId(UUID.fromString(restaurantEntities.getUuid()));
+        restaurantFoundResponse.setPhotoURL(restaurantEntities.getPhoto_url());
+        restaurantFoundResponse.setCustomerRating(restaurantEntities.getCustomer_rating());
+        restaurantFoundResponse.setAveragePrice(restaurantEntities.getAverage_price_for_two());
+        restaurantFoundResponse.setNumberCustomersRated(restaurantEntities.getNumber_of_customers_rated());
+
+        restaurantDetailsResponseList.add(restaurantFoundResponse);
+
+        if (restaurantDetailsResponseList.isEmpty()) {
+            return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantDetailsResponseList, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantDetailsResponseList, HttpStatus.OK);
+        }
+    }
 }
 
