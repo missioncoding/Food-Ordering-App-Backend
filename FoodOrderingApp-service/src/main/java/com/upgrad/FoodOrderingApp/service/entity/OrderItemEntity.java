@@ -8,18 +8,18 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-//This Class represents the OrderItem table in the DB
+/**
+ * @author zeelani
+ * class representing order_item entity table
+ */
+
+@NamedQueries({
+    @NamedQuery(name = "order_item.fetchByOrder",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :orders ORDER BY LOWER(o.item.itemName) ASC"),
+})
 
 @Entity
 @Table(name = "order_item")
-@NamedQueries({
-
-        @NamedQuery(name = "getOrderItemsByOrder",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :orders ORDER BY LOWER(o.item.itemName) ASC"),
-        @NamedQuery(name = "getItemsByOrders",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :ordersEntity"),
-
-})
 public class OrderItemEntity implements Serializable {
-
 
     @Id
     @Column(name = "id")

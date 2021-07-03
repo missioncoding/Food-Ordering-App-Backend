@@ -13,11 +13,13 @@ import java.util.List;
 
 //This Class represents the ItemEntity table in the DB
 
+
+@NamedQueries({
+    @NamedQuery(name = "item.fetchByUuid", query = "SELECT i FROM ItemEntity i WHERE i.uuid = :uuid"),
+})
+
 @Entity
 @Table(name = "item", uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
-@NamedQueries({
-        @NamedQuery(name = "getItemByUUID", query = "SELECT i FROM ItemEntity i WHERE i.uuid = :uuid"),
-})
 public class ItemEntity implements Serializable {
 
 

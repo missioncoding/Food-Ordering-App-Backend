@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 
 @NamedQueries({
-    @NamedQuery(name = "getItemsByRestaurant",query = "SELECT r FROM RestaurantItemEntity r WHERE r.restaurant = :restaurant ORDER BY LOWER(r.item.itemName) ASC "),
+    @NamedQuery(name = "restaurant_item.fetchAllItems",query = "SELECT r FROM RestaurantItemEntity r WHERE r.restaurant = :restaurant ORDER BY LOWER(r.item.itemName) ASC "),
 })
 
 @Entity

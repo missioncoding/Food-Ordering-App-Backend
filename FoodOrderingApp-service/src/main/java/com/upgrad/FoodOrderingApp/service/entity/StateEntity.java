@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
  */
 
 @NamedQueries({
-    @NamedQuery(name = "getStateByUuid", query = "SELECT s from StateEntity s where s.stateUuid = :uuid"),
-    @NamedQuery(name = "getAllStates",query = "SELECT s from StateEntity s"),
+    @NamedQuery(name = "state.fetchByUuid", query = "SELECT s from StateEntity s where s.stateUuid = :uuid"),
+    @NamedQuery(name = "state.fetchAll",query = "SELECT s from StateEntity s"),
 })
 
 @Entity
@@ -27,7 +27,6 @@ public class StateEntity implements Serializable {
     @Size(max = 200)
     @NotNull
     private String stateUuid;
-
 
     @Column(name = "state_name")
     @Size(max = 30)

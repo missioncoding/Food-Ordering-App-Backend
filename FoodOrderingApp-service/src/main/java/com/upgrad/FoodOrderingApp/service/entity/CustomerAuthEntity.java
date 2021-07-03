@@ -9,7 +9,10 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-
+/**
+ * @author zeelani
+ * Entity class representing the customer auth table
+ */
 
 @NamedQueries({
     @NamedQuery(name = "customer_auth.fetchByAccessToken", query = "SELECT c from CustomerAuthEntity c where c.accessToken = :access_Token"),

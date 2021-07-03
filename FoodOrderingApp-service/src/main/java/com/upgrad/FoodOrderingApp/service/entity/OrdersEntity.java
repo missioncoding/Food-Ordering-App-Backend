@@ -7,17 +7,20 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-//This Class represents the Orders table in the DB
+/**
+ * @author zeelani
+ * class representing orders entity table
+ */
+
+@NamedQueries({
+    @NamedQuery(name = "orders.fetchByCustomers",query = "SELECT o FROM OrdersEntity o WHERE o.customer = :customer ORDER BY o.date DESC "),
+    @NamedQuery(name = "orders.fetchByRestaurant",query = "SELECT o FROM OrdersEntity o WHERE o.restaurant = :restaurant"),
+    @NamedQuery(name = "orders.fetchByAddress",query = "SELECT o FROM OrdersEntity o WHERE o.address = :address")
+})
 
 @Entity
 @Table(name = "orders",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
-@NamedQueries({
-            @NamedQuery(name = "getOrdersByCustomers",query = "SELECT o FROM OrdersEntity o WHERE o.customer = :customer ORDER BY o.date DESC "),
-            @NamedQuery(name = "getOrdersByRestaurant",query = "SELECT o FROM OrdersEntity o WHERE o.restaurant = :restaurant"),
-            @NamedQuery(name = "getOrdersByAddress",query = "SELECT o FROM OrdersEntity o WHERE o.address = :address")
-})
 public class OrdersEntity implements Serializable {
-
 
     @Id
     @Column(name = "id")
@@ -63,24 +66,6 @@ public class OrdersEntity implements Serializable {
     @JoinColumn(name = "restaurant_id")
     @NotNull
     private RestaurantEntity restaurant;
-
-    public OrdersEntity(){
-
-    }
-
-    public OrdersEntity(String uuid, Double bill, CouponEntity couponEntity, Double discount, Timestamp orderDate, PaymentEntity paymentEntity, CustomerEntity customerEntity, AddressEntity addressEntity, RestaurantEntity restaurantEntity) {
-        this.uuid = uuid;
-        this.bill = bill;
-        this.coupon = couponEntity;
-        this.discount = discount;
-        this.date = orderDate;
-        this.payment = paymentEntity;
-        this.customer = customerEntity;
-        this.address = addressEntity;
-        this.restaurant = restaurantEntity;
-
-    }
-
 
     public Integer getId() {
         return id;
