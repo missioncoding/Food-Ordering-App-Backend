@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * AuthorizationFailedException is thrown when customer is not authorized to access that endpoint.
+ * AuthorizationFailedException is thrown when Customer is not authorized to access that endpoint.
  */
 public class AuthorizationFailedException extends Exception {
     private final String code;
