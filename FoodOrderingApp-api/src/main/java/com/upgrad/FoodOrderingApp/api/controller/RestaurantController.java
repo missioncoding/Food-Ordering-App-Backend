@@ -1,8 +1,11 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.RestaurantDetailsResponse;
+import com.upgrad.FoodOrderingApp.api.model.RestaurantDetailsResponseAddress;
+import com.upgrad.FoodOrderingApp.api.model.RestaurantDetailsResponseAddressState;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
+import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -45,6 +48,36 @@ public class RestaurantController {
             restaurantDetailsResponseList.add(restaurantDetailsResponse);
         }
         return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantDetailsResponseList, HttpStatus.OK);
+    }
+    /**
+     * GET method for handling get restaurant based on restaurant name request
+     * @param restaurantName
+     * @return restaurantDetailsResponseList
+     */
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, path = "/restaurant/name/{restaurant_name}",
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<RestaurantDetailsResponse>> getRestaurant(
+            @PathVariable("restaurant_name") final String restaurantName)
+            throws RestaurantNotFoundException {
+        List<RestaurantEntity> foundRestaurant = restaurantService.getRestaurant(restaurantName);
+        List<RestaurantDetailsResponse> restaurantFoundResponseList = new ArrayList<>();
+        for (RestaurantEntity q : foundRestaurant) {
+            RestaurantDetailsResponse restaurantFoundResponse = new RestaurantDetailsResponse();
+            restaurantFoundResponse.setRestaurantName(q.getRestaurant_name());
+            restaurantFoundResponse.setId(UUID.fromString(q.getUuid()));
+            restaurantFoundResponse.setPhotoURL(q.getPhoto_url());
+            restaurantFoundResponse.setCustomerRating(q.getCustomer_rating());
+            restaurantFoundResponse.setAveragePrice(q.getAverage_price_for_two());
+            restaurantFoundResponse.setNumberCustomersRated(q.getNumber_of_customers_rated());
+
+            restaurantFoundResponseList.add(restaurantFoundResponse);
+        }
+        if (restaurantFoundResponseList.isEmpty()) {
+            return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantFoundResponseList, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantFoundResponseList, HttpStatus.OK);
+        }
     }
 }
 
