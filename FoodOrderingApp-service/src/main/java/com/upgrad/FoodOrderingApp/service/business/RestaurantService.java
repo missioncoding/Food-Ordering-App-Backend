@@ -1,4 +1,4 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.business;
 
 import com.upgrad.FoodOrderingApp.service.common.ApplicationUtil;
 import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;

@@ -1,9 +1,9 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.*;
-import com.upgrad.FoodOrderingApp.service.businness.CustomerBusinessService;
+import com.upgrad.FoodOrderingApp.service.business.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
-import com.upgrad.FoodOrderingApp.service.entity.Customer_AuthEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class CustomerController {
 
 @Autowired
-    private CustomerBusinessService customerBusinessService;
+    private CustomerService customerService;
 
     @RequestMapping(method = RequestMethod.POST,
             path = "/customer/signup" ,
@@ -46,7 +46,7 @@ public class CustomerController {
         customerEntity.setLastName(signupCustomerRequest.getLastName());
         customerEntity.setPassword(signupCustomerRequest.getPassword());
 
-        final CustomerEntity createdCustomerEntity = customerBusinessService.signUp(customerEntity);
+        final CustomerEntity createdCustomerEntity = customerService.signUp(customerEntity);
 
         SignupCustomerResponse customerResponse = new SignupCustomerResponse().id(createdCustomerEntity.getUuid()).status("CUSTOMER SUCCESSFULLY REGISTERED");
 
@@ -65,7 +65,7 @@ public class CustomerController {
         String decodedText = new String(decode);
         String[] decodedArray = decodedText.split(":");
 
-        Customer_AuthEntity customerAuthEntity = customerBusinessService.login(decodedArray[0], decodedArray[1]);
+        CustomerAuthEntity customerAuthEntity = customerService.authenticate(decodedArray[0], decodedArray[1]);
         CustomerEntity user_entity = customerAuthEntity.getCustomer();
         LoginResponse loginResponse = new LoginResponse().id(user_entity.getUuid())
                                                           .firstName(user_entity.getFirstName())
@@ -85,7 +85,7 @@ public class CustomerController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<LogoutResponse> customerLogout(@RequestHeader("authorization") final String authorization) throws AuthorizationFailedException {
         String[] bearerToken = authorization.split("Bearer ");
-        Customer_AuthEntity customer_authEntity = customerBusinessService.logout(bearerToken[1]);
+        CustomerAuthEntity customer_authEntity = customerService.logout(bearerToken[1]);
 
 
         LogoutResponse logoutResponse = new LogoutResponse().id(customer_authEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
@@ -107,7 +107,7 @@ public class CustomerController {
         updatedCustomerEntity.setFirstName(updateCustomerRequest.getFirstName());
         updatedCustomerEntity.setLastName(updateCustomerRequest.getLastName());
 
-        CustomerEntity customerEntity = customerBusinessService.updateCustomer(bearerToken[1],updatedCustomerEntity);
+        CustomerEntity customerEntity = customerService.updateCustomer(updatedCustomerEntity);
 
 
         UpdateCustomerResponse updateCustomerResponse = new UpdateCustomerResponse().id(customerEntity.getUuid())
@@ -130,7 +130,7 @@ public class CustomerController {
 
 
 
-        CustomerEntity customerEntity = customerBusinessService.updatePassword(bearerToken[1],oldPassword,newPassword);
+        CustomerEntity customerEntity = customerService.updatePassword(bearerToken[1],oldPassword,newPassword);
 
 
         UpdatePasswordResponse updatePasswordResponse = new UpdatePasswordResponse().id(customerEntity.getUuid())

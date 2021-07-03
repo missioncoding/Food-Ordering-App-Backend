@@ -1,4 +1,4 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.business;
 
 import com.upgrad.FoodOrderingApp.service.common.ApplicationUtil;
 import org.springframework.stereotype.Service;
@@ -44,7 +44,7 @@ public class CustomerService {
      * @throws SignUpRestrictedException
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerEntity saveCustomer(CustomerEntity customerEntity) throws SignUpRestrictedException {
+    public CustomerEntity signUp(CustomerEntity customerEntity) throws SignUpRestrictedException {
         //checking whether the customer entry already exists
         CustomerEntity lookUpEntity = customerDao.fetchByContactNumber(customerEntity.getContactNumber());
         if (lookUpEntity != null) {
@@ -157,11 +157,11 @@ public class CustomerService {
         }
         String encryptedOldPassword = passwordCryptographyProvider.encrypt(oldPassword, customerEntity.getSalt());
         if (encryptedOldPassword.equals(customerEntity.getPassword())) {
-            CustomerEntity tobeUpdatedCustomerEntity = customerDao.fetchByUuid(customerEntity.getUuid());
+            CustomerEntity CustomerEntity = customerDao.fetchByUuid(customerEntity.getUuid());
             String[] encryptedPassword = passwordCryptographyProvider.encrypt(newPassword);
-            tobeUpdatedCustomerEntity.setSalt(encryptedPassword[0]);
-            tobeUpdatedCustomerEntity.setPassword(encryptedPassword[1]);
-            CustomerEntity updatedCustomerEntity = customerDao.updateCustomer(tobeUpdatedCustomerEntity);
+            CustomerEntity.setSalt(encryptedPassword[0]);
+            CustomerEntity.setPassword(encryptedPassword[1]);
+            CustomerEntity updatedCustomerEntity = customerDao.updateCustomer(CustomerEntity);
             return updatedCustomerEntity;
         } else {
             throw new UpdateCustomerException("UCR-004", "Incorrect old password!");
