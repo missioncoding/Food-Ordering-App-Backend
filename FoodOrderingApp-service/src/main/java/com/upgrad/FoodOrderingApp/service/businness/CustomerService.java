@@ -51,19 +51,19 @@ public class CustomerService {
             throw new SignUpRestrictedException("SGR-001", "This contact number is already registered! Try other contact number");
         }
         //validating the fields entered
-        if (!applicationUtil.isValidSignupRequest(customerEntity)) {
+        if (!applicationUtil.validateSignUpRequest(customerEntity)) {
             throw new SignUpRestrictedException("SGR-005", "Except last name all fields should be filled");
         }
         //validating the email format
-        if (!applicationUtil.isEmailValid(customerEntity.getEmail())) {
+        if (!applicationUtil.validateEmail(customerEntity.getEmail())) {
             throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
         }
         //validating the contact number
-        if (!applicationUtil.isContactValid(customerEntity.getContactNumber())) {
+        if (!applicationUtil.validateContactNumber(customerEntity.getContactNumber())) {
             throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
         }
         //verifying the strength of the password
-        if (!applicationUtil.isValidPassword(customerEntity.getPassword())) {
+        if (!applicationUtil.validatePassword(customerEntity.getPassword())) {
             throw new SignUpRestrictedException("SGR-004", "Weak password!");
         }
 
@@ -152,7 +152,7 @@ public class CustomerService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity updateCustomerPassword(String oldPassword,String newPassword,CustomerEntity customerEntity ) throws UpdateCustomerException {
-        if (!applicationUtil.isValidPassword(newPassword)) {
+        if (!applicationUtil.validatePassword(newPassword)) {
             throw new UpdateCustomerException("UCR-001", "Weak password!");
         }
         String encryptedOldPassword = passwordCryptographyProvider.encrypt(oldPassword, customerEntity.getSalt());

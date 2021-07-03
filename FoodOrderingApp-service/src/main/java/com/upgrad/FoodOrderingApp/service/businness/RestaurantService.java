@@ -120,7 +120,7 @@ public class RestaurantService {
     @Transactional(propagation = Propagation.REQUIRED)
     public RestaurantEntity updateRestaurantRating(RestaurantEntity restaurantEntity, Double customerRating) throws InvalidRatingException {
         // validate the rating
-        if(!applicationUtil.isValidCustomerRating(customerRating.toString())){
+        if(!applicationUtil.validateCustomerRating(customerRating.toString())){
             throw new InvalidRatingException("IRE-001","Restaurant should be in the range of 1 to 5");
         }
         // Finding the new Customer rating adn updating it.
