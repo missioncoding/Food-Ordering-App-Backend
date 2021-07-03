@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * UpdatePasswordResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:49.663+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:09.892+05:30")
 
 public class UpdatePasswordResponse   {
   @JsonProperty("id")
@@ -28,10 +28,10 @@ public class UpdatePasswordResponse   {
   }
 
   /**
-   * uuid of the Customer with updated password
+   * uuid of the customer with updated password
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid of the Customer with updated password")
+  @ApiModelProperty(required = true, value = "uuid of the customer with updated password")
   @NotNull
 
 
@@ -49,10 +49,10 @@ public class UpdatePasswordResponse   {
   }
 
   /**
-   * message showing the status of the Customer
+   * message showing the status of the customer
    * @return status
   **/
-  @ApiModelProperty(required = true, value = "message showing the status of the Customer")
+  @ApiModelProperty(required = true, value = "message showing the status of the customer")
   @NotNull
 
 

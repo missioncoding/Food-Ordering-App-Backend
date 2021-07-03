@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * OrderListCustomer
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:50.585+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:10.637+05:30")
 
 public class OrderListCustomer   {
   @JsonProperty("id")
@@ -38,10 +38,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Unique identifier of the Customer in a standard UUID format
+   * Unique identifier of the customer in a standard UUID format
    * @return id
   **/
-  @ApiModelProperty(value = "Unique identifier of the Customer in a standard UUID format")
+  @ApiModelProperty(value = "Unique identifier of the customer in a standard UUID format")
 
   @Valid
 
@@ -59,10 +59,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * First name of the new Customer
+   * First name of the new customer
    * @return firstName
   **/
-  @ApiModelProperty(value = "First name of the new Customer")
+  @ApiModelProperty(value = "First name of the new customer")
 
 
   public String getFirstName() {
@@ -79,10 +79,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Last name of the new Customer
+   * Last name of the new customer
    * @return lastName
   **/
-  @ApiModelProperty(value = "Last name of the new Customer")
+  @ApiModelProperty(value = "Last name of the new customer")
 
 
   public String getLastName() {
@@ -99,10 +99,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Email address of the new Customer
+   * Email address of the new customer
    * @return emailAddress
   **/
-  @ApiModelProperty(value = "Email address of the new Customer")
+  @ApiModelProperty(value = "Email address of the new customer")
 
 
   public String getEmailAddress() {
@@ -119,10 +119,10 @@ public class OrderListCustomer   {
   }
 
   /**
-   * Contact Number of the new Customer
+   * Contact Number of the new customer
    * @return contactNumber
   **/
-  @ApiModelProperty(value = "Contact Number of the new Customer")
+  @ApiModelProperty(value = "Contact Number of the new customer")
 
 
   public String getContactNumber() {

@@ -3,7 +3,9 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Entity
@@ -45,6 +47,13 @@ public class CustomerEntity implements Serializable {
     @Column(name="salt")
     @Size(max = 255)
     private String salt;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<AddressEntity> address = new ArrayList<AddressEntity>();
+
+    public List<AddressEntity> getAddress() {
+        return address;
+    }
 
 
     public Integer getId() {

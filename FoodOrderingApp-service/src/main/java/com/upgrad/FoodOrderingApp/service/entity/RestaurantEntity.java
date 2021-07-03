@@ -41,6 +41,31 @@ public class RestaurantEntity {
     @Column(name = "NUMBER_OF_CUSTOMERS_RATED")
     private int number_of_customers_rated;
 
+    @OneToOne
+    @JoinColumn(name = "ADDRESS_ID")
+    private AddressEntity addressEntity;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CategoryEntity> category = new ArrayList<CategoryEntity>();
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ItemEntity> item = new ArrayList<ItemEntity>();
+
+    public List<ItemEntity> getItem() {
+        return item;
+    }
+
+    public void setItem(List<ItemEntity> item) {
+        this.item = item;
+    }
+
+    public List<CategoryEntity> getCategories() {
+        return category;
+    }
+
+    public void setCategories(List<CategoryEntity> categories) {
+        this.category = categories;
+    }
 
     public Integer getId() {
         return id;
@@ -98,5 +123,12 @@ public class RestaurantEntity {
         this.number_of_customers_rated = number_of_customers_rated;
     }
 
+    public AddressEntity getAddressEntity() {
+        return addressEntity;
+    }
+
+    public void setAddressEntity(AddressEntity addressEntity) {
+        this.addressEntity = addressEntity;
+    }
 
 }

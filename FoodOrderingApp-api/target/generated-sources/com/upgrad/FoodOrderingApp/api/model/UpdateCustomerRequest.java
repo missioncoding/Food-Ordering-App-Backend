@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * UpdateCustomerRequest
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:49.663+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:09.892+05:30")
 
 public class UpdateCustomerRequest   {
   @JsonProperty("first_name")
@@ -28,10 +28,10 @@ public class UpdateCustomerRequest   {
   }
 
   /**
-   * First name of the new Customer
+   * First name of the new customer
    * @return firstName
   **/
-  @ApiModelProperty(value = "First name of the new Customer")
+  @ApiModelProperty(value = "First name of the new customer")
 
 
   public String getFirstName() {
@@ -48,10 +48,10 @@ public class UpdateCustomerRequest   {
   }
 
   /**
-   * Last name of the new Customer
+   * Last name of the new customer
    * @return lastName
   **/
-  @ApiModelProperty(value = "Last name of the new Customer")
+  @ApiModelProperty(value = "Last name of the new customer")
 
 
   public String getLastName() {

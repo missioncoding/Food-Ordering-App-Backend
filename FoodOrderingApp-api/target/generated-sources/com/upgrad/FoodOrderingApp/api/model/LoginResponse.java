@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * LoginResponse
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:49.663+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:09.892+05:30")
 
 public class LoginResponse   {
   @JsonProperty("id")
@@ -40,10 +40,10 @@ public class LoginResponse   {
   }
 
   /**
-   * uuid for the Customer authentication after he signs in.
+   * uuid for the customer authentication after he signs in.
    * @return id
   **/
-  @ApiModelProperty(required = true, value = "uuid for the Customer authentication after he signs in.")
+  @ApiModelProperty(required = true, value = "uuid for the customer authentication after he signs in.")
   @NotNull
 
 
@@ -61,10 +61,10 @@ public class LoginResponse   {
   }
 
   /**
-   * message to show the status of the signed in Customer
+   * message to show the status of the signed in customer
    * @return message
   **/
-  @ApiModelProperty(required = true, value = "message to show the status of the signed in Customer")
+  @ApiModelProperty(required = true, value = "message to show the status of the signed in customer")
   @NotNull
 
 
@@ -82,10 +82,10 @@ public class LoginResponse   {
   }
 
   /**
-   * First name of the new Customer
+   * First name of the new customer
    * @return firstName
   **/
-  @ApiModelProperty(required = true, value = "First name of the new Customer")
+  @ApiModelProperty(required = true, value = "First name of the new customer")
   @NotNull
 
 
@@ -103,10 +103,10 @@ public class LoginResponse   {
   }
 
   /**
-   * Last name of the new Customer
+   * Last name of the new customer
    * @return lastName
   **/
-  @ApiModelProperty(required = true, value = "Last name of the new Customer")
+  @ApiModelProperty(required = true, value = "Last name of the new customer")
   @NotNull
 
 
@@ -124,10 +124,10 @@ public class LoginResponse   {
   }
 
   /**
-   * Email address of the new Customer
+   * Email address of the new customer
    * @return emailAddress
   **/
-  @ApiModelProperty(required = true, value = "Email address of the new Customer")
+  @ApiModelProperty(required = true, value = "Email address of the new customer")
   @NotNull
 
 
@@ -145,10 +145,10 @@ public class LoginResponse   {
   }
 
   /**
-   * Contact Number of the new Customer
+   * Contact Number of the new customer
    * @return contactNumber
   **/
-  @ApiModelProperty(required = true, value = "Contact Number of the new Customer")
+  @ApiModelProperty(required = true, value = "Contact Number of the new customer")
   @NotNull
 
 

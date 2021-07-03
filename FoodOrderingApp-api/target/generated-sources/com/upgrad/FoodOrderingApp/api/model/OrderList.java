@@ -22,7 +22,7 @@ import javax.validation.constraints.*;
  * OrderList
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-06-30T19:29:50.585+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-07-03T19:58:10.637+05:30")
 
 public class OrderList   {
   @JsonProperty("id")
@@ -43,7 +43,7 @@ public class OrderList   {
   @JsonProperty("payment")
   private OrderListPayment payment = null;
 
-  @JsonProperty("Customer")
+  @JsonProperty("customer")
   private OrderListCustomer customer = null;
 
   @JsonProperty("address")
@@ -184,8 +184,8 @@ public class OrderList   {
   }
 
   /**
-   * Get Customer
-   * @return Customer
+   * Get customer
+   * @return customer
   **/
   @ApiModelProperty(value = "")
 
@@ -286,7 +286,7 @@ public class OrderList   {
     sb.append("    discount: ").append(toIndentedString(discount)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    payment: ").append(toIndentedString(payment)).append("\n");
-    sb.append("    Customer: ").append(toIndentedString(customer)).append("\n");
+    sb.append("    customer: ").append(toIndentedString(customer)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    itemQuantities: ").append(toIndentedString(itemQuantities)).append("\n");
     sb.append("}");
