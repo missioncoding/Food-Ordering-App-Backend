@@ -65,7 +65,7 @@ public class CategoryEntity {
         this.uuid = uuid;
     }
 
-    public String getCategory_name() {
+    public String getCategoryName() {
         return category_name;
     }
 
@@ -76,8 +76,8 @@ public class CategoryEntity {
     public static Comparator<CategoryEntity> CatNameComparator = new Comparator<CategoryEntity>() {
 
         public int compare(CategoryEntity c1, CategoryEntity c2) {
-            String CatName1 = c1.getCategory_name().toUpperCase();
-            String CatName2 = c2.getCategory_name().toUpperCase();
+            String CatName1 = c1.getCategoryName().toUpperCase();
+            String CatName2 = c2.getCategoryName().toUpperCase();
 
             //ascending order
             return CatName1.compareTo(CatName2);

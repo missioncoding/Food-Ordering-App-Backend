@@ -6,6 +6,8 @@ com\upgrad\FoodOrderingApp\service\exception\AuthenticationFailedException.class
 com\upgrad\FoodOrderingApp\service\entity\AddressEntity.class
 com\upgrad\FoodOrderingApp\service\dao\CustomerDao.class
 com\upgrad\FoodOrderingApp\service\businness\PasswordCryptographyProvider.class
+com\upgrad\FoodOrderingApp\service\dao\CategoryDao.class
+com\upgrad\FoodOrderingApp\service\businness\CategoryService.class
 com\upgrad\FoodOrderingApp\service\dao\OrderItemDao.class
 com\upgrad\FoodOrderingApp\service\exception\PaymentMethodNotFoundException.class
 com\upgrad\FoodOrderingApp\service\dao\CustomerAuthDao.class
@@ -29,7 +31,9 @@ com\upgrad\FoodOrderingApp\service\common\GenericErrorCode.class
 com\upgrad\FoodOrderingApp\service\dao\RestaurantDao.class
 com\upgrad\FoodOrderingApp\service\exception\RestaurantNotFoundException.class
 com\upgrad\FoodOrderingApp\service\dao\OrderDao.class
+com\upgrad\FoodOrderingApp\service\dao\RestaurantCategoryDao.class
 com\upgrad\FoodOrderingApp\service\businness\CustomerBusinessService.class
+com\upgrad\FoodOrderingApp\service\entity\RestaurantCategoryEntity.class
 com\upgrad\FoodOrderingApp\service\exception\AddressNotFoundException.class
 com\upgrad\FoodOrderingApp\service\exception\InvalidRatingException.class
 com\upgrad\FoodOrderingApp\service\common\UnexpectedException.class
