@@ -28,7 +28,7 @@ public class RestaurantService {
         return restaurantDao.getRestaurant(restaurantName);
     }
     @Transactional
-    public RestaurantEntity getRestaurantById(String restaurantUuid)throws RestaurantNotFoundException{
+    public RestaurantEntity restaurantByUUID(String restaurantUuid)throws RestaurantNotFoundException{
         if(restaurantUuid == null||restaurantUuid.isEmpty()){
             throw new RestaurantNotFoundException("RNF-002","Restaurant id field should not be empty");
         }
