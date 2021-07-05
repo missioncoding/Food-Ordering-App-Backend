@@ -50,6 +50,14 @@ public class AddressEntity {
     @ManyToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<CustomerEntity> customer = new ArrayList<CustomerEntity>();
 
+//    public AddressEntity(String addressId, String s, String someLocality, String someCity, String s1, StateEntity stateEntity) {
+//        this.uuid = addressId;
+//        this.locality = someLocality;
+//        this.city = someCity;
+//        this.pincode = s1;
+//        this.stateEntity =stateEntity;
+//    }
+
     public List<CustomerEntity> getCustomer() {
         return customer;
     }
@@ -58,7 +66,7 @@ public class AddressEntity {
         this.customer = customer;
     }
 
-    public StateEntity getStateEntity() {
+    public StateEntity getState() {
         return stateEntity;
     }
 

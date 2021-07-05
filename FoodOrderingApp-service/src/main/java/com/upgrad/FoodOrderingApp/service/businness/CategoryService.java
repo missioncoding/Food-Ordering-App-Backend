@@ -43,4 +43,15 @@ public class CategoryService {
         });
         return categoryEntities;
     }
+
+    public CategoryEntity getCategoryById(String category_id) throws CategoryNotFoundException {
+        CategoryEntity categoryEntity = categoryDao.getCategoryById(category_id);
+        if(category_id == "") {
+            throw new CategoryNotFoundException("CNF-001","Category id field should not be empty");
+        } else if(categoryEntity == null) {
+            throw new CategoryNotFoundException("CNF-002","No category by this id");
+        } else {
+            return categoryEntity;
+        }
+    }
 }

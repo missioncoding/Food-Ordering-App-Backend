@@ -8,9 +8,7 @@ import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
@@ -25,10 +23,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.UUID;
 
-import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
+//import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class RestaurantControllerTest {
 
+    private static final String NON_VEG = "NON_VEG";
     @Autowired
     private MockMvc mockMvc;
 
@@ -75,7 +76,7 @@ public class RestaurantControllerTest {
                 .thenReturn(Collections.singletonList(itemEntity));
 
         mockMvc
-                .perform(get("/restaurant/someRestaurantId").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/api/restaurant/someRestaurantId").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("id").value(restaurantEntity.getUuid()))
                 .andExpect(jsonPath("restaurant_name").value("Famous Restaurant"))
@@ -86,6 +87,7 @@ public class RestaurantControllerTest {
         verify(mockItemService, times(1))
                 .getItemsByCategoryAndRestaurant("someRestaurantId", categoryEntity.getUuid());
     }
+
 
     //This test case passes when you have handled the exception of trying to fetch any restaurant but your restaurant id
     // field is empty.
@@ -227,7 +229,7 @@ public class RestaurantControllerTest {
     @Test
     public void shouldGetAllRestaurantDetails() throws Exception {
         final RestaurantEntity restaurantEntity = getRestaurantEntity();
-        when(mockRestaurantService.restaurantsByRating())
+        when(mockRestaurantService.getAllRestaurant())
                 .thenReturn(Collections.singletonList(restaurantEntity));
 
         final CategoryEntity categoryEntity = getCategoryEntity();
@@ -247,9 +249,10 @@ public class RestaurantControllerTest {
         assertEquals(restaurantList.getAddress().getId().toString(), restaurantEntity.getAddress().getUuid());
         assertEquals(restaurantList.getAddress().getState().getId().toString(), restaurantEntity.getAddress().getState().getUuid());
 
-        verify(mockRestaurantService, times(1)).restaurantsByRating();
+        verify(mockRestaurantService, times(1)).getAllRestaurant();
         verify(mockCategoryService, times(1)).getCategoriesByRestaurant(restaurantEntity.getUuid());
     }
+
 
 
     // ------------------------------------------ PUT /restaurant/{restaurant_id} ------------------------------------------
@@ -460,15 +463,15 @@ public class RestaurantControllerTest {
         final RestaurantEntity restaurantEntity = new RestaurantEntity();
         final String restaurantId = UUID.randomUUID().toString();
         restaurantEntity.setUuid(restaurantId);
-        restaurantEntity.setAddress(addressEntity);
-        restaurantEntity.setAvgPrice(123);
-        restaurantEntity.setCustomerRating(3.4);
-        restaurantEntity.setNumberCustomersRated(200);
-        restaurantEntity.setPhotoUrl("someurl");
-        restaurantEntity.setRestaurantName("Famous Restaurant");
+        restaurantEntity.setAddressEntity(addressEntity);
+        restaurantEntity.setAverage_price_for_two(123);
+        restaurantEntity.setCustomer_rating(BigDecimal.valueOf(3.4));
+        restaurantEntity.setNumber_of_customers_rated(200);
+        restaurantEntity.setPhoto_url("someurl");
+        restaurantEntity.setRestaurant_name("Famous Restaurant");
         return restaurantEntity;
     }
 }
 
 
- */
+*/

@@ -69,7 +69,7 @@ public class CategoryEntity {
         return category_name;
     }
 
-    public void setCategory_name(String category_name) {
+    public void setCategoryName(String category_name) {
         this.category_name = category_name;
     }
 

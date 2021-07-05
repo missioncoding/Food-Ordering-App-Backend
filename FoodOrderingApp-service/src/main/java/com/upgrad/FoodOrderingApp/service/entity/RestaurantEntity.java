@@ -123,7 +123,7 @@ public class RestaurantEntity {
         this.number_of_customers_rated = number_of_customers_rated;
     }
 
-    public AddressEntity getAddressEntity() {
+    public AddressEntity getAddress() {
         return addressEntity;
     }
 
