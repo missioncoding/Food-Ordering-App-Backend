@@ -27,9 +27,15 @@ public class StateEntity {
 
     public StateEntity(){}
 
+//    public StateEntity(String stateId, String someState) {
+//        this.uuid = stateId;
+//        this.state_name = someState;
+//    }
+
     public Integer getId() {
         return id;
     }
+
 
     public void setId(Integer id) {
         this.id = id;

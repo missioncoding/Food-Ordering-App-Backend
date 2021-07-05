@@ -1,6 +1,7 @@
 com\upgrad\FoodOrderingApp\service\common\ApplicationUtil.class
 com\upgrad\FoodOrderingApp\service\exception\CouponNotFoundException.class
 com\upgrad\FoodOrderingApp\service\exception\ItemNotFoundException.class
+com\upgrad\FoodOrderingApp\service\businness\ItemService.class
 com\upgrad\FoodOrderingApp\service\common\ApplicationUtil$1.class
 com\upgrad\FoodOrderingApp\service\exception\AuthenticationFailedException.class
 com\upgrad\FoodOrderingApp\service\entity\AddressEntity.class
@@ -21,6 +22,7 @@ com\upgrad\FoodOrderingApp\service\exception\CategoryNotFoundException.class
 com\upgrad\FoodOrderingApp\service\entity\CategoryEntity.class
 com\upgrad\FoodOrderingApp\service\entity\StateEntity.class
 com\upgrad\FoodOrderingApp\service\exception\CustomerNotFoundException.class
+com\upgrad\FoodOrderingApp\service\dao\ItemDao.class
 com\upgrad\FoodOrderingApp\service\businness\RestaurantService.class
 com\upgrad\FoodOrderingApp\service\entity\RestaurantEntity.class
 com\upgrad\FoodOrderingApp\service\businness\JwtTokenProvider.class
@@ -32,6 +34,7 @@ com\upgrad\FoodOrderingApp\service\dao\RestaurantDao.class
 com\upgrad\FoodOrderingApp\service\exception\RestaurantNotFoundException.class
 com\upgrad\FoodOrderingApp\service\dao\OrderDao.class
 com\upgrad\FoodOrderingApp\service\dao\RestaurantCategoryDao.class
+com\upgrad\FoodOrderingApp\service\businness\CustomerService.class
 com\upgrad\FoodOrderingApp\service\businness\CustomerBusinessService.class
 com\upgrad\FoodOrderingApp\service\entity\RestaurantCategoryEntity.class
 com\upgrad\FoodOrderingApp\service\exception\AddressNotFoundException.class
