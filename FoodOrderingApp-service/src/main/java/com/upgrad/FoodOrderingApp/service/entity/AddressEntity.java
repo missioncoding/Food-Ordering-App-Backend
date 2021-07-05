@@ -4,6 +4,10 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+/**
+ * @author Vipin Mohan
+ */
+
 @NamedQueries({
         @NamedQuery(name = "deleteAddressById", query = "delete from AddressEntity a where a.uuid=:addressuuid"),
         @NamedQuery(name = "archiveAddressById", query = "update AddressEntity a set a.active = 0 where a.uuid=:addressuuid"),
@@ -50,13 +54,6 @@ public class AddressEntity {
     @ManyToMany(mappedBy = "address", cascade = CascadeType.ALL)
     private List<CustomerEntity> customer = new ArrayList<CustomerEntity>();
 
-//    public AddressEntity(String addressId, String s, String someLocality, String someCity, String s1, StateEntity stateEntity) {
-//        this.uuid = addressId;
-//        this.locality = someLocality;
-//        this.city = someCity;
-//        this.pincode = s1;
-//        this.stateEntity =stateEntity;
-//    }
 
     public List<CustomerEntity> getCustomer() {
         return customer;

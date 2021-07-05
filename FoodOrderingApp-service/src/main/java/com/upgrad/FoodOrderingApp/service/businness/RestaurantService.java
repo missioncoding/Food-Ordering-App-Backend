@@ -40,7 +40,4 @@ public class RestaurantService {
         return restaurantEntity;
     }
 
-    public Object restaurantByCategory(String someCategoryId) {
-        return null;
-    }
 }

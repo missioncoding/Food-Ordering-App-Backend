@@ -3,6 +3,10 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+
+/**
+ * @author Vipin Mohan
+ */
 @NamedQueries({
         @NamedQuery(name = "getAllStates", query = "select s from StateEntity s"),
         @NamedQuery(name = "getStateById", query = "select s from StateEntity s where s.uuid=:stateuuid")
@@ -26,11 +30,6 @@ public class StateEntity {
 
 
     public StateEntity(){}
-
-//    public StateEntity(String stateId, String someState) {
-//        this.uuid = stateId;
-//        this.state_name = someState;
-//    }
 
     public Integer getId() {
         return id;
