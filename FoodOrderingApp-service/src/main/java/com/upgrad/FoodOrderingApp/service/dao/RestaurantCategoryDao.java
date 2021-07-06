@@ -25,9 +25,9 @@ public class RestaurantCategoryDao {
      * @param categoryEntity
      * @return
      */
-    public List<RestaurantCategoryEntity> getRestaurantByCategory(CategoryEntity categoryEntity) {
+    public List<RestaurantCategoryEntity> fetchRestaurantByCategory(CategoryEntity categoryEntity) {
         try {
-            List<RestaurantCategoryEntity> restaurantCategoryEntities = entityManager.createNamedQuery("restaurant_category.fetchRestaurantByCategory.fetchRestaurantByCategoryaurantByCategory",RestaurantCategoryEntity.class).setParameter("category",categoryEntity).getResultList();
+            List<RestaurantCategoryEntity> restaurantCategoryEntities = entityManager.createNamedQuery("restaurant_category.fetchRestaurantByCategory",RestaurantCategoryEntity.class).setParameter("category",categoryEntity).getResultList();
             return restaurantCategoryEntities;
         }catch (NoResultException nre){
             return null;
@@ -39,7 +39,7 @@ public class RestaurantCategoryDao {
      * @param restaurantEntity
      * @return
      */
-    public List<RestaurantCategoryEntity> getCategoriesByRestaurant(RestaurantEntity restaurantEntity){
+    public List<RestaurantCategoryEntity> fetchCategoriesByRestaurant(RestaurantEntity restaurantEntity){
         try {
             List<RestaurantCategoryEntity> restaurantCategoryEntity = entityManager.createNamedQuery("restaurant_category.fetchCategoryByRestaurant",RestaurantCategoryEntity.class).
                     setParameter("restaurant",restaurantEntity).getResultList();
