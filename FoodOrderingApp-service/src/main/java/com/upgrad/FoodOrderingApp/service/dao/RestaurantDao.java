@@ -8,28 +8,68 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ * @author zeelani
+ * Repository class handling the Restaurant related DB operations
+ */
+
 @Repository
 public class RestaurantDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public  List<RestaurantEntity> getAllRestaurants() {
-        return entityManager.createNamedQuery("fetchAll",RestaurantEntity.class).getResultList();
-    }
-
-    public  List<RestaurantEntity> getRestaurantByName(String restaurantName) {
-        return entityManager.createNamedQuery("fetchRestaurant", RestaurantEntity.class).setParameter("restaurantName", restaurantName).getResultList();
-    }
-
-    public RestaurantEntity getRestaurantByUuid(String uuid) {
+    /**
+     * Fetch restaurant using name
+     * @param restaurantName
+     * @return
+     */
+    public List<RestaurantEntity> restaurantsByName(String restaurantName) {
         try {
-            RestaurantEntity restaurantEntity = entityManager.createNamedQuery("restByUuid",RestaurantEntity.class).setParameter("uuid",uuid).getSingleResult();
-            return restaurantEntity;
+            String restaurantNameLow = "%"+restaurantName.toLowerCase()+"%"; // to make a check with lower
+            List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurant.fetchByName", RestaurantEntity.class).setParameter("restaurant_name_low",restaurantNameLow).getResultList();
+            return restaurantEntities;
         }catch (NoResultException nre){
             return null;
         }
 
     }
 
+    /**
+     * Update the restaurant
+     * @param restaurantEntity
+     * @return
+     */
+    public RestaurantEntity updateRestaurantRating(RestaurantEntity restaurantEntity) {
+        entityManager.merge(restaurantEntity);
+        return restaurantEntity;
+    }
+
+    /**
+     * Fetch all restaurants by rating
+     * @return
+     */
+    public List<RestaurantEntity> restaurantsByRating(){
+        try{
+            List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurant.fetchByRating",RestaurantEntity.class).getResultList();
+            return restaurantEntities;
+        }catch (NoResultException nre){
+            return null;
+        }
+    }
+
+    /**
+     * Fetch restaurant using UUID
+     * @param uuid
+     * @return
+     */
+    public RestaurantEntity getRestaurantByUuid(String uuid) {
+        try {
+            RestaurantEntity restaurantEntity = entityManager.createNamedQuery("restaurant.fetchByUuid",RestaurantEntity.class).setParameter("uuid",uuid).getSingleResult();
+            return restaurantEntity;
+        }catch (NoResultException nre){
+            return null;
+        }
+
+    }
 }
