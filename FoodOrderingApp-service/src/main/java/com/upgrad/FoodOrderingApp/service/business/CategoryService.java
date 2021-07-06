@@ -1,4 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.business;
+
 import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantCategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantDao;
@@ -9,37 +10,36 @@ import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.LinkedList;
 import java.util.List;
 
-/* Category Service for Category Entitites */
+/**
+ * @author zeelani
+ * service class handling business logic for category
+ */
+
 @Service
 public class CategoryService {
 
-    /* Auto wiring restaurantDao, resrestaurantCategoryDao, category DAO */
+    @Autowired
+    CategoryDao categoryDao;
+
     @Autowired
     RestaurantDao restaurantDao;
 
     @Autowired
     RestaurantCategoryDao restaurantCategoryDao;
 
-    @Autowired
-    CategoryDao categoryDao;
-
-    @PersistenceContext
-    EntityManager entityManager;
-
-    /* get Categories of Restaurant through restaurant UUID */
-
-    /* get categories tagged to Restaurant */
-    public List<CategoryEntity> getCategoriesByRestaurant(String restaurantId) {
-        //Calls getRestaurantByUuid of restaurantDao to get RestaurantEntity
-        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantId);
-
-        //Calls getCategoriesByRestaurant of restaurantCategoryDao to get list of RestaurantCategoryEntity
-        List<RestaurantCategoryEntity> restaurantCategoryEntities = restaurantCategoryDao.getRestaurantCategories(restaurantEntity);
+    /**
+     * Method to fetch all the categories of a restaurant
+     * @param restaurantUuid
+     * @return
+     */
+    public List<CategoryEntity> fetchCategoriesByRestaurant(String restaurantUuid){
+        // First get the restaurant entity
+        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
+        // lookup for all categories
+        List<RestaurantCategoryEntity> restaurantCategoryEntities = restaurantCategoryDao.fetchCategoriesByRestaurant(restaurantEntity);
 
         //Creating the list of the Category entity to be returned.
         List<CategoryEntity> categoryEntities = new LinkedList<>();
@@ -49,16 +49,31 @@ public class CategoryService {
         return categoryEntities;
     }
 
-    public CategoryEntity getCategoryById(String uuid) throws CategoryNotFoundException {
-        CategoryEntity categoryEntity = categoryDao.fetchByUuid(uuid);
-        if(uuid == "") {
-            throw new CategoryNotFoundException("CNF-001","Category id field should not be empty");
-        } else if(categoryEntity == null) {
-            throw new CategoryNotFoundException("CNF-002","No category by this id");
-        } else {
-            return categoryEntity;
-        }
+    /**
+     * Fetch all categories. The list is ordered by name
+     * @return
+     */
+    public List<CategoryEntity> fetchAllCategories() {
+        List<CategoryEntity> categoryEntities = categoryDao.fetchAll();
+        return categoryEntities;
     }
 
-
+    /**
+     * fetch the category by UUID
+     * @param categoryUuid
+     * @return
+     * @throws CategoryNotFoundException
+     */
+    public CategoryEntity fetchCategoryById(String categoryUuid) throws CategoryNotFoundException {
+        //check for null or empty category
+        if(categoryUuid == null || categoryUuid == ""){
+            throw new CategoryNotFoundException("CNF-001","Category id field should not be empty");
+        }
+        // fetching the data from DB
+        CategoryEntity categoryEntity = categoryDao.fetchByUuid(categoryUuid);
+        if(categoryEntity == null){
+            throw new CategoryNotFoundException("CNF-002","No category by this id");
+        }
+        return categoryEntity;
+    }
 }
