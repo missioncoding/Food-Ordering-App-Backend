@@ -13,8 +13,8 @@ import java.io.Serializable;
 
 
 @NamedQueries({
-    @NamedQuery(name = "coupon.fetchByCouponName",query = "SELECT c FROM CouponEntity c WHERE c.couponName = :coupon_name"),
-    @NamedQuery(name = "coupon.fetchByCouponId",query = "SELECT c FROM  CouponEntity c WHERE c.uuid = :uuid"),
+    @NamedQuery(name = "coupon.fetchByName",query = "SELECT c FROM CouponEntity c WHERE c.couponName = :coupon_name"),
+    @NamedQuery(name = "coupon.fetchByUuid",query = "SELECT c FROM  CouponEntity c WHERE c.uuid = :uuid"),
 })
 
 @Entity
