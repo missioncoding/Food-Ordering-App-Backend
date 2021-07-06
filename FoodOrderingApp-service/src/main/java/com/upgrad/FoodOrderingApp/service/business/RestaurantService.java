@@ -80,7 +80,7 @@ public class RestaurantService {
             throw new CategoryNotFoundException("CNF-002","No category by this id");
         }
         // get all the list of restaurants using the above category
-        List<RestaurantCategoryEntity> restaurantCategoryEntities = restaurantCategoryDao.getRestaurantByCategory(categoryEntity);
+        List<RestaurantCategoryEntity> restaurantCategoryEntities = restaurantCategoryDao.fetchRestaurantByCategory(categoryEntity);
 
         //Creating new restaurantEntity List and add only the restaurant for the corresponding category.
         List<RestaurantEntity> restaurantEntities = new LinkedList<>();

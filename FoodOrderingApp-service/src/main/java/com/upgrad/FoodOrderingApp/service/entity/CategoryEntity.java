@@ -1,7 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,8 +36,6 @@ public class CategoryEntity implements Serializable {
     @Size(max = 255)
     private String categoryName;
 
-
-    //Created direct relation as the Test Mockito expects ListOf items as a variable in CategoryEntity.
     @ManyToMany
     @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "item_id"))

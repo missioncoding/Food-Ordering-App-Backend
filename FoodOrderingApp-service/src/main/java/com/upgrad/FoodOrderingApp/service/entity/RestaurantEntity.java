@@ -122,4 +122,5 @@ public class RestaurantEntity implements Serializable {
     public void setAddress(AddressEntity address) {
         this.address = address;
     }
+
 }
