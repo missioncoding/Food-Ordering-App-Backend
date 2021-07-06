@@ -31,7 +31,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    /**
+    *
      * This method  takes customer's access token and a coupon name as inputs and the returns the coupon
      * details
      *
@@ -40,7 +40,7 @@ public class OrderController {
      * @return ResponseEntity with details of the matching coupon
      * @throws AuthorizationFailedException on incorrect/invalid access token
      * @throws CouponNotFoundException on incorrect/invalid/non-existent coupon name
-     */
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/order/coupon/{coupon_name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CouponDetailsResponse> getCouponByName(@PathVariable(value = "coupon_name", required = false) String couponName, @RequestHeader("authorization") final String authorization)
@@ -55,13 +55,13 @@ public class OrderController {
         return new ResponseEntity<CouponDetailsResponse>(couponDetailsResponse,HttpStatus.OK);
     }
 
-    /**
+    *
      * This method  takes customers access token and retrieves a list of all of the customer's orders
      *
      * @param authorization Customer's access token as request header parameter
      * @return ResponseEntity with list of all of the customer's orders
      * @throws AuthorizationFailedException on invalid/incorrect access token
-     */
+
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, path = "/order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public  ResponseEntity<CustomerOrderResponse> getOrderItemsByCustomerId(@RequestHeader("authorization") final String authorization)
