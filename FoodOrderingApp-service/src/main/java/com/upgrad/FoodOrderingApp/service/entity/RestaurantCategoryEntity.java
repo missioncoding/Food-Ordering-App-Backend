@@ -4,47 +4,37 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
-/**
- * @author zeelani
- * class representing restaurant category table
- */
-
-
-@NamedQueries({
-    @NamedQuery(name = "restaurant_category.fetchCategoryByRestaurant",query = "SELECT r FROM RestaurantCategoryEntity r WHERE r.restaurant= :restaurant ORDER BY r.category.categoryName ASC "),
-    @NamedQuery(name = "restaurant_category.fetchRestaurantByCategory",query = "SELECT r FROM RestaurantCategoryEntity r WHERE r.category = :category ORDER BY r.restaurant.customerRating DESC "),
-})
 
 @Entity
 @Table(name = "restaurant_category")
+@NamedQueries(
+        {
+                @NamedQuery(name = "getRestaurantCategories", query = "SELECT rc from RestaurantCategoryEntity rc where rc.restaurant=:restaurant"),
+                @NamedQuery(name = "getRestaurantsByCategoryId", query = "SELECT rc from RestaurantCategoryEntity rc where rc.category=:category"),
+        }
+)
 public class RestaurantCategoryEntity implements Serializable {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private long id;
 
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id")
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
+    @JoinColumn(name = "restaurant_id")
     private RestaurantEntity restaurant;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
+    @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

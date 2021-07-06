@@ -1,6 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
-import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import org.springframework.stereotype.Repository;
@@ -10,43 +9,20 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-/**
- * @author zeelani
- * Repository class handling Restaurant category db operations
- */
-
+/* Interacting with Database Repository */
 @Repository
 public class RestaurantCategoryDao {
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
-    /**
-     * Fetch restaurant based on category
-     * @param categoryEntity
-     * @return
-     */
-    public List<RestaurantCategoryEntity> getRestaurantByCategory(CategoryEntity categoryEntity) {
-        try {
-            List<RestaurantCategoryEntity> restaurantCategoryEntities = entityManager.createNamedQuery("restaurant_category.fetchRestaurantByCategory.fetchRestaurantByCategoryaurantByCategory",RestaurantCategoryEntity.class).setParameter("category",categoryEntity).getResultList();
-            return restaurantCategoryEntities;
-        }catch (NoResultException nre){
+    /* get categories tagged to Restaurant */
+    public List<RestaurantCategoryEntity> getRestaurantCategories(RestaurantEntity restaurantEntity) {
+        try{
+            return entityManager.createNamedQuery("getRestaurantCategories", RestaurantCategoryEntity.class)
+                    .setParameter("restaurant", restaurantEntity).getResultList();
+        }catch(NoResultException nre) {
             return null;
         }
     }
 
-    /**
-     * Fetch categories based on restaurant
-     * @param restaurantEntity
-     * @return
-     */
-    public List<RestaurantCategoryEntity> getCategoriesByRestaurant(RestaurantEntity restaurantEntity){
-        try {
-            List<RestaurantCategoryEntity> restaurantCategoryEntity = entityManager.createNamedQuery("restaurant_category.fetchCategoryByRestaurant",RestaurantCategoryEntity.class).
-                    setParameter("restaurant",restaurantEntity).getResultList();
-            return restaurantCategoryEntity;
-        }catch (NoResultException nre){
-            return null;
-        }
-
-    }
 }

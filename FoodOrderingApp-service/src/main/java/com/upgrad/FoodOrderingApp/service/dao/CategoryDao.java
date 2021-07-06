@@ -25,7 +25,7 @@ public class CategoryDao {
      */
     public List<CategoryEntity> fetchAll() {
         try {
-            List<CategoryEntity> categoryEntities = entityManager.createNamedQuery("category.fetchAll",CategoryEntity.class).getResultList();
+            List<CategoryEntity> categoryEntities = entityManager.createNamedQuery("allCategories",CategoryEntity.class).getResultList();
             return categoryEntities;
         }catch (NoResultException nre){
             return null;
@@ -39,7 +39,7 @@ public class CategoryDao {
      */
     public CategoryEntity fetchByUuid(String uuid) {
         try {
-            CategoryEntity categoryEntity = entityManager.createNamedQuery("category.fetchByUuid",CategoryEntity.class).setParameter("uuid",uuid).getSingleResult();
+            CategoryEntity categoryEntity = entityManager.createNamedQuery("categoryById",CategoryEntity.class).setParameter("uuid",uuid).getSingleResult();
             return categoryEntity;
         }catch (NoResultException nre){
             return null;
