@@ -54,7 +54,7 @@ public class RestaurantService {
      * @return list of restaurant entities
      * @throws RestaurantNotFoundException
      */
-    public List<RestaurantEntity> restaurantsByName(String restaurantName)throws RestaurantNotFoundException{
+    public List<RestaurantEntity> getRestaurantsByName(String restaurantName)throws RestaurantNotFoundException{
         if(restaurantName == null || restaurantName ==""){
             throw new RestaurantNotFoundException("RNF-003","Restaurant name field should not be empty");
         }
@@ -69,7 +69,7 @@ public class RestaurantService {
      * @return list of restaurant entities
      * @throws CategoryNotFoundException
      */
-    public List<RestaurantEntity> restaurantByCategory(String categoryId) throws CategoryNotFoundException {
+    public List<RestaurantEntity> getRestaurantByCategory(String categoryId) throws CategoryNotFoundException {
         // check whether the category id is null
         if(categoryId == null || categoryId == ""){
             throw new CategoryNotFoundException("CNF-001","Category id field should not be empty");
@@ -97,7 +97,7 @@ public class RestaurantService {
      * @return
      * @throws RestaurantNotFoundException
      */
-    public RestaurantEntity restaurantByUUID(String restaurantUuid)throws RestaurantNotFoundException{
+    public RestaurantEntity getRestaurantByUUID(String restaurantUuid)throws RestaurantNotFoundException{
         // Check whether the restaurant id is null
         if(restaurantUuid == null||restaurantUuid == "") {
             throw new RestaurantNotFoundException("RNF-002","Restaurant id field should not be empty");
