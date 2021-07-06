@@ -1,44 +1,45 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-@Entity
-@Table(name="category")
+
+/**
+ * @author zeelani
+ * Entity class representing the Category table
+ */
+
 @NamedQueries({
-        @NamedQuery(name = "allCategories", query = "select c from CategoryEntity c ORDER BY c.category_name ASC"),
-        @NamedQuery(name = "categoryById", query = "select c from CategoryEntity c where c.uuid=:uuid")
+    @NamedQuery(name = "category.fetchByUuid",query = "SELECT c FROM CategoryEntity c WHERE c.uuid = :uuid"),
+    @NamedQuery(name = "category.fetchAll",query = "SELECT c FROM CategoryEntity c ORDER BY c.categoryName ASC "),
 })
-public class CategoryEntity {
+
+@Entity
+@Table(name = "category",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+public class CategoryEntity implements Serializable {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
     @Size(max = 200)
+    @NotNull
     private String uuid;
 
-    @Column(name = "CATEGORY_NAME")
+    @Column(name = "category_name")
     @Size(max = 255)
-    private String category_name;
+    private String categoryName;
 
-    @ManyToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<RestaurantEntity> restaurant = new ArrayList<RestaurantEntity>();
-
-
-
-    public List<RestaurantEntity> getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(List<RestaurantEntity> restaurant) {
-        this.restaurant = restaurant;
-    }
+    @ManyToMany
+    @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<ItemEntity> items = new ArrayList<>();
 
 
 
@@ -59,21 +60,18 @@ public class CategoryEntity {
     }
 
     public String getCategoryName() {
-        return category_name;
+        return categoryName;
     }
 
-    public void setCategoryName(String category_name) {
-        this.category_name = category_name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
-    public static Comparator<CategoryEntity> CatNameComparator = new Comparator<CategoryEntity>() {
+    public List<ItemEntity> getItems() {
+        return items;
+    }
 
-        public int compare(CategoryEntity c1, CategoryEntity c2) {
-            String CatName1 = c1.getCategoryName().toUpperCase();
-            String CatName2 = c2.getCategoryName().toUpperCase();
-
-            //ascending order
-            return CatName1.compareTo(CatName2);
-        }};
-
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
 }

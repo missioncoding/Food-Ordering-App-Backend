@@ -10,6 +10,7 @@ import java.util.List;
 
 @Repository
 public class RestaurantDao {
+
     @PersistenceContext
     private EntityManager entityManager;
 

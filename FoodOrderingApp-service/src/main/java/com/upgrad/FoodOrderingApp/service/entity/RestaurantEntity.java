@@ -1,63 +1,63 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 /**
- * @author Vipin Mohan
+ * @author zeelani
+ * class representing restaurant table entity
  */
-@Entity
-@Table(name="restaurant")
+
 @NamedQueries({
-        @NamedQuery(name = "fetchAll", query = "select r from RestaurantEntity r ORDER BY r.customer_rating DESC"),
-        @NamedQuery(name = "fetchRestaurant", query = "select r from RestaurantEntity r where lower(r.restaurant_name) LIKE lower(CONCAT('%',:restaurantName,'%')) ORDER BY r.customer_rating DESC"),
-        @NamedQuery(name = "restByUuid", query = "select r from RestaurantEntity r where r.uuid=:uuid")
+    @NamedQuery(name = "restaurant.fetchByRating",query = "SELECT r FROM RestaurantEntity r ORDER BY r.customerRating DESC"),
+    @NamedQuery(name = "restaurant.fetchByUuid",query = "SELECT r FROM RestaurantEntity r WHERE r.uuid = :uuid"),
+    @NamedQuery(name = "restaurant.fetchByName",query = "SELECT r FROM  RestaurantEntity r WHERE LOWER(r.restaurantName) LIKE :restaurant_name_low"),
 })
-public class RestaurantEntity {
+
+@Entity
+@Table(name = "restaurant",uniqueConstraints = {@UniqueConstraint(columnNames = {"uuid"})})
+public class RestaurantEntity implements Serializable {
+
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
     @Size(max = 200)
+    @NotNull
     private String uuid;
 
-    @Column(name = "RESTAURANT_NAME")
+    @Column(name = "restaurant_name")
     @Size(max = 50)
-    private String restaurant_name;
+    @NotNull
+    private String restaurantName;
 
-    @Column(name = "PHOTO_URL")
+    @Column(name = "photo_url")
     @Size(max = 255)
-    private String photo_url;
+    private String photoUrl;
 
-    @Column(name = "CUSTOMER_RATING")
-    private BigDecimal customer_rating;
+    @Column(name = "customer_rating")
+    @NotNull
+    private double customerRating;
 
-    @Column(name = "AVERAGE_PRICE_FOR_TWO")
-    private int average_price_for_two;
+    @Column(name = "average_price_for_two")
+    @NotNull
+    private Integer avgPrice;
 
-    @Column(name = "NUMBER_OF_CUSTOMERS_RATED")
-    private int number_of_customers_rated;
+    @Column(name = "number_of_customers_rated")
+    @NotNull
+    private Integer numberCustomersRated;
 
-    @OneToOne
-    @JoinColumn(name = "ADDRESS_ID")
-    private AddressEntity addressEntity;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CategoryEntity> category = new ArrayList<CategoryEntity>();
-
-
-    public List<CategoryEntity> getCategories() {
-        return category;
-    }
-
-    public void setCategories(List<CategoryEntity> categories) {
-        this.category = categories;
-    }
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "address_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private AddressEntity address;
 
     public Integer getId() {
         return id;
@@ -75,52 +75,52 @@ public class RestaurantEntity {
         this.uuid = uuid;
     }
 
-    public String getRestaurant_name() {
-        return restaurant_name;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setRestaurant_name(String restaurant_name) {
-        this.restaurant_name = restaurant_name;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public String getPhoto_url() {
-        return photo_url;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setPhoto_url(String photo_url) {
-        this.photo_url = photo_url;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public BigDecimal getCustomer_rating() {
-        return customer_rating;
+    public double getCustomerRating() {
+        return customerRating;
     }
 
-    public void setCustomer_rating(BigDecimal customer_rating) {
-        this.customer_rating = customer_rating;
+    public void setCustomerRating(double customerRating) {
+        this.customerRating = customerRating;
     }
 
-    public int getAverage_price_for_two() {
-        return average_price_for_two;
+    public Integer getAvgPrice() {
+        return avgPrice;
     }
 
-    public void setAverage_price_for_two(int average_price_for_two) {
-        this.average_price_for_two = average_price_for_two;
+    public void setAvgPrice(Integer avgPrice) {
+        this.avgPrice = avgPrice;
     }
 
-    public int getNumber_of_customers_rated() {
-        return number_of_customers_rated;
+    public Integer getNumberCustomersRated() {
+        return numberCustomersRated;
     }
 
-    public void setNumber_of_customers_rated(int number_of_customers_rated) {
-        this.number_of_customers_rated = number_of_customers_rated;
+    public void setNumberCustomersRated(Integer numberCustomersRated) {
+        this.numberCustomersRated = numberCustomersRated;
     }
 
     public AddressEntity getAddress() {
-        return addressEntity;
+        return address;
     }
 
-    public void setAddressEntity(AddressEntity addressEntity) {
-        this.addressEntity = addressEntity;
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 
 }

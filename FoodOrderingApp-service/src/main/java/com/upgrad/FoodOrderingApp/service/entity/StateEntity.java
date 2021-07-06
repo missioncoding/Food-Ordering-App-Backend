@@ -10,6 +10,7 @@ import java.io.Serializable;
  * class representing the state entity
  */
 
+
 @NamedQueries({
     @NamedQuery(name = "state.fetchByUuid", query = "SELECT s from StateEntity s where s.stateUuid = :uuid"),
     @NamedQuery(name = "state.fetchAll",query = "SELECT s from StateEntity s"),
