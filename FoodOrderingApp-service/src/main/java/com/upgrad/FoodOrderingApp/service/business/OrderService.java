@@ -3,6 +3,7 @@ package com.upgrad.FoodOrderingApp.service.business;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.dao.OrderDao;
 import com.upgrad.FoodOrderingApp.service.dao.OrderItemDao;
+import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
@@ -75,6 +76,10 @@ public class OrderService {
     public List<OrderItemEntity> getOrderItemsByOrder(OrdersEntity ordersEntity) {
         List<OrderItemEntity> orderItemEntities = orderItemDao.fetchByOrder(ordersEntity);
         return orderItemEntities;
+    }
+
+    public CouponEntity getCouponByName(String couponName,String authorization){
+        return new CouponEntity();
     }
 }
 
