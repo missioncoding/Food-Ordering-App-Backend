@@ -102,11 +102,13 @@ public class CustomerController {
             throws UpdateCustomerException,AuthorizationFailedException {
         String[] bearerToken = authorization.split("Bearer ");
 
+
         final CustomerEntity updatedCustomerEntity = new CustomerEntity();
         updatedCustomerEntity.setFirstName(updateCustomerRequest.getFirstName());
         updatedCustomerEntity.setLastName(updateCustomerRequest.getLastName());
 
         CustomerEntity customerEntity = customerService.updateCustomer(updatedCustomerEntity);
+
 
         UpdateCustomerResponse updateCustomerResponse = new UpdateCustomerResponse().id(customerEntity.getUuid())
                                                              .status("USER DETAILS SUCCESSFULLY UPDATED");
@@ -126,9 +128,10 @@ public class CustomerController {
         String oldPassword = updatePasswordRequest.getOldPassword();
         String newPassword = updatePasswordRequest.getNewPassword();
 
-        CustomerEntity oldcustomerEntity = customerService.getCustomer(bearerToken[1]);
 
-        CustomerEntity customerEntity = customerService.updateCustomerPassword(oldPassword,newPassword,oldcustomerEntity);
+
+        CustomerEntity customerEntity = customerService.updatePassword(bearerToken[1],oldPassword,newPassword);
+
 
         UpdatePasswordResponse updatePasswordResponse = new UpdatePasswordResponse().id(customerEntity.getUuid())
                 .status("USER PASSWORD SUCCESSFULLY UPDATED");

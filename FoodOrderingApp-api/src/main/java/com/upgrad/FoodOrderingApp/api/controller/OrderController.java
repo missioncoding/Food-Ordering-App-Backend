@@ -46,7 +46,6 @@ public class OrderController {
     @Autowired
     RestaurantService restaurantService;
 
-<<<<<<< HEAD
     /**
      * POST request to save the order placed
      * @param authorization
@@ -59,18 +58,6 @@ public class OrderController {
      * @throws CouponNotFoundException
      * @throws ItemNotFoundException
      */
-=======
-    *
-     * This method  takes customer's access token and a coupon name as inputs and the returns the coupon
-     * details
-     *
-     * @param authorization Customer's access token as request parameter
-     * @param couponName Coupon name
-     * @return ResponseEntity with details of the matching coupon
-     * @throws AuthorizationFailedException on incorrect/invalid access token
-     * @throws CouponNotFoundException on incorrect/invalid/non-existent coupon name
-
->>>>>>> 593795181ed6dd7e05627612f643ea78447c27c0
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST,path = "",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader(value = "authorization")final String authorization, @RequestBody(required = false) final SaveOrderRequest saveOrderRequest)
@@ -134,7 +121,6 @@ public class OrderController {
         return new ResponseEntity<SaveOrderResponse>(saveOrderResponse,HttpStatus.CREATED);
     }
 
-<<<<<<< HEAD
     /**
      * Get method to retrive the coupon using the coupon name
      * @param authorization
@@ -143,15 +129,6 @@ public class OrderController {
      * @throws AuthorizationFailedException
      * @throws CouponNotFoundException
      */
-=======
-    *
-     * This method  takes customers access token and retrieves a list of all of the customer's orders
-     *
-     * @param authorization Customer's access token as request header parameter
-     * @return ResponseEntity with list of all of the customer's orders
-     * @throws AuthorizationFailedException on invalid/incorrect access token
-
->>>>>>> 593795181ed6dd7e05627612f643ea78447c27c0
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET,path = "/coupon/{coupon_name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CouponDetailsResponse> getCouponByCouponName(@RequestHeader(value = "authorization") final String authorization, @PathVariable(value = "coupon_name")final String couponName)

@@ -8,13 +8,17 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
+/**
+ * @author zeelani
+ * Repository class handling the Restaurant related DB operations
+ */
+
 @Repository
 public class RestaurantDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-<<<<<<< HEAD
     /**
      * Fetch restaurant using name
      * @param restaurantName
@@ -60,24 +64,12 @@ public class RestaurantDao {
      * @return
      */
     public RestaurantEntity fetchByUuid(String uuid) {
-=======
-    public  List<RestaurantEntity> getAllRestaurants() {
-        return entityManager.createNamedQuery("fetchAll",RestaurantEntity.class).getResultList();
-    }
-
-    public  List<RestaurantEntity> getRestaurantByName(String restaurantName) {
-        return entityManager.createNamedQuery("fetchRestaurant", RestaurantEntity.class).setParameter("restaurantName", restaurantName).getResultList();
-    }
-
-    public RestaurantEntity getRestaurantByUuid(String uuid) {
->>>>>>> 593795181ed6dd7e05627612f643ea78447c27c0
         try {
-            RestaurantEntity restaurantEntity = entityManager.createNamedQuery("restByUuid",RestaurantEntity.class).setParameter("uuid",uuid).getSingleResult();
+            RestaurantEntity restaurantEntity = entityManager.createNamedQuery("restaurant.fetchByUuid",RestaurantEntity.class).setParameter("uuid",uuid).getSingleResult();
             return restaurantEntity;
         }catch (NoResultException nre){
             return null;
         }
 
     }
-
 }
