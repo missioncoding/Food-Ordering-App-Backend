@@ -1,11 +1,14 @@
 package com.upgrad.FoodOrderingApp.service.business;
 
+import com.upgrad.FoodOrderingApp.service.dao.CouponDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.dao.OrderDao;
 import com.upgrad.FoodOrderingApp.service.dao.OrderItemDao;
+import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
+import com.upgrad.FoodOrderingApp.service.exception.CouponNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,6 +33,9 @@ public class OrderService {
     @Autowired
     CustomerDao customerDao;
 
+    @Autowired
+    CouponDao couponDao;
+
      /**
      * Method to save the order
      * @param ordersEntity
@@ -40,10 +46,6 @@ public class OrderService {
         OrdersEntity savedOrderEntity = orderDao.saveOrder(ordersEntity);
         return savedOrderEntity;
     }
-
-    /* This method is to saveOrderItem.Takes the orderItemEntity  and saves it to DB and returns saved the OrderItemEntity.
-    If error throws exception with error code and error message.
-    */
 
     /**
      * method to save the order item
@@ -75,6 +77,37 @@ public class OrderService {
     public List<OrderItemEntity> getOrderItemsByOrder(OrdersEntity ordersEntity) {
         List<OrderItemEntity> orderItemEntities = orderItemDao.fetchByOrder(ordersEntity);
         return orderItemEntities;
+    }
+
+     /**
+     * Method to get the coupon entity using coupon name
+     * @param couponName
+     * @return
+     * @throws CouponNotFoundException
+     */
+    public CouponEntity getCouponByCouponName(String couponName) throws CouponNotFoundException {
+        if(couponName == null||couponName == ""){
+            throw new CouponNotFoundException("CPF-002","Coupon name field should not be empty");
+        }
+        CouponEntity couponEntity = couponDao.fetchByName(couponName);
+        if(couponEntity == null){
+            throw new CouponNotFoundException("CPF-001","No coupon by this name");
+        }
+        return couponEntity;
+    }
+
+    /**
+     * Method to get the coupon entity using the coupon id
+     * @param couponUuid
+     * @return
+     * @throws CouponNotFoundException
+     */
+    public CouponEntity getCouponByCouponId(String couponUuid) throws CouponNotFoundException {
+        CouponEntity couponEntity = couponDao.fetchById(couponUuid);
+        if(couponEntity == null){
+            throw new CouponNotFoundException("CPF-002","No coupon by this id");
+        }
+        return couponEntity;
     }
 }
 

@@ -28,23 +28,23 @@ import java.util.List;
 public class RestaurantService {
 
     @Autowired
-    RestaurantDao restaurantDao;
-
-    @Autowired
-    RestaurantCategoryDao restaurantCategoryDao;
-
-    @Autowired
     CategoryDao categoryDao;
+
+    @Autowired
+    RestaurantDao restaurantDao;
 
     @Autowired
     ApplicationUtil applicationUtil;
 
+    @Autowired
+    RestaurantCategoryDao restaurantCategoryDao;
+
     /**
-     * Method to ge the restaurants by rating
+     * Method to get the restaurants by rating
      * @return list of restaurant entities
      */
-    public List<RestaurantEntity> restaurantsByRating(){
-        List<RestaurantEntity> restaurantEntities = restaurantDao.restaurantsByRating();
+    public List<RestaurantEntity> getRestaurantsByRating(){
+        List<RestaurantEntity> restaurantEntities = restaurantDao.fetchByRating();
         return restaurantEntities;
     }
 
@@ -54,11 +54,11 @@ public class RestaurantService {
      * @return list of restaurant entities
      * @throws RestaurantNotFoundException
      */
-    public List<RestaurantEntity> restaurantsByName(String restaurantName)throws RestaurantNotFoundException{
+    public List<RestaurantEntity> getRestaurantsByName(String restaurantName)throws RestaurantNotFoundException{
         if(restaurantName == null || restaurantName ==""){
             throw new RestaurantNotFoundException("RNF-003","Restaurant name field should not be empty");
         }
-        List<RestaurantEntity> restaurantEntities = restaurantDao.restaurantsByName(restaurantName);
+        List<RestaurantEntity> restaurantEntities = restaurantDao.fetchByName(restaurantName);
         return restaurantEntities;
     }
 
@@ -69,7 +69,7 @@ public class RestaurantService {
      * @return list of restaurant entities
      * @throws CategoryNotFoundException
      */
-    public List<RestaurantEntity> restaurantByCategory(String categoryId) throws CategoryNotFoundException {
+    public List<RestaurantEntity> getRestaurantByCategory(String categoryId) throws CategoryNotFoundException {
         // check whether the category id is null
         if(categoryId == null || categoryId == ""){
             throw new CategoryNotFoundException("CNF-001","Category id field should not be empty");
@@ -97,13 +97,13 @@ public class RestaurantService {
      * @return
      * @throws RestaurantNotFoundException
      */
-    public RestaurantEntity restaurantByUUID(String restaurantUuid)throws RestaurantNotFoundException{
+    public RestaurantEntity getRestaurantByUUID(String restaurantUuid)throws RestaurantNotFoundException{
         // Check whether the restaurant id is null
         if(restaurantUuid == null||restaurantUuid == "") {
             throw new RestaurantNotFoundException("RNF-002","Restaurant id field should not be empty");
         }
         // get the restaurant entity using the id
-        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
+        RestaurantEntity restaurantEntity = restaurantDao.fetchByUuid(restaurantUuid);
         if (restaurantEntity == null){
             throw new RestaurantNotFoundException("RNF-001","No restaurant by this id");
         }
@@ -134,8 +134,8 @@ public class RestaurantService {
 
         restaurantEntity.setCustomerRating(Double.parseDouble(format.format(newCustomerRating)));
 
-        //Updating the restautant in the db using the method updateRestaurantRating of restaurantDao.
-        RestaurantEntity updatedRestaurantEntity = restaurantDao.updateRestaurantRating(restaurantEntity);
+        //Updating the restaurant in the db using the method updateRestaurantRating of restaurantDao.
+        RestaurantEntity updatedRestaurantEntity = restaurantDao.updateRating(restaurantEntity);
 
         return updatedRestaurantEntity;
 

@@ -35,9 +35,9 @@ public class CategoryService {
      * @param restaurantUuid
      * @return
      */
-    public List<CategoryEntity> fetchCategoriesByRestaurant(String restaurantUuid){
+    public List<CategoryEntity> getCategoriesByRestaurant(String restaurantUuid){
         // First get the restaurant entity
-        RestaurantEntity restaurantEntity = restaurantDao.getRestaurantByUuid(restaurantUuid);
+        RestaurantEntity restaurantEntity = restaurantDao.fetchByUuid(restaurantUuid);
         // lookup for all categories
         List<RestaurantCategoryEntity> restaurantCategoryEntities = restaurantCategoryDao.fetchCategoriesByRestaurant(restaurantEntity);
 
@@ -53,7 +53,7 @@ public class CategoryService {
      * Fetch all categories. The list is ordered by name
      * @return
      */
-    public List<CategoryEntity> fetchAllCategories() {
+    public List<CategoryEntity> getAllCategories() {
         List<CategoryEntity> categoryEntities = categoryDao.fetchAll();
         return categoryEntities;
     }
@@ -64,7 +64,7 @@ public class CategoryService {
      * @return
      * @throws CategoryNotFoundException
      */
-    public CategoryEntity fetchCategoryById(String categoryUuid) throws CategoryNotFoundException {
+    public CategoryEntity getCategoryById(String categoryUuid) throws CategoryNotFoundException {
         //check for null or empty category
         if(categoryUuid == null || categoryUuid == ""){
             throw new CategoryNotFoundException("CNF-001","Category id field should not be empty");
