@@ -79,6 +79,7 @@ public class OrderService {
         return orderItemEntities;
     }
 
+<<<<<<< HEAD
      /**
      * Method to get the coupon entity using coupon name
      * @param couponName
@@ -108,6 +109,10 @@ public class OrderService {
             throw new CouponNotFoundException("CPF-002","No coupon by this id");
         }
         return couponEntity;
+=======
+    public CouponEntity getCouponByName(String couponName,String authorization){
+        return new CouponEntity();
+>>>>>>> 593795181ed6dd7e05627612f643ea78447c27c0
     }
 }
 
