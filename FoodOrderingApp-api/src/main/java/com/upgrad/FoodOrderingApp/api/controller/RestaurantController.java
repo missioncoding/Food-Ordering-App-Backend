@@ -112,15 +112,15 @@ public class RestaurantController {
         // deciding on the business logic function based on the criteria
         switch (withCriteria) {
             case "RATING" : {
-                restaurantEntities = restaurantService.getRestaurantsByRating();
+                restaurantEntities = restaurantService.restaurantsByRating();
                 break;
             }
             case "NAME" : {
-                restaurantEntities = restaurantService.getRestaurantsByName(byCondition);
+                restaurantEntities = restaurantService.restaurantsByName(byCondition);
                 break;
             }
             case "CATEGORY" : {
-                restaurantEntities = restaurantService.getRestaurantByCategory(byCondition);
+                restaurantEntities = restaurantService.restaurantByCategory(byCondition);
                 break;
             }
             default: {
@@ -147,7 +147,7 @@ public class RestaurantController {
 
                 //Creating the RestaurantDetailsResponseAddressState for the RestaurantDetailsResponseAddress
                 RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState()
-                        .id(UUID.fromString(restaurantEntity.getAddress().getState().getStateUuid()))
+                        .id(UUID.fromString(restaurantEntity.getAddress().getState().getUuid()))
                         .stateName(restaurantEntity.getAddress().getState().getStateName());
 
                 //Creating the RestaurantDetailsResponseAddress for the RestaurantList
@@ -218,7 +218,7 @@ public class RestaurantController {
     public ResponseEntity<RestaurantDetailsResponse>getRestaurantByRestaurantId(@PathVariable(value = "restaurant_id") final String restaurantUuid)throws RestaurantNotFoundException{
 
         //Calls restaurantByUUID method of restaurantService to get the restaurant entity.
-        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUID(restaurantUuid);
+        RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
 
         //Calls  getCategoriesByRestaurant to get categories of the corresponding restaurant.
         List<CategoryEntity> categoryEntities = categoryService.getCategoriesByRestaurant(restaurantUuid);
@@ -253,7 +253,7 @@ public class RestaurantController {
 
         //Creating the RestaurantDetailsResponseAddressState for the RestaurantDetailsResponseAddress
         RestaurantDetailsResponseAddressState restaurantDetailsResponseAddressState = new RestaurantDetailsResponseAddressState()
-                .id(UUID.fromString(restaurantEntity.getAddress().getState().getStateUuid()))
+                .id(UUID.fromString(restaurantEntity.getAddress().getState().getUuid()))
                 .stateName(restaurantEntity.getAddress().getState().getStateName());
 
         //Creating the RestaurantDetailsResponseAddress for the RestaurantList
@@ -300,7 +300,7 @@ public class RestaurantController {
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
         //Calls restaurantByUUID method of restaurantService to get the restaurant entity.
-        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUID(restaurantUuid);
+        RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
 
         //Calls updateRestaurantRating and passes restaurantentity found and customer rating and return the updated entity.
         RestaurantEntity updatedRestaurantEntity = restaurantService.updateRestaurantRating(restaurantEntity,customerRating);

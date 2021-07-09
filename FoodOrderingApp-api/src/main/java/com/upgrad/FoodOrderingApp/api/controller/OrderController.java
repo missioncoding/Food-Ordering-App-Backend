@@ -80,7 +80,7 @@ public class OrderController {
         AddressEntity addressEntity = addressService.getAddressByUUID(saveOrderRequest.getAddressId(),customerEntity);
 
         // fetch the restaurant entity using the restaurant id
-        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUID(saveOrderRequest.getRestaurantId().toString());
+        RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(saveOrderRequest.getRestaurantId().toString());
 
         // creating the order entity using the data fetched from the db
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -196,7 +196,7 @@ public class OrderController {
                 });
                 //Creating OrderListAddressState to add in the address
                 OrderListAddressState orderListAddressState = new OrderListAddressState()
-                        .id(UUID.fromString(ordersEntity.getAddress().getState().getStateUuid()))
+                        .id(UUID.fromString(ordersEntity.getAddress().getState().getUuid()))
                         .stateName(ordersEntity.getAddress().getState().getStateName());
 
                 //Creating OrderListAddress to add address to the orderList

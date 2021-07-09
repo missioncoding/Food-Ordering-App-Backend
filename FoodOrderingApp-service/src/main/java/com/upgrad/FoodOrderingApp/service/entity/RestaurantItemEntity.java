@@ -38,8 +38,7 @@ public class RestaurantItemEntity implements Serializable {
     private RestaurantEntity restaurant;
 
     // adding parameterized constructor for testing purpose
-    public RestaurantItemEntity(Integer id, @NotNull ItemEntity item, @NotNull RestaurantEntity restaurant) {
-        this.id = id;
+    public RestaurantItemEntity(@NotNull ItemEntity item, @NotNull RestaurantEntity restaurant) {
         this.item = item;
         this.restaurant = restaurant;
     }

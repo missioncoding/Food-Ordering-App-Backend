@@ -42,7 +42,7 @@ public class CategoryController {
     public ResponseEntity<CategoriesListResponse> getAllCategories(){
 
         // calling the service logic function to retrieve all categories
-        List<CategoryEntity> categoryEntities = categoryService.getAllCategories();
+        List<CategoryEntity> categoryEntities = categoryService.getAllCategoriesOrderedByName();
 
         // proceed to check only if the retrieved categories are non empty
         if(!categoryEntities.isEmpty()) {

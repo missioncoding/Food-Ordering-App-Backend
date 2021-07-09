@@ -1,7 +1,7 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
-import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
+import com.upgrad.FoodOrderingApp.service.business.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthenticationFailedException;
@@ -298,11 +298,11 @@ public class CustomerControllerTest {
         mockMvc
                 .perform(put("/customer")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .header("authorization", "auth")
+                        .header("authorization", "Bearer auth")
                         .content("{\"first_name\":\"\", \"last_name\":\"last\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("UCR-002"));
-        verify(mockCustomerService, times(0)).getCustomer(anyString());
+        verify(mockCustomerService, times(1)).getCustomer(anyString());
         verify(mockCustomerService, times(0)).updateCustomer(any());
     }
 
@@ -390,7 +390,7 @@ public class CustomerControllerTest {
         mockMvc
                 .perform(put("/customer/password")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .header("authorization", "auth")
+                        .header("authorization", "Bearer auth")
                         .content("{\"old_password\":\"\", \"new_password\":\"newPwd\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("UCR-003"));
@@ -405,7 +405,7 @@ public class CustomerControllerTest {
         mockMvc
                 .perform(put("/customer/password")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .header("authorization", "auth")
+                        .header("authorization", "Bearer auth")
                         .content("{\"old_password\":\"oldPwd\", \"new_password\":\"\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("UCR-003"));
@@ -484,4 +484,4 @@ public class CustomerControllerTest {
         verify(mockCustomerService, times(1)).updateCustomerPassword("oldPwd", "newPwd", customerEntity);
     }
 
-}*/
+}

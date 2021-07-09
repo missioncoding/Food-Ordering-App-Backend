@@ -35,8 +35,7 @@ public class CustomerAddressEntity implements Serializable {
     private AddressEntity address;
 
     // adding parameterized constructor for testing purpose
-    public CustomerAddressEntity(Integer id, CustomerEntity customer, AddressEntity address) {
-        this.id = id;
+    public CustomerAddressEntity(CustomerEntity customer, AddressEntity address) {
         this.customer = customer;
         this.address = address;
     }

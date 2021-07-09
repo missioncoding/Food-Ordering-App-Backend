@@ -57,7 +57,7 @@ public class CustomerController {
         customerEntity.setPassword(signupCustomerRequest.getPassword());
 
         // creating the customer auth entity
-        CustomerEntity createdCustomerEntity = customerService.signUp(customerEntity);
+        CustomerEntity createdCustomerEntity = customerService.saveCustomer(customerEntity);
         // creating the final customer response
         SignupCustomerResponse customerResponse = new SignupCustomerResponse().id(createdCustomerEntity.getUuid()).status("CUSTOMER SUCCESSFULLY REGISTERED");
         return new ResponseEntity<SignupCustomerResponse>(customerResponse, HttpStatus.CREATED);
@@ -131,6 +131,7 @@ public class CustomerController {
         // first fetching the bearer token and validating it
         String[] bearerToken = authorization.split("Bearer ");
         CustomerEntity customerEntity = customerService.getCustomer(bearerToken[1]);
+        applicationUtil.validateUpdateCustomer(updateCustomerRequest.getFirstName());
         customerEntity.setFirstName(updateCustomerRequest.getFirstName());
         customerEntity.setLastName(updateCustomerRequest.getLastName());
 
@@ -166,7 +167,7 @@ public class CustomerController {
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
         //updating the password using the service method updatePassword
-        CustomerEntity newcustomerEntity = customerService.updatePassword(oldPassword,newPassword,customerEntity);
+        CustomerEntity newcustomerEntity = customerService.updateCustomerPassword(oldPassword,newPassword,customerEntity);
 
         // setting the final response
         UpdatePasswordResponse updatePasswordResponse = new UpdatePasswordResponse().id(newcustomerEntity.getUuid())

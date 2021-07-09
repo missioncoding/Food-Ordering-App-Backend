@@ -60,8 +60,7 @@ public class RestaurantEntity implements Serializable {
     private AddressEntity address;
 
     // adding parameterized constructor for testing purpose
-    public RestaurantEntity(Integer id, @Size(max = 200) @NotNull String uuid, @Size(max = 50) @NotNull String restaurantName, @Size(max = 255) String photoUrl, @NotNull double customerRating, @NotNull Integer avgPrice, @NotNull Integer numberCustomersRated, AddressEntity address) {
-        this.id = id;
+    public RestaurantEntity(@Size(max = 200) @NotNull String uuid, @Size(max = 50) @NotNull String restaurantName, @Size(max = 255) String photoUrl, @NotNull double customerRating, @NotNull Integer avgPrice, @NotNull Integer numberCustomersRated, AddressEntity address) {
         this.uuid = uuid;
         this.restaurantName = restaurantName;
         this.photoUrl = photoUrl;
