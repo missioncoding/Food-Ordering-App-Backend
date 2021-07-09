@@ -88,9 +88,6 @@ public class ItemService {
         return sortedItemEntites;
     }
 
-    /* This method is to get Items By Category and returns list of ItemEntity it takes CategoryEntity as input.
-     */
-
     /**
      * Method to get the items by category
      * @param categoryEntity

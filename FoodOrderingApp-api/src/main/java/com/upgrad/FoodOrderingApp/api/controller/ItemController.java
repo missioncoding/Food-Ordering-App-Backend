@@ -26,6 +26,7 @@ import java.util.UUID;
 @RequestMapping("/item")
 public class ItemController {
 
+    // injecting the service classes for handling business logic
     @Autowired
     ItemService itemService;
 
@@ -35,7 +36,7 @@ public class ItemController {
     /**
      * get method to retrieve the top 5 popular items for the restaurant using id
      * @param restaurantUuid
-     * @return
+     * @return ItemListResponse
      * @throws RestaurantNotFoundException
      */
     @CrossOrigin
@@ -58,7 +59,7 @@ public class ItemController {
                     .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
             itemListResponse.add(itemList);
         });
-
+        // returning the final response
         return new ResponseEntity<ItemListResponse>(itemListResponse,HttpStatus.OK);
     }
 }

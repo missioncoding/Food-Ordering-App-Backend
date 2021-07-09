@@ -33,6 +33,17 @@ public class StateEntity implements Serializable {
     @Size(max = 30)
     private String stateName;
 
+    // creating a parameterized constructor for the testing purpose
+    public StateEntity(String stateUuid, String stateName) {
+        this.stateUuid = stateUuid;
+        this.stateName = stateName;
+        return;
+    }
+
+    public StateEntity() {
+
+    }
+
      public Integer getId() {
         return id;
     }

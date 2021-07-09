@@ -27,7 +27,7 @@ import java.util.UUID;
 @RequestMapping("/payment")
 public class PaymentController {
 
-    //@Autowired
+    @Autowired
     PaymentService paymentService;
 
      /**

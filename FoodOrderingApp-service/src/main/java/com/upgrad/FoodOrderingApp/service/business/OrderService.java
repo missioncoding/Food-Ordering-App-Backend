@@ -28,13 +28,13 @@ public class OrderService {
     OrderDao orderDao;
 
     @Autowired
-    OrderItemDao orderItemDao;
+    CouponDao couponDao;
 
     @Autowired
     CustomerDao customerDao;
 
     @Autowired
-    CouponDao couponDao;
+    OrderItemDao orderItemDao;
 
      /**
      * Method to save the order
