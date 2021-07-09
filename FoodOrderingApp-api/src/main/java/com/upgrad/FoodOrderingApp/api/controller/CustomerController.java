@@ -27,7 +27,7 @@ import java.util.UUID;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class CustomerController {
 
     // injecting customer service for business logic operations
@@ -45,7 +45,7 @@ public class CustomerController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/customer/signup",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SignupCustomerResponse> customerSignup(@RequestBody(required = false) final SignupCustomerRequest signupCustomerRequest)
+    public ResponseEntity<SignupCustomerResponse> customerSignup(@RequestBody(required = false) SignupCustomerRequest signupCustomerRequest)
             throws SignUpRestrictedException {
         // creating the customer entity object
         CustomerEntity customerEntity = new CustomerEntity();
@@ -55,7 +55,8 @@ public class CustomerController {
         customerEntity.setFirstName(signupCustomerRequest.getFirstName());
         customerEntity.setLastName(signupCustomerRequest.getLastName());
         customerEntity.setPassword(signupCustomerRequest.getPassword());
-
+        // validating the customer entity for mandatory fields
+        applicationUtil.validateSignUpRequest(customerEntity);
         // creating the customer auth entity
         CustomerEntity createdCustomerEntity = customerService.saveCustomer(customerEntity);
         // creating the final customer response
@@ -111,7 +112,7 @@ public class CustomerController {
         CustomerAuthEntity customer_authEntity = customerService.logout(bearerToken[1]);
 
         // Generating the final logout response
-        LogoutResponse logoutResponse = new LogoutResponse().id(customer_authEntity.getUuid()).message("LOGGED OUT SUCCESSFULLY");
+        LogoutResponse logoutResponse = new LogoutResponse().id(customer_authEntity.getCustomer().getUuid()).message("LOGGED OUT SUCCESSFULLY");
         return new ResponseEntity<LogoutResponse>(logoutResponse, HttpStatus.OK);
 
     }
@@ -126,7 +127,7 @@ public class CustomerController {
      */
     @RequestMapping(method = RequestMethod.PUT, path = "/customer" ,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,final UpdateCustomerRequest updateCustomerRequest)
+    public ResponseEntity<UpdateCustomerResponse> updateCustomer(@RequestHeader("authorization") final String authorization,@RequestBody(required = false) UpdateCustomerRequest updateCustomerRequest)
             throws UpdateCustomerException,AuthorizationFailedException {
         // first fetching the bearer token and validating it
         String[] bearerToken = authorization.split("Bearer ");
@@ -153,7 +154,7 @@ public class CustomerController {
      */
     @RequestMapping(method = RequestMethod.PUT,path = "/customer/password" ,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization,final UpdatePasswordRequest updatePasswordRequest)
+    public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestHeader("authorization") final String authorization,@RequestBody(required = false) UpdatePasswordRequest updatePasswordRequest)
             throws UpdateCustomerException,AuthorizationFailedException {
         // fetching the bearer token
         String accessToken = authorization.split("Bearer ")[1];

@@ -30,7 +30,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/restaurant")
+@RequestMapping("/api/restaurant")
 public class RestaurantController {
 
     // injecting the service classes to handle business logic operations
@@ -192,7 +192,7 @@ public class RestaurantController {
         List<RestaurantList> restaurantLists = null;
         try {
             // fetching the restaurant list based on the criteria with a private method
-            restaurantLists = getRestaurantList("CATEGORY", null);
+            restaurantLists = getRestaurantList("CATEGORY", categoryId);
         } catch (RestaurantNotFoundException r) {
             // this case can be ignored as we are not searching with any restaurant name
             restaurantLists = new LinkedList<>();

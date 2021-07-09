@@ -25,7 +25,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/api/order")
 public class OrderController {
 
     // injecting all service classes for handling business logic operations
