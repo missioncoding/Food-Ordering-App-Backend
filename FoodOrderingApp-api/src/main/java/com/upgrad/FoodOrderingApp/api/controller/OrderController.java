@@ -1,176 +1,257 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
+
 import com.upgrad.FoodOrderingApp.api.model.*;
-import com.upgrad.FoodOrderingApp.service.business.OrderService;
-import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
-import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrderItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
+import com.upgrad.FoodOrderingApp.service.business.*;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.math.BigDecimal;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+
 /**
- * Created by ashishvats
+ * @author ashishvats, zeelani
+ * Controller method to handle the order api calls
  */
 
-@RestController
 @CrossOrigin
-@RequestMapping("/")
-
+@RestController
+@RequestMapping("/order")
 public class OrderController {
 
+    // injecting all service classes for handling business logic operations
     @Autowired
-    private OrderService orderService;
+    ItemService itemService;
 
-    *
-     * This method  takes customer's access token and a coupon name as inputs and the returns the coupon
-     * details
-     *
-     * @param authorization Customer's access token as request parameter
-     * @param couponName Coupon name
-     * @return ResponseEntity with details of the matching coupon
-     * @throws AuthorizationFailedException on incorrect/invalid access token
-     * @throws CouponNotFoundException on incorrect/invalid/non-existent coupon name
+    @Autowired
+    OrderService orderService;
 
+    @Autowired
+    PaymentService paymentService;
+
+    @Autowired
+    AddressService addressService;
+
+    @Autowired
+    CustomerService customerService;
+
+    @Autowired
+    RestaurantService restaurantService;
+
+    /**
+     * POST request to save the order placed
+     * @param authorization
+     * @param saveOrderRequest
+     * @return SaveOrderResponse
+     * @throws AuthorizationFailedException
+     * @throws PaymentMethodNotFoundException
+     * @throws AddressNotFoundException
+     * @throws RestaurantNotFoundException
+     * @throws CouponNotFoundException
+     * @throws ItemNotFoundException
+     */
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, path = "/order/coupon/{coupon_name}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<CouponDetailsResponse> getCouponByName(@PathVariable(value = "coupon_name", required = false) String couponName, @RequestHeader("authorization") final String authorization)
+    @RequestMapping(method = RequestMethod.POST,path = "",consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<SaveOrderResponse> saveOrder(@RequestHeader(value = "authorization")final String authorization, @RequestBody(required = false) final SaveOrderRequest saveOrderRequest)
+            throws AuthorizationFailedException, PaymentMethodNotFoundException, AddressNotFoundException, RestaurantNotFoundException, CouponNotFoundException ,ItemNotFoundException{
+
+        // access the auth token from the authorization
+        String accessToken = authorization.split("Bearer ")[1];
+
+        // fetching the customer entity using the access token this will throw exception in case of any invalid creds
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
+
+        // fetch the coupon entity using the coupon id
+        CouponEntity couponEntity = orderService.getCouponByCouponId(saveOrderRequest.getCouponId().toString());
+
+        // fetching the payment entity using the payment id
+        PaymentEntity paymentEntity = paymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
+
+        // get the address entity using the address id
+        AddressEntity addressEntity = addressService.getAddressByUUID(saveOrderRequest.getAddressId(),customerEntity);
+
+        // fetch the restaurant entity using the restaurant id
+        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUID(saveOrderRequest.getRestaurantId().toString());
+
+        // creating the order entity using the data fetched from the db
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        OrdersEntity ordersEntity = new OrdersEntity();
+        ordersEntity.setUuid(UUID.randomUUID().toString());
+        ordersEntity.setBill(saveOrderRequest.getBill().floatValue());
+        ordersEntity.setDate(timestamp);
+        ordersEntity.setCustomer(customerEntity);
+        ordersEntity.setDiscount(saveOrderRequest.getDiscount().doubleValue());
+        ordersEntity.setPayment(paymentEntity);
+        ordersEntity.setAddress(addressEntity);
+        ordersEntity.setRestaurant(restaurantEntity);
+        ordersEntity.setCoupon(couponEntity);
+
+        // saving the order entity in the db
+        OrdersEntity finalOrderEntity = orderService.saveOrder(ordersEntity);
+
+        // now looking at the order items and quantities
+        List<ItemQuantity> itemQuantities = saveOrderRequest.getItemQuantities();
+        // looping through each order item
+        for(ItemQuantity itemQuantity : itemQuantities) {
+            OrderItemEntity orderItemEntity = new OrderItemEntity();
+            ItemEntity itemEntity = itemService.getItemByUUID(itemQuantity.getItemId().toString());
+            orderItemEntity.setItem(itemEntity);
+            orderItemEntity.setOrder(ordersEntity);
+            orderItemEntity.setPrice(itemQuantity.getPrice());
+            orderItemEntity.setQuantity(itemQuantity.getQuantity());
+
+            // saving the order item in the db
+            OrderItemEntity savedOrderItem = orderService.saveOrderItem(orderItemEntity);
+        }
+
+        // creating the final response
+        SaveOrderResponse saveOrderResponse = new SaveOrderResponse()
+                .id(finalOrderEntity.getUuid())
+                .status("ORDER SUCCESSFULLY PLACED");
+        return new ResponseEntity<SaveOrderResponse>(saveOrderResponse,HttpStatus.CREATED);
+    }
+
+    /**
+     * Get method to retrive the coupon using the coupon name
+     * @param authorization
+     * @param couponName
+     * @return CouponDetailsResponse
+     * @throws AuthorizationFailedException
+     * @throws CouponNotFoundException
+     */
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET,path = "/coupon/{coupon_name}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<CouponDetailsResponse> getCouponByCouponName(@RequestHeader(value = "authorization") final String authorization, @PathVariable(value = "coupon_name")final String couponName)
             throws AuthorizationFailedException, CouponNotFoundException {
 
-        CouponEntity couponEntity = orderService.getCouponByName(couponName, authorization);
-        CouponDetailsResponse couponDetailsResponse = new CouponDetailsResponse();
-        couponDetailsResponse.setCouponName(couponEntity.getCouponName());
-        couponDetailsResponse.setId(UUID.fromString(couponEntity.getUuid()));
-        couponDetailsResponse.setPercent(couponEntity.getPercent());
+        // access the auth token from the authorization
+        String accessToken = authorization.split("Bearer ")[1];
 
+        // fetching the customer entity using the access token this will throw exception in case of any invalid creds
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
+
+        // Calling getCouponByCouponName orderService method
+        CouponEntity couponEntity = orderService.getCouponByCouponName(couponName);
+
+        // Creating the couponDetailsResponse
+        CouponDetailsResponse couponDetailsResponse = new CouponDetailsResponse()
+                .couponName(couponEntity.getCouponName())
+                .id(UUID.fromString(couponEntity.getUuid()))
+                .percent(couponEntity.getPercent());
         return new ResponseEntity<CouponDetailsResponse>(couponDetailsResponse,HttpStatus.OK);
     }
 
-    *
-     * This method  takes customers access token and retrieves a list of all of the customer's orders
-     *
-     * @param authorization Customer's access token as request header parameter
-     * @return ResponseEntity with list of all of the customer's orders
-     * @throws AuthorizationFailedException on invalid/incorrect access token
-
+    /**
+     * Get method to retrieve the past orders of the user
+     * @param authorization
+     * @return CustomerOrderResponse
+     * @throws AuthorizationFailedException
+     */
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, path = "/order", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public  ResponseEntity<CustomerOrderResponse> getOrderItemsByCustomerId(@RequestHeader("authorization") final String authorization)
-            throws AuthorizationFailedException {
+    @RequestMapping(method = RequestMethod.GET,path = "",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<CustomerOrderResponse> getPastOrderOfUser(@RequestHeader(value = "authorization")final String authorization) throws AuthorizationFailedException {
 
-        //@PathVariable("customer_id") String customerId
+        // access the auth token from the authorization
+        String accessToken = authorization.split("Bearer ")[1];
 
-        List<OrdersEntity> orderEntityList = orderService.getOrdersByCustomers(authorization);
+        // fetching the customer entity using the access token this will throw exception in case of any invalid creds
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
-        // Create response
-        CustomerOrderResponse customerOrderResponse = new CustomerOrderResponse();
+        // Calling getOrdersByCustomers method from orderService to get all the past orders of the customer.
+        List<OrdersEntity> ordersEntities =  orderService.getOrdersByCustomers(customerEntity.getUuid());
 
-                OrderListCoupon  orderListCoupon = new OrderListCoupon()
-                            .id(UUID.fromString(orderEntity.getCoupon().getUuid()))
-                            .couponName(orderEntity.getCoupon().getCouponName())
-                            .percent(orderEntity.getCoupon().getPercent());
+        // Creating List of OrderList
+        List<OrderList> orderLists = new LinkedList<>();
 
+        // if orderentities is null, then return empty list
+        if(ordersEntities != null){
+            //looping in for each orderentity received
+            for(OrdersEntity ordersEntity:ordersEntities){
+                // calling service method to recive order item entity for each order entity.
+                List<OrderItemEntity> orderItemEntities = orderService.getOrderItemsByOrder(ordersEntity);
 
-                OrderListCustomer orderListCustomer = new OrderListCustomer()
-                        .id(UUID.fromString(orderEntity.getCustomer().getUuid()))
-                        .firstName(orderEntity.getCustomer().getFirstName())
-                        .lastName(orderEntity.getCustomer().getLastName())
-                        .emailAddress(orderEntity.getCustomer().getEmail())
-                        .contactNumber(orderEntity.getCustomer().getContactNum());
-
-                OrderListAddressState orderListAddressState = new OrderListAddressState()
-                        .id(UUID.fromString(orderEntity.getAddress().getState().getUuid()))
-                        .stateName(orderEntity.getAddress().getState().getStateName());
-
-                OrderListPayment orderListPayment = new OrderListPayment()
-                        .id(UUID.fromString(orderEntity.getPayment().getUuid()))
-                        .paymentName(orderEntity.getPayment().getPaymentName());
-
-                OrderListAddress orderListAddress = new OrderListAddress()
-                        .id(UUID.fromString(orderEntity.getAddress().getUuid()))
-                        .flatBuildingName(orderEntity.getAddress().getFlatBuilNumber())
-                        .locality(orderEntity.getAddress().getLocality())
-                        .city(orderEntity.getAddress().getCity())
-                        .pincode(orderEntity.getAddress().getPinCode())
-                        .state(orderListAddressState);
-
-                OrderList orderList = new OrderList()
-                        .id(UUID.fromString(orderEntity.getUuid()))
-                        .bill(new BigDecimal(orderEntity.getBill()))
-                        .coupon(orderListCoupon)
-                        .discount(new BigDecimal(orderEntity.getDiscount()))
-                        .date(orderEntity.getDate().toString())
-                        .payment(orderListPayment)
-                        .customer(orderListCustomer)
-                        .address(orderListAddress);
-
-                for (OrderItemEntity orderItemEntity : itemService.getItemsByOrder(orderEntity)) {
-
+                //Creating ItemQuantitiesResponse List
+                List<ItemQuantityResponse> itemQuantityResponseList = new LinkedList<>();
+                orderItemEntities.forEach(orderItemEntity -> {
                     ItemQuantityResponseItem itemQuantityResponseItem = new ItemQuantityResponseItem()
-                            .id(UUID.fromString(orderItemEntity.getItem().getUuid()))
-                            .itemName(orderItemEntity.getItem().getItemName())
+                            .itemName(orderItemEntity.getItem().getitemName())
                             .itemPrice(orderItemEntity.getItem().getPrice())
-                            .type(ItemQuantityResponseItem.TypeEnum.fromValue(orderItemEntity.getItem().getType().getValue()));
-
+                            .id(UUID.fromString(orderItemEntity.getItem().getUuid()))
+                            .type(ItemQuantityResponseItem.TypeEnum.valueOf(orderItemEntity.getItem().getType().getValue()));
+                    //Creating ItemQuantityResponse which will be added to the list
                     ItemQuantityResponse itemQuantityResponse = new ItemQuantityResponse()
                             .item(itemQuantityResponseItem)
                             .quantity(orderItemEntity.getQuantity())
                             .price(orderItemEntity.getPrice());
+                    itemQuantityResponseList.add(itemQuantityResponse);
+                });
+                //Creating OrderListAddressState to add in the address
+                OrderListAddressState orderListAddressState = new OrderListAddressState()
+                        .id(UUID.fromString(ordersEntity.getAddress().getState().getStateUuid()))
+                        .stateName(ordersEntity.getAddress().getState().getStateName());
 
-                    orderList.addItemQuantitiesItem(itemQuantityResponse);
-                }
+                //Creating OrderListAddress to add address to the orderList
+                OrderListAddress orderListAddress = new OrderListAddress()
+                        .id(UUID.fromString(ordersEntity.getAddress().getUuid()))
+                        .flatBuildingName(ordersEntity.getAddress().getFlatBuilNo())
+                        .locality(ordersEntity.getAddress().getLocality())
+                        .city(ordersEntity.getAddress().getCity())
+                        .pincode(ordersEntity.getAddress().getPincode())
+                        .state(orderListAddressState);
 
-                customerOrderResponse.addOrdersItem(orderList);
+                //Creating OrderListCoupon to add Coupon to the orderList
+                OrderListCoupon orderListCoupon = new OrderListCoupon()
+                        .couponName(ordersEntity.getCoupon().getCouponName())
+                        .id(UUID.fromString(ordersEntity.getCoupon().getUuid()))
+                        .percent(ordersEntity.getCoupon().getPercent());
 
-        return new ResponseEntity<CustomerOrderResponse>(customerOrderResponse, HttpStatus.OK);
-    }
+                //Creating OrderListCustomer to add Customer to the orderList
+                OrderListCustomer orderListCustomer = new OrderListCustomer()
+                        .id(UUID.fromString(ordersEntity.getCustomer().getUuid()))
+                        .firstName(ordersEntity.getCustomer().getFirstName())
+                        .lastName(ordersEntity.getCustomer().getLastName())
+                        .emailAddress(ordersEntity.getCustomer().getEmail())
+                        .contactNumber(ordersEntity.getCustomer().getContactNumber());
 
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST, path = "/order", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<SaveOrderResponse> saveOrder(final SaveOrderRequest saveOrderRequest, @RequestHeader("authorization") final String authorization)
-            throws  AuthorizationFailedException, CouponNotFoundException, AddressNotFoundException, PaymentMethodNotFoundException, RestaurantNotFoundException, ItemNotFoundException {
+                //Creating OrderListPayment to add Payment to the orderList
+                OrderListPayment orderListPayment = new OrderListPayment()
+                        .id(UUID.fromString(ordersEntity.getPayment().getUuid()))
+                        .paymentName(ordersEntity.getPayment().getPaymentName());
 
-        OrdersEntity requestOrdersEntity = new OrdersEntity();
-        requestOrdersEntity.setBill(saveOrderRequest.getBill().doubleValue());
-        requestOrdersEntity.setDiscount(saveOrderRequest.getDiscount().doubleValue());
+                //Craeting orderList to add all the above info and then add it orderLists to finally add it to CustomerOrderResponse
+                OrderList orderList = new OrderList()
+                        .id(UUID.fromString(ordersEntity.getUuid()))
+                        .itemQuantities(itemQuantityResponseList)
+                        .address(orderListAddress)
+                        .bill(BigDecimal.valueOf(ordersEntity.getBill()))
+                        .date(String.valueOf(ordersEntity.getDate()))
+                        .discount(BigDecimal.valueOf(ordersEntity.getDiscount()))
+                        .coupon(orderListCoupon)
+                        .customer(orderListCustomer)
+                        .payment(orderListPayment);
+                orderLists.add(orderList);
+            }
 
-        List<OrderItemEntity> orderItemEntities = new ArrayList<>();
-
-        for (ItemQuantity item: saveOrderRequest.getItemQuantities()) {
-            OrderItemEntity orderItemEntity = new OrderItemEntity();
-            String uuid = item.getItemId().toString();
-            Integer qty = item.getQuantity();
-            Integer price = item.getPrice();
-            ItemEntity itemEntity = new ItemEntity();
-            itemEntity.setUuid(uuid);
-            //itemEntity.setPrice(price);
-            orderItemEntity.setItem(itemEntity);
-            orderItemEntity.setQuantity(qty);
-            orderItemEntity.setPrice(price);
-
-            orderItemEntities.add(orderItemEntity);
-
+            //Creating CustomerOrderResponse by adding OrderLists to it
+            CustomerOrderResponse customerOrderResponse = new CustomerOrderResponse()
+                    .orders(orderLists);
+            return new ResponseEntity<CustomerOrderResponse>(customerOrderResponse,HttpStatus.OK);
+        }else {
+            //If no order created by customer empty array is returned.
+            return new ResponseEntity<CustomerOrderResponse>(new CustomerOrderResponse(),HttpStatus.OK);
         }
 
-        final OrdersEntity ordersEntity = orderService.saveOrder
-                (requestOrdersEntity,saveOrderRequest.getAddressId(),
-                        saveOrderRequest.getRestaurantId().toString(),
-                        saveOrderRequest.getPaymentId().toString(),
-                        saveOrderRequest.getCouponId().toString(),
-                        orderItemEntities,
-                        authorization);
-        final SaveOrderResponse saveOrderResponse = new SaveOrderResponse().id(ordersEntity.getUuid()).status("ORDER SUCCESSFULLY PLACED");
 
-
-        return new ResponseEntity<SaveOrderResponse>(saveOrderResponse, HttpStatus.OK);
     }
+
+
 }

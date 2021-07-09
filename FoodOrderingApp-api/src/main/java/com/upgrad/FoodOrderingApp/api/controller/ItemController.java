@@ -1,5 +1,6 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
+
 import com.upgrad.FoodOrderingApp.api.model.ItemList;
 import com.upgrad.FoodOrderingApp.api.model.ItemListResponse;
 import com.upgrad.FoodOrderingApp.service.business.RestaurantService;
@@ -17,37 +18,48 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by murarka on 07/06/21.
+ * @author murarka
+ * Item controller handling all item related apis
  */
 
 @RestController
+@RequestMapping("/item")
 public class ItemController {
+
+    // injecting the service classes for handling business logic
     @Autowired
-    private RestaurantService restaurantService;
+    ItemService itemService;
 
     @Autowired
-    private ItemService itemService;
+    RestaurantService restaurantService;
 
-    @RequestMapping(method = RequestMethod.GET,
-                    path = "/item/restaurant/{restaurantId}",
-                    produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<ItemListResponse> getItemList(@PathVariable("restaurant_id") final String restaurantUuid )
-        throws RestaurantNotFoundException {
+    /**
+     * get method to retrieve the top 5 popular items for the restaurant using id
+     * @param restaurantUuid
+     * @return ItemListResponse
+     * @throws RestaurantNotFoundException
+     */
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET,path = "/restaurant/{restaurant_id}",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ItemListResponse> getTopFivePopularItems (@PathVariable(value = "restaurant_id")final String restaurantUuid) throws RestaurantNotFoundException {
 
-        RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
-        List<ItemEntity> itemEntityList = itemService.getTopFiveItems(restaurantEntity);
+        //calling restaurantService method to get the restaurant entity.
+        RestaurantEntity restaurantEntity = restaurantService.getRestaurantByUUID(restaurantUuid);
 
+        //using the item service to get the popular items of the restaurant
+        List<ItemEntity> itemEntities = itemService.getItemsByPopularity(restaurantEntity);
+
+        //Creating the api response
         ItemListResponse itemListResponse = new ItemListResponse();
-
-        for(ItemEntity ie: itemEntityList) {
-            ItemList itemList = new ItemList().id(UUID.fromString(ie.getUuid()))
-                    .itemName(ie.getitemName())
-                    .price(ie.getPrice());
+        itemEntities.forEach(itemEntity -> {
+            ItemList itemList = new ItemList()
+                    .id(UUID.fromString(itemEntity.getUuid()))
+                    .itemName(itemEntity.getitemName())
+                    .price(itemEntity.getPrice())
+                    .itemType(ItemList.ItemTypeEnum.fromValue(itemEntity.getType().getValue()));
             itemListResponse.add(itemList);
-
-
-        }
-
-        return new ResponseEntity<ItemListResponse>(itemListResponse, HttpStatus.OK);
+        });
+        // returning the final response
+        return new ResponseEntity<ItemListResponse>(itemListResponse,HttpStatus.OK);
     }
 }

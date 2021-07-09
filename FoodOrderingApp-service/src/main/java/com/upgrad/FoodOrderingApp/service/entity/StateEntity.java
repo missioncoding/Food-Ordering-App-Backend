@@ -1,9 +1,9 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 /**
  * @author zeelani
@@ -32,6 +32,17 @@ public class StateEntity implements Serializable {
     @Column(name = "state_name")
     @Size(max = 30)
     private String stateName;
+
+    // creating a parameterized constructor for the testing purpose
+    public StateEntity(String stateUuid, String stateName) {
+        this.stateUuid = stateUuid;
+        this.stateName = stateName;
+        return;
+    }
+
+    public StateEntity() {
+
+    }
 
      public Integer getId() {
         return id;
