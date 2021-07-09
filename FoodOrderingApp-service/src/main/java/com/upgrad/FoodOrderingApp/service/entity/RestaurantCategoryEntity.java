@@ -39,6 +39,15 @@ public class RestaurantCategoryEntity implements Serializable {
     @NotNull
     private CategoryEntity category;
 
+    // adding parameterized constructor for testing purpose
+    public RestaurantCategoryEntity(Integer id, @NotNull RestaurantEntity restaurant, @NotNull CategoryEntity category) {
+        this.id = id;
+        this.restaurant = restaurant;
+        this.category = category;
+    }
+
+    public RestaurantCategoryEntity() {}
+
     public Integer getId() {
         return id;
     }

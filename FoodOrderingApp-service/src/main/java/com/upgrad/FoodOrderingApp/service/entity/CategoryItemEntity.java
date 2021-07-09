@@ -39,6 +39,15 @@ public class CategoryItemEntity implements Serializable {
     @NotNull
     private CategoryEntity category;
 
+    // adding parameterized constructor for testing purpose
+    public CategoryItemEntity(Integer id, @NotNull ItemEntity item, @NotNull CategoryEntity category) {
+        this.id = id;
+        this.item = item;
+        this.category = category;
+    }
+
+    public CategoryItemEntity() {
+    }
 
     public Integer getId() {
         return id;

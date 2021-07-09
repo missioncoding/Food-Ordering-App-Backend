@@ -45,6 +45,17 @@ public class OrderItemEntity implements Serializable {
     @NotNull
     private Integer price;
 
+    // adding parameterized constructor for testing purpose
+    public OrderItemEntity(Integer id, @NotNull OrdersEntity order, @NotNull ItemEntity item, @NotNull Integer quantity, @NotNull Integer price) {
+        this.id = id;
+        this.order = order;
+        this.item = item;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+    public OrderItemEntity() {}
+
     public Integer getId() {
         return id;
     }
