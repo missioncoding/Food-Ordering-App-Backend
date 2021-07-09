@@ -53,7 +53,7 @@ public class CategoryService {
      * Fetch all categories. The list is ordered by name
      * @return
      */
-    public List<CategoryEntity> getAllCategories() {
+    public List<CategoryEntity> getAllCategoriesOrderedByName() {
         List<CategoryEntity> categoryEntities = categoryDao.fetchAll();
         return categoryEntities;
     }

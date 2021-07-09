@@ -51,8 +51,7 @@ public class CustomerAuthEntity implements Serializable {
     private ZonedDateTime expiresAt;
 
     // adding parameterized constuctor for testing purpose
-    public CustomerAuthEntity(Integer id, @Size(max = 200) @NotNull String uuid, CustomerEntity customer, @Size(max = 500) String accessToken, ZonedDateTime loginAt, ZonedDateTime logoutAt, ZonedDateTime expiresAt) {
-        this.id = id;
+    public CustomerAuthEntity(@Size(max = 200) @NotNull String uuid, CustomerEntity customer, @Size(max = 500) String accessToken, ZonedDateTime loginAt, ZonedDateTime logoutAt, ZonedDateTime expiresAt) {
         this.uuid = uuid;
         this.customer = customer;
         this.accessToken = accessToken;

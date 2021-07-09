@@ -36,8 +36,7 @@ public class PaymentEntity implements Serializable {
     private String paymentName;
 
     // adding parameterized constructor for testing purpose
-    public PaymentEntity(Integer id, @Size(max = 200) @NotNull String uuid, @Size(max = 255) String paymentName) {
-        this.id = id;
+    public PaymentEntity(@Size(max = 200) @NotNull String uuid, @Size(max = 255) String paymentName) {
         this.uuid = uuid;
         this.paymentName = paymentName;
     }

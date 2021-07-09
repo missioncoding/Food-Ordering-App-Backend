@@ -68,8 +68,7 @@ public class OrdersEntity implements Serializable {
     private RestaurantEntity restaurant;
 
     // adding parameterized constructor for testing purpose
-    public OrdersEntity(Integer id, @Size(max = 200) @NotNull String uuid, @NotNull double bill, CouponEntity coupon, double discount, @NotNull Timestamp date, PaymentEntity payment, @NotNull CustomerEntity customer, @NotNull AddressEntity address, @NotNull RestaurantEntity restaurant) {
-        this.id = id;
+    public OrdersEntity(@Size(max = 200) @NotNull String uuid, @NotNull double bill, CouponEntity coupon, double discount, @NotNull Timestamp date, PaymentEntity payment, @NotNull CustomerEntity customer, @NotNull AddressEntity address, @NotNull RestaurantEntity restaurant) {
         this.uuid = uuid;
         this.bill = bill;
         this.coupon = coupon;

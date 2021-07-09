@@ -105,7 +105,7 @@ public class AddressController {
         // looping through the address entities and create the address lists
         addressEntities.forEach(addressEntity -> {
             AddressListState addressListState = new AddressListState()
-                    .id(UUID.fromString(addressEntity.getState().getStateUuid()))
+                    .id(UUID.fromString(addressEntity.getState().getUuid()))
                     .stateName(addressEntity.getState().getStateName());
             // creating the address list object
             AddressList addressList = new AddressList()
@@ -169,7 +169,7 @@ public class AddressController {
             List<StatesList> statesLists = new LinkedList<>();
             stateEntities.forEach(stateEntity -> {
                 StatesList statesList = new StatesList()
-                        .id(UUID.fromString(stateEntity.getStateUuid()))
+                        .id(UUID.fromString(stateEntity.getUuid()))
                         .stateName(stateEntity.getStateName());
                 statesLists.add(statesList);
             });
