@@ -8,102 +8,105 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import com.upgrad.FoodOrderingApp.api.model.ErrorResponse;
 
+/**
+ * @author madhuri, zeelani
+ */
 
 @ControllerAdvice
 public class RestExceptionHandler {
     @ExceptionHandler(SignUpRestrictedException.class)
-    public ResponseEntity<ErrorResponse> signUpRestrictedException (SignUpRestrictedException exc, WebRequest request){
+    public ResponseEntity<ErrorResponse> signUpRestrictedException (SignUpRestrictedException sre, WebRequest request){
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(sre.getCode())
+                .message(sre.getErrorMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AuthenticationFailedException.class)
-    public  ResponseEntity<ErrorResponse> authenticationFailedException (AuthenticationFailedException exc, WebRequest request) {
+    public  ResponseEntity<ErrorResponse> authenticationFailedException (AuthenticationFailedException afe, WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(afe.getCode())
+                .message(afe.getErrorMessage()),
                 HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(UpdateCustomerException.class)
-    public ResponseEntity<ErrorResponse> updateCustomerException (UpdateCustomerException exc,WebRequest request){
+    public ResponseEntity<ErrorResponse> updateCustomerException (UpdateCustomerException uce,WebRequest request){
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(uce.getCode())
+                .message(uce.getErrorMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(SaveAddressException.class)
-    public ResponseEntity<ErrorResponse> saveAddressException(SaveAddressException exc ,WebRequest request){
+    public ResponseEntity<ErrorResponse> saveAddressException(SaveAddressException sae ,WebRequest request){
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(sae.getCode())
+                .message(sae.getErrorMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AddressNotFoundException.class)
-    public ResponseEntity<ErrorResponse> addressNotFoundException(AddressNotFoundException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> addressNotFoundException(AddressNotFoundException anfe ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(anfe.getCode())
+                .message(anfe.getErrorMessage()),
                 HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AuthorizationFailedException.class)
-    public ResponseEntity<ErrorResponse> authorizationFailedException(AuthorizationFailedException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> authorizationFailedException(AuthorizationFailedException afe ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(afe.getCode())
+                .message(afe.getErrorMessage()),
                 HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(RestaurantNotFoundException.class)
-    public ResponseEntity<ErrorResponse> restaurantNotFoundException(RestaurantNotFoundException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> restaurantNotFoundException(RestaurantNotFoundException rnfe ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(rnfe.getCode())
+                .message(rnfe.getErrorMessage()),
                 HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
-    public ResponseEntity<ErrorResponse> categoryNotFoundException(CategoryNotFoundException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> categoryNotFoundException(CategoryNotFoundException cnfe ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(cnfe.getCode())
+                .message(cnfe.getErrorMessage()),
                 HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidRatingException.class)
-    public ResponseEntity<ErrorResponse> invalidRatingException(InvalidRatingException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> invalidRatingException(InvalidRatingException ire ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(ire.getCode())
+                .message(ire.getErrorMessage()),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CouponNotFoundException.class)
-    public ResponseEntity<ErrorResponse> couponNotFoundException(CouponNotFoundException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> couponNotFoundException(CouponNotFoundException cnfe ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(cnfe.getCode())
+                .message(cnfe.getErrorMessage()),
                 HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(PaymentMethodNotFoundException.class)
-    public ResponseEntity<ErrorResponse> paymentMethodNotFoundException(PaymentMethodNotFoundException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> paymentMethodNotFoundException(PaymentMethodNotFoundException pnfe ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(pnfe.getCode())
+                .message(pnfe.getErrorMessage()),
                 HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ItemNotFoundException.class)
-    public ResponseEntity<ErrorResponse> itemNotFoundException(ItemNotFoundException exc ,WebRequest request) {
+    public ResponseEntity<ErrorResponse> itemNotFoundException(ItemNotFoundException infe ,WebRequest request) {
         return new ResponseEntity<ErrorResponse>(new ErrorResponse()
-                .code(exc.getCode())
-                .message(exc.getErrorMessage()),
+                .code(infe.getCode())
+                .message(infe.getErrorMessage()),
                 HttpStatus.NOT_FOUND);
     }
 }

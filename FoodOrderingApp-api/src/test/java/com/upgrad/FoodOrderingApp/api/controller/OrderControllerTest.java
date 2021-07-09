@@ -86,7 +86,7 @@ public class OrderControllerTest {
         when(mockOrderService.saveOrderItem(any())).thenReturn(new OrderItemEntity());
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -113,7 +113,7 @@ public class OrderControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth")
                         .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
@@ -135,7 +135,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth")
                         .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
@@ -158,7 +158,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth")
                         .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
@@ -186,7 +186,7 @@ public class OrderControllerTest {
                 .thenThrow(new PaymentMethodNotFoundException("PNF-002", "No payment method found by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -220,7 +220,7 @@ public class OrderControllerTest {
                 .thenThrow(new AddressNotFoundException("ANF-003", "No address by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -255,7 +255,7 @@ public class OrderControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -292,7 +292,7 @@ public class OrderControllerTest {
                 .thenThrow(new RestaurantNotFoundException("RNF-001", "No restaurant by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -332,7 +332,7 @@ public class OrderControllerTest {
                 .thenThrow(new CouponNotFoundException("CPF-002", "No coupon by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -368,7 +368,7 @@ public class OrderControllerTest {
                 .thenReturn(Collections.singletonList(orderEntity));
 
         final String responseString = mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isOk())
@@ -392,7 +392,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
         mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -409,7 +409,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -426,7 +426,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -449,7 +449,7 @@ public class OrderControllerTest {
         when(mockOrderService.getCouponByCouponName("myCoupon")).thenReturn(couponEntity);
 
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isOk())
@@ -465,7 +465,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -482,7 +482,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -499,7 +499,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -520,7 +520,7 @@ public class OrderControllerTest {
                 .thenThrow(new CouponNotFoundException("CPF-002", "Coupon name field should not be empty"));
 
         mockMvc
-                .perform(get("/order/coupon/emptyString")
+                .perform(get("/api/order/coupon/emptyString")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isNotFound())
@@ -540,7 +540,7 @@ public class OrderControllerTest {
                 .thenThrow(new CouponNotFoundException("CPF-001", "No coupon by this name"));
 
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isNotFound())
