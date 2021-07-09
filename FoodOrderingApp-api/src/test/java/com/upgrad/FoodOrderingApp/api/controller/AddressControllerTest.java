@@ -63,7 +63,7 @@ public class AddressControllerTest {
         when(mockAddressService.saveAddress(any(), any())).thenReturn(addressEntity);
 
         mockMvc
-                .perform(post("/address?content=my_address")
+                .perform(post("/api/address?content=my_address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"\", \"state_uuid\":\"testUUID\"}"))
