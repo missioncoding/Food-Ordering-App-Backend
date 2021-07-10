@@ -1,10 +1,10 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.FoodOrderingApp.api.model.CategoriesListResponse;
 import com.upgrad.FoodOrderingApp.api.model.CategoryDetailsResponse;
-import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
+import com.upgrad.FoodOrderingApp.service.business.CategoryService;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static com.upgrad.FoodOrderingApp.service.common.ItemType.NON_VEG;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -59,7 +59,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getCategoryById("sampleCategoryId")).thenReturn(categoryEntity);
 
         final String response = mockMvc
-                .perform(get("/category/sampleCategoryId").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/api/category/sampleCategoryId").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -81,7 +81,7 @@ public class CategoryControllerTest {
                 .thenThrow(new CategoryNotFoundException("CNF-001", "Category id field should not be empty"));
 
         mockMvc
-                .perform(get("/category/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/api/category/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("CNF-001"));
         verify(mockCategoryService, times(1)).getCategoryById(anyString());
@@ -95,7 +95,7 @@ public class CategoryControllerTest {
                 .thenThrow(new CategoryNotFoundException("CNF-002", "No category by this id"));
 
         mockMvc
-                .perform(get("/category/someCategory").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/api/category/someCategory").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("CNF-002"));
         verify(mockCategoryService, times(1)).getCategoryById("someCategory");
@@ -112,7 +112,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getAllCategoriesOrderedByName()).thenReturn(Collections.singletonList(categoryEntity));
 
         final String response = mockMvc
-                .perform(get("/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/api/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -129,7 +129,7 @@ public class CategoryControllerTest {
         when(mockCategoryService.getAllCategoriesOrderedByName()).thenReturn(Collections.emptyList());
 
         final String response = mockMvc
-                .perform(get("/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/api/category").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -139,4 +139,4 @@ public class CategoryControllerTest {
     }
 
 
-}*/
+}

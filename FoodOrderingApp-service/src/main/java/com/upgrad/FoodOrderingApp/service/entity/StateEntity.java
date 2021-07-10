@@ -1,9 +1,9 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 
 /**
  * @author zeelani
@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 
 @NamedQueries({
-    @NamedQuery(name = "state.fetchByUuid", query = "SELECT s from StateEntity s where s.stateUuid = :uuid"),
+    @NamedQuery(name = "state.fetchByUuid", query = "SELECT s from StateEntity s where s.uuid = :uuid"),
     @NamedQuery(name = "state.fetchAll",query = "SELECT s from StateEntity s"),
 })
 
@@ -27,11 +27,22 @@ public class StateEntity implements Serializable {
     @Column(name = "uuid")
     @Size(max = 200)
     @NotNull
-    private String stateUuid;
+    private String uuid;
 
     @Column(name = "state_name")
     @Size(max = 30)
     private String stateName;
+
+    // creating a parameterized constructor for the testing purpose
+    public StateEntity(String uuid, String stateName) {
+        this.uuid = uuid;
+        this.stateName = stateName;
+        return;
+    }
+
+    public StateEntity() {
+
+    }
 
      public Integer getId() {
         return id;
@@ -41,12 +52,12 @@ public class StateEntity implements Serializable {
         this.id = id;
     }
 
-    public String getStateUuid() {
-        return stateUuid;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setStateUuid(String stateUuid) {
-        this.stateUuid = stateUuid;
+    public void setUuid(String stateUuid) {
+        this.uuid = uuid;
     }
 
     public String getStateName() {

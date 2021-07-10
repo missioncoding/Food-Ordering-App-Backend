@@ -39,7 +39,7 @@ public class CustomerAddressDao {
      * @param customerAddressEntity
      * @return
      */
-    public CustomerAddressEntity saveCustomerAddress(CustomerAddressEntity customerAddressEntity){
+    public CustomerAddressEntity save(CustomerAddressEntity customerAddressEntity){
         entityManager.persist(customerAddressEntity);
         return customerAddressEntity;
     }

@@ -41,7 +41,15 @@ public class CategoryEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<ItemEntity> items = new ArrayList<>();
 
+    // adding parameterized constructor for testing purpose
+    public CategoryEntity(@Size(max = 200) @NotNull String uuid, @Size(max = 255) String categoryName, List<ItemEntity> items) {
+        this.uuid = uuid;
+        this.categoryName = categoryName;
+        this.items = items;
+    }
 
+    public CategoryEntity() {
+    }
 
     public Integer getId() {
         return id;

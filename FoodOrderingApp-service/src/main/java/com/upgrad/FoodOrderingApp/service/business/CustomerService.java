@@ -44,7 +44,7 @@ public class CustomerService {
      * @throws SignUpRestrictedException
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerEntity signUp(CustomerEntity customerEntity) throws SignUpRestrictedException {
+    public CustomerEntity saveCustomer(CustomerEntity customerEntity) throws SignUpRestrictedException {
         //checking whether the customer entry already exists
         CustomerEntity lookUpEntity = customerDao.fetchByContactNumber(customerEntity.getContactNumber());
         if (lookUpEntity != null) {
@@ -148,7 +148,7 @@ public class CustomerService {
      * @param newPassword
      * @param customerEntity
      * @return
-     *  @throws UpdateCustomerException
+     * @throws UpdateCustomerException
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity updateCustomerPassword(String oldPassword,String newPassword,CustomerEntity customerEntity ) throws UpdateCustomerException {

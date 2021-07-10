@@ -1,9 +1,9 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.FoodOrderingApp.api.model.PaymentListResponse;
-import com.upgrad.FoodOrderingApp.service.businness.PaymentService;
+import com.upgrad.FoodOrderingApp.service.business.PaymentService;
 import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +47,7 @@ public class PaymentControllerTest {
                 .thenReturn(Collections.singletonList(paymentEntity));
 
         final String response = mockMvc
-                .perform(get("/payment").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/api/payment").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -58,4 +59,4 @@ public class PaymentControllerTest {
     }
 
 }
-*/
+

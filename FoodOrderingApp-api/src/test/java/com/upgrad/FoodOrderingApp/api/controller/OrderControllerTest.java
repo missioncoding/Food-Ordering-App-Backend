@@ -1,10 +1,12 @@
-/*
+
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.upgrad.FoodOrderingApp.api.model.CustomerOrderResponse;
 import com.upgrad.FoodOrderingApp.api.model.ItemQuantity;
 import com.upgrad.FoodOrderingApp.api.model.SaveOrderRequest;
+import com.upgrad.FoodOrderingApp.service.business.*;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,12 +19,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -75,14 +79,14 @@ public class OrderControllerTest {
         when(mockOrderService.getCouponByCouponId(saveOrderRequest.getCouponId().toString()))
                 .thenReturn(new CouponEntity());
 
-        final OrderEntity orderEntity = new OrderEntity();
+        final OrdersEntity orderEntity = new OrdersEntity();
         final String orderId = UUID.randomUUID().toString();
         orderEntity.setUuid(orderId);
         when(mockOrderService.saveOrder(any())).thenReturn(orderEntity);
         when(mockOrderService.saveOrderItem(any())).thenReturn(new OrderItemEntity());
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -109,7 +113,7 @@ public class OrderControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth")
                         .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
@@ -131,7 +135,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth")
                         .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
@@ -154,7 +158,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth")
                         .content(new ObjectMapper().writeValueAsString(getSaveOrderRequest())))
@@ -182,7 +186,7 @@ public class OrderControllerTest {
                 .thenThrow(new PaymentMethodNotFoundException("PNF-002", "No payment method found by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -216,7 +220,7 @@ public class OrderControllerTest {
                 .thenThrow(new AddressNotFoundException("ANF-003", "No address by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -251,7 +255,7 @@ public class OrderControllerTest {
                 .thenThrow(new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -288,7 +292,7 @@ public class OrderControllerTest {
                 .thenThrow(new RestaurantNotFoundException("RNF-001", "No restaurant by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -328,7 +332,7 @@ public class OrderControllerTest {
                 .thenThrow(new CouponNotFoundException("CPF-002", "No coupon by this id"));
 
         mockMvc
-                .perform(post("/order")
+                .perform(post("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
                         .content(new ObjectMapper().writeValueAsString(saveOrderRequest)))
@@ -359,12 +363,12 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("database_accesstoken2"))
                 .thenReturn(customerEntity);
 
-        final OrderEntity orderEntity = getOrderEntity(customerEntity);
+        final OrdersEntity orderEntity = getOrderEntity(customerEntity);
         when(mockOrderService.getOrdersByCustomers(customerId))
                 .thenReturn(Collections.singletonList(orderEntity));
 
         final String responseString = mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isOk())
@@ -388,7 +392,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
         mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -405,7 +409,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -422,7 +426,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order")
+                .perform(get("/api/order")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -445,7 +449,7 @@ public class OrderControllerTest {
         when(mockOrderService.getCouponByCouponName("myCoupon")).thenReturn(couponEntity);
 
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isOk())
@@ -461,7 +465,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -478,7 +482,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -495,7 +499,7 @@ public class OrderControllerTest {
         when(mockCustomerService.getCustomer("invalid_auth"))
                 .thenThrow(new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint."));
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer invalid_auth"))
                 .andExpect(status().isForbidden())
@@ -516,7 +520,7 @@ public class OrderControllerTest {
                 .thenThrow(new CouponNotFoundException("CPF-002", "Coupon name field should not be empty"));
 
         mockMvc
-                .perform(get("/order/coupon/emptyString")
+                .perform(get("/api/order/coupon/emptyString")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isNotFound())
@@ -536,7 +540,7 @@ public class OrderControllerTest {
                 .thenThrow(new CouponNotFoundException("CPF-001", "No coupon by this name"));
 
         mockMvc
-                .perform(get("/order/coupon/myCoupon")
+                .perform(get("/api/order/coupon/myCoupon")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2"))
                 .andExpect(status().isNotFound())
@@ -576,7 +580,7 @@ public class OrderControllerTest {
         return request;
     }
 
-    private OrderEntity getOrderEntity(final CustomerEntity customerEntity) {
+    private OrdersEntity getOrderEntity(final CustomerEntity customerEntity) {
         final String stateId = UUID.randomUUID().toString();
         final StateEntity stateEntity = new StateEntity(stateId, "someState");
 
@@ -603,9 +607,8 @@ public class OrderControllerTest {
 
         final String orderId = UUID.randomUUID().toString();
         final Date orderDate = new Date();
-        return new OrderEntity(orderId, 200.50, couponEntity, 10.0,
-                orderDate, paymentEntity, customerEntity, addressEntity, restaurantEntity);
+        Timestamp dateTimestamp = new Timestamp(orderDate.getTime());
+        return new OrdersEntity(orderId, 200.50, couponEntity, 10.0,
+                dateTimestamp, paymentEntity, customerEntity, addressEntity, restaurantEntity);
     }
-
-
-}*/
+}

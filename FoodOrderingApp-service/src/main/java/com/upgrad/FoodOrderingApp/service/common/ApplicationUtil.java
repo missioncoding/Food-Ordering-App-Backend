@@ -76,18 +76,16 @@ public class ApplicationUtil {
      * @return
      * @throws AuthenticationFailedException
      */
-    public boolean valdiateAuthorization(String authorization)throws AuthenticationFailedException{
+    public String[] valdiateAuthorization(String authorization)throws AuthenticationFailedException{
         try {
-            byte[] decoded = Base64.getDecoder().decode(authorization.split("Basic ")[1]);
-            String decodedAuth = new String(decoded);
-            String[] decodedArray = decodedAuth.split(":");
-            if (decodedArray.length != 2) {
+            byte[] authByteArray = Base64.getDecoder().decode(authorization.split("Basic ")[1]);
+            String authString = new String(authByteArray);
+            String[] authArray = authString.split(":");
+            if (authArray.length != 2) {
                 // some issue with the auhorization field should be only of length 2
-                return false;
+                throw new AuthenticationFailedException("ATH-003","Incorrect format of decoded customer name and password");
             } else {
-                //username = decodedArray[0];
-                //password = decodedArray[1];
-                return true;
+                return authArray;
             }
         }catch (ArrayIndexOutOfBoundsException exc){
             throw new AuthenticationFailedException("ATH-003","Incorrect format of decoded customer name and password");

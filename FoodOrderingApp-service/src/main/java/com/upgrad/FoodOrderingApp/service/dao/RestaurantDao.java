@@ -24,7 +24,7 @@ public class RestaurantDao {
      * @param restaurantName
      * @return
      */
-    public List<RestaurantEntity> restaurantsByName(String restaurantName) {
+    public List<RestaurantEntity> fetchByName(String restaurantName) {
         try {
             String restaurantNameLow = "%"+restaurantName.toLowerCase()+"%"; // to make a check with lower
             List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurant.fetchByName", RestaurantEntity.class).setParameter("restaurant_name_low",restaurantNameLow).getResultList();
@@ -40,7 +40,7 @@ public class RestaurantDao {
      * @param restaurantEntity
      * @return
      */
-    public RestaurantEntity updateRestaurantRating(RestaurantEntity restaurantEntity) {
+    public RestaurantEntity updateRating(RestaurantEntity restaurantEntity) {
         entityManager.merge(restaurantEntity);
         return restaurantEntity;
     }
@@ -49,7 +49,7 @@ public class RestaurantDao {
      * Fetch all restaurants by rating
      * @return
      */
-    public List<RestaurantEntity> restaurantsByRating(){
+    public List<RestaurantEntity> fetchByRating(){
         try{
             List<RestaurantEntity> restaurantEntities = entityManager.createNamedQuery("restaurant.fetchByRating",RestaurantEntity.class).getResultList();
             return restaurantEntities;
@@ -63,7 +63,7 @@ public class RestaurantDao {
      * @param uuid
      * @return
      */
-    public RestaurantEntity getRestaurantByUuid(String uuid) {
+    public RestaurantEntity fetchByUuid(String uuid) {
         try {
             RestaurantEntity restaurantEntity = entityManager.createNamedQuery("restaurant.fetchByUuid",RestaurantEntity.class).setParameter("uuid",uuid).getSingleResult();
             return restaurantEntity;
