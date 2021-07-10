@@ -3,6 +3,8 @@ package com.upgrad.FoodOrderingApp.service.common;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.*;
 import org.springframework.stereotype.Component;
@@ -42,7 +44,7 @@ public class ApplicationUtil {
      * @param pincode
      * @return
      */
-    public boolean valdiatePinCode(String pincode){
+    public boolean validatePinCode(String pincode){
         Pattern p = Pattern.compile("\\d{6}\\b");
         Matcher m = p.matcher(pincode);
         return (m.find() && m.group().equals(pincode));
@@ -55,18 +57,51 @@ public class ApplicationUtil {
      * @throws SignUpRestrictedException
      */
     public boolean validateSignUpRequest (CustomerEntity customerEntity) throws SignUpRestrictedException {
-        if (customerEntity.getFirstName() == null || customerEntity.getFirstName() == "") {
+        if (customerEntity.getFirstName() == null || customerEntity.getFirstName().trim().isEmpty()) {
             throw new SignUpRestrictedException("SGR-005","Except last name all fields should be filled");
         }
-        if(customerEntity.getPassword() == null||customerEntity.getPassword() == "") {
+        if(customerEntity.getPassword() == null||customerEntity.getPassword().trim().isEmpty()) {
             throw new SignUpRestrictedException("SGR-005","Except last name all fields should be filled");
         }
-        if (customerEntity.getEmail() == null||customerEntity.getEmail() == "") {
+        if (customerEntity.getEmail() == null||customerEntity.getEmail().trim().isEmpty()) {
             throw new SignUpRestrictedException("SGR-005","Except last name all fields should be filled");
         }
-        if (customerEntity.getContactNumber() == null||customerEntity.getContactNumber() == "") {
+        if (customerEntity.getContactNumber() == null||customerEntity.getContactNumber().trim().isEmpty()) {
             throw new SignUpRestrictedException("SGR-005","Except last name all fields should be filled");
         }
+        return true;
+    }
+
+    /**
+     * Method validate the address request
+     * @param addressEntity
+     * @return
+     * @throws SaveAddressException
+     */
+    public boolean validateAddressRequest (AddressEntity addressEntity,String stateUuid) throws SaveAddressException {
+        if (addressEntity.getLocality() == null || addressEntity.getLocality().trim().isEmpty()) {
+            throw new SaveAddressException("SAR-001","No field can be empty");
+        }
+        if(addressEntity.getCity() == null||addressEntity.getCity().trim().isEmpty()) {
+            throw new SaveAddressException("SAR-001","No field can be empty");
+        }
+        if (addressEntity.getFlatBuilNo() == null||addressEntity.getFlatBuilNo().trim().isEmpty()) {
+            throw new SaveAddressException("SAR-001","No field can be empty");
+        }
+        if (addressEntity.getPincode() == null||addressEntity.getPincode().trim().isEmpty()) {
+            throw new SaveAddressException("SAR-001", "No field can be empty");
+        }
+        else{
+            if(!validatePinCode(addressEntity.getPincode()))
+            {
+                throw new SaveAddressException("SAR-002", "Invalid pincode");
+            }
+        }
+        if (stateUuid == null || stateUuid.trim().isEmpty()) {
+            throw new SaveAddressException("SAR-001","No field can be empty");
+        }
+
+
         return true;
     }
 
@@ -121,6 +156,10 @@ public class ApplicationUtil {
         }
         return true;
     }
+
+
+
+
 
     /**
      * Method to validate the customer 5 being the best

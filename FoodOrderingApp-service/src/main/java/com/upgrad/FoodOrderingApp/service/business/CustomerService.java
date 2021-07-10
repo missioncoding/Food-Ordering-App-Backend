@@ -48,7 +48,7 @@ public class CustomerService {
         //checking whether the customer entry already exists
         CustomerEntity lookUpEntity = customerDao.fetchByContactNumber(customerEntity.getContactNumber());
         if (lookUpEntity != null) {
-            throw new SignUpRestrictedException("SGR-001", "This contact number is already registered! Try other contact number");
+            throw new SignUpRestrictedException("SGR-001", "This contact number is already registered! Try other contact number.");
         }
         //validating the fields entered
         if (!applicationUtil.validateSignUpRequest(customerEntity)) {
