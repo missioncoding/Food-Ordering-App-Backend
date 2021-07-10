@@ -1,5 +1,9 @@
 package com.upgrad.FoodOrderingApp.service.common;
 
+/**
+ * @author zeelani
+ * Enum for item category
+ */
 public enum ItemType {
 
     VEG("VEG"),

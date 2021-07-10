@@ -23,7 +23,7 @@ public class CouponDao {
      * @param couponName
      * @return
      */
-    public CouponEntity fetchByCouponName(String couponName){
+    public CouponEntity fetchByName(String couponName){
         try{
             CouponEntity couponEntity = entityManager.createNamedQuery("coupon.fetchByName",CouponEntity.class).setParameter("coupon_name",couponName).getSingleResult();
             return couponEntity;
@@ -37,7 +37,7 @@ public class CouponDao {
      * @param couponUuid
      * @return
      */
-    public CouponEntity fetchByCouponId(String couponUuid) {
+    public CouponEntity fetchById(String couponUuid) {
         try {
             CouponEntity couponEntity = entityManager.createNamedQuery("coupon.fetchByUuid",CouponEntity.class).setParameter("uuid",couponUuid).getSingleResult();
             return couponEntity;

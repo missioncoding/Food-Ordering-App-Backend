@@ -49,6 +49,16 @@ public class ItemEntity implements Serializable {
     @NotNull
     private ItemType type;
 
+    // adding parameterized constructor for testing purpose
+    public ItemEntity(@Size(max = 200) @NotNull String uuid, @Size(max = 30) @NotNull String itemName, @NotNull Integer price, @Size(max = 10) @NotNull ItemType type) {
+        this.uuid = uuid;
+        this.itemName = itemName;
+        this.price = price;
+        this.type = type;
+    }
+
+    public ItemEntity() {}
+
     public Integer getId() {
         return id;
     }

@@ -56,6 +56,19 @@ public class CustomerEntity implements Serializable {
     @NotNull
     private String salt;
 
+    // adding parameterized constructor for testing purpose
+    public CustomerEntity(@Size(max = 200) @NotNull String uuid, @Size(max = 30) @NotNull String firstName, @Size(max = 30) String lastName, @Size(max = 30) @NotNull String contactNumber, @Size(max = 50) String email, @Size(max = 255) @NotNull String password, @Size(max = 255) @NotNull String salt) {
+        this.uuid = uuid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactNumber = contactNumber;
+        this.email = email;
+        this.password = password;
+        this.salt = salt;
+    }
+
+    public CustomerEntity() {}
+
     public Integer getId() {
         return id;
     }

@@ -59,6 +59,19 @@ public class RestaurantEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private AddressEntity address;
 
+    // adding parameterized constructor for testing purpose
+    public RestaurantEntity(@Size(max = 200) @NotNull String uuid, @Size(max = 50) @NotNull String restaurantName, @Size(max = 255) String photoUrl, @NotNull double customerRating, @NotNull Integer avgPrice, @NotNull Integer numberCustomersRated, AddressEntity address) {
+        this.uuid = uuid;
+        this.restaurantName = restaurantName;
+        this.photoUrl = photoUrl;
+        this.customerRating = customerRating;
+        this.avgPrice = avgPrice;
+        this.numberCustomersRated = numberCustomersRated;
+        this.address = address;
+    }
+
+    public RestaurantEntity() {}
+
     public Integer getId() {
         return id;
     }

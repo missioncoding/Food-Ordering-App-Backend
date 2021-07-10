@@ -54,6 +54,20 @@ public class AddressEntity implements Serializable{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private StateEntity state;
 
+    // adding parameterized constructor for testing purpose
+    public AddressEntity(@Size(max = 200) @NotNull String uuid, @Size(max = 255) String flatBuilNo, @Size(max = 255) String locality, @Size(max = 30) String city, @Size(max = 30) String pincode, StateEntity state) {
+        this.uuid = uuid;
+        this.flatBuilNo = flatBuilNo;
+        this.locality = locality;
+        this.city = city;
+        this.pincode = pincode;
+        this.state = state;
+    }
+
+    public AddressEntity() {
+    }
+
+
     public Integer getId() {
         return id;
     }

@@ -34,6 +34,14 @@ public class CustomerAddressEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private AddressEntity address;
 
+    // adding parameterized constructor for testing purpose
+    public CustomerAddressEntity(CustomerEntity customer, AddressEntity address) {
+        this.customer = customer;
+        this.address = address;
+    }
+
+    public CustomerAddressEntity() {}
+
     public Integer getId() {
         return id;
     }

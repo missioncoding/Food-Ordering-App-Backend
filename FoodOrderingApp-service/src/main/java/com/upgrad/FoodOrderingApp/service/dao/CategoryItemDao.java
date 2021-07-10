@@ -26,7 +26,7 @@ public class CategoryItemDao {
      * @param categoryEntity
      * @return
      */
-    public List<CategoryItemEntity> fetchAllCategoryItems(CategoryEntity categoryEntity) {
+    public List<CategoryItemEntity> fetchAllItems(CategoryEntity categoryEntity) {
         try {
             List<CategoryItemEntity> categoryItems = entityManager.createNamedQuery("category_item.fetchAll",CategoryItemEntity.class).
                                                                   setParameter("category",categoryEntity).getResultList();

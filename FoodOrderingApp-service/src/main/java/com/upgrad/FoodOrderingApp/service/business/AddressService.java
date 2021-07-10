@@ -57,7 +57,7 @@ public class AddressService {
             throw new SaveAddressException("SAR-002","Invalid pincode");
         }
         addressEntity.setState(stateEntity);
-        AddressEntity updatedAddressEntity = addressDao.saveAddress(addressEntity);
+        AddressEntity updatedAddressEntity = addressDao.save(addressEntity);
         return updatedAddressEntity;
     }
 
@@ -98,11 +98,11 @@ public class AddressService {
      * @return
      */
     @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerAddressEntity saveCustomerAddressEntity(CustomerEntity customerEntity,AddressEntity addressEntity){
+    public CustomerAddressEntity saveCustomerAddress(CustomerEntity customerEntity,AddressEntity addressEntity){
         CustomerAddressEntity customerAddressEntity = new CustomerAddressEntity();
         customerAddressEntity.setCustomer(customerEntity);
         customerAddressEntity.setAddress(addressEntity);
-        CustomerAddressEntity createdCustomerAddressEntity = customerAddressDao.saveCustomerAddress(customerAddressEntity);
+        CustomerAddressEntity createdCustomerAddressEntity = customerAddressDao.save(customerAddressEntity);
         return createdCustomerAddressEntity;
     }
 
