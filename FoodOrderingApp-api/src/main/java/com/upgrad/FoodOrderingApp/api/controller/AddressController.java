@@ -2,6 +2,7 @@ package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.service.business.AddressService;
 import com.upgrad.FoodOrderingApp.service.business.CustomerService;
+import com.upgrad.FoodOrderingApp.service.common.ApplicationUtil;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -38,6 +39,8 @@ public class AddressController {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    ApplicationUtil applicationUtil;
 
     /**
      * Post request to save the address of the customer
@@ -64,6 +67,9 @@ public class AddressController {
         addressEntity.setLocality(saveAddressRequest.getLocality());
         addressEntity.setPincode(saveAddressRequest.getPincode());
         addressEntity.setUuid(UUID.randomUUID().toString());
+
+        //Validating address entity
+        applicationUtil.validateAddressRequest(addressEntity,saveAddressRequest.getStateUuid());
 
         // calling the service logic operation to get the state entity
         StateEntity stateEntity = addressService.getStateByUUID(saveAddressRequest.getStateUuid());
@@ -138,6 +144,9 @@ public class AddressController {
         // getting the authorization token from parameter
         String accessToken = authorization.split("Bearer ")[1];
 
+        if(addressUuid.trim().isEmpty()){
+            throw new AddressNotFoundException("ANF-005","Address id can not be empty");
+        }
         // get the customer entity using the access token.
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 

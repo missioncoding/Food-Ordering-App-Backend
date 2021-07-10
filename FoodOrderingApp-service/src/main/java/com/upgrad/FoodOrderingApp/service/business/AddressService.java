@@ -50,12 +50,13 @@ public class AddressService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public AddressEntity saveAddress(AddressEntity addressEntity,StateEntity stateEntity)throws SaveAddressException{
-        if (addressEntity.getCity() == null || addressEntity.getFlatBuilNo() == null || addressEntity.getPincode() == null || addressEntity.getLocality() == null){
+        /*if (addressEntity.getCity() == null || addressEntity.getFlatBuilNo() == null || addressEntity.getPincode() == null || addressEntity.getLocality() == null){
             throw new SaveAddressException("SAR-001","No field can be empty");
         }
-        if(!applicationUtil.valdiatePinCode(addressEntity.getPincode())){
+        if(!applicationUtil.validatePinCode(addressEntity.getPincode())){
             throw new SaveAddressException("SAR-002","Invalid pincode");
-        }
+        }*/
+
         addressEntity.setState(stateEntity);
         AddressEntity updatedAddressEntity = addressDao.save(addressEntity);
         return updatedAddressEntity;
