@@ -27,7 +27,7 @@ import java.util.UUID;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class CustomerController {
 
     // injecting customer service for business logic operations

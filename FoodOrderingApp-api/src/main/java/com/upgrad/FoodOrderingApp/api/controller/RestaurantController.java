@@ -30,7 +30,7 @@ import java.util.UUID;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/restaurant")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
     // injecting the service classes to handle business logic operations

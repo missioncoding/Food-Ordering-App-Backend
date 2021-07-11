@@ -26,7 +26,7 @@ import java.util.UUID;
  */
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/category")
 public class CategoryController {
 
     // injecting the service logic handling classes
