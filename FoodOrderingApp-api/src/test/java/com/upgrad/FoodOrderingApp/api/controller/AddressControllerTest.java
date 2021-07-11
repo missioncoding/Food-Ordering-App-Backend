@@ -66,7 +66,7 @@ public class AddressControllerTest {
                 .perform(post("/api/address?content=my_address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
-                        .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"\", \"state_uuid\":\"testUUID\"}"))
+                        .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"560035\", \"state_uuid\":\"testUUID\"}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("id").value("randomUuid001"))
                 .andExpect(jsonPath("status").value("ADDRESS SUCCESSFULLY REGISTERED"));
@@ -160,8 +160,8 @@ public class AddressControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("SAR-001"));
         verify(mockCustomerService, times(1)).getCustomer("database_accesstoken2");
-        verify(mockAddressService, times(1)).getStateByUUID("testUUID");
-        verify(mockAddressService, times(1)).saveAddress(any(), any());
+        verify(mockAddressService, times(0)).getStateByUUID("testUUID");
+        verify(mockAddressService, times(0)).saveAddress(any(), any());
     }
 
     //This test case passes when you have handled the exception of trying to save an address with incorrect pincode.
@@ -175,12 +175,12 @@ public class AddressControllerTest {
                 .perform(post("/api/address?content=my_address")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .header("authorization", "Bearer database_accesstoken2")
-                        .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"\", \"state_uuid\":\"testUUID\"}"))
+                        .content("{\"flat_building_name\":\"xyz\", \"locality\":\"abc\", \"city\":\"pqr\", \"pincode\":\"123\", \"state_uuid\":\"testUUID\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("code").value("SAR-002"));
         verify(mockCustomerService, times(1)).getCustomer("database_accesstoken2");
-        verify(mockAddressService, times(1)).getStateByUUID("testUUID");
-        verify(mockAddressService, times(1)).saveAddress(any(), any());
+        verify(mockAddressService, times(0)).getStateByUUID("testUUID");
+        verify(mockAddressService, times(0)).saveAddress(any(), any());
     }
 
 
