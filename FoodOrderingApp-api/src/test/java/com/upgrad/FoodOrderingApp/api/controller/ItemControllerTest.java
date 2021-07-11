@@ -57,7 +57,7 @@ public class ItemControllerTest {
                 .thenReturn(Collections.singletonList(itemEntity));
 
         final String responseString = mockMvc
-                .perform(get("/api/item/restaurant/some_restaurant_id")
+                .perform(get("/item/restaurant/some_restaurant_id")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -76,7 +76,7 @@ public class ItemControllerTest {
                 .thenThrow(new RestaurantNotFoundException("RNF-001", "No restaurant by this id"));
 
         mockMvc
-                .perform(get("/api/item/restaurant/some_restaurant_id").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/item/restaurant/some_restaurant_id").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("code").value("RNF-001"));
     }

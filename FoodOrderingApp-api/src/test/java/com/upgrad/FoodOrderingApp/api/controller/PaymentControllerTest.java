@@ -47,7 +47,7 @@ public class PaymentControllerTest {
                 .thenReturn(Collections.singletonList(paymentEntity));
 
         final String response = mockMvc
-                .perform(get("/api/payment").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .perform(get("/payment").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 

@@ -24,7 +24,7 @@ import java.util.UUID;
  */
 
 @RestController
-@RequestMapping("/api/item")
+@RequestMapping("/item")
 public class ItemController {
 
     // injecting the service classes for handling business logic

@@ -28,7 +28,7 @@ import org.springframework.http.ResponseEntity;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class AddressController {
 
     // injecting services classes for customer and address to
