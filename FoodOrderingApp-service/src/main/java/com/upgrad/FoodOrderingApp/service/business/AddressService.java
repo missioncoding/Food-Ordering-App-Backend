@@ -125,6 +125,11 @@ public class AddressService {
         }
         CustomerAddressEntity customerAddressEntity = customerAddressDao.fetchCustomerByAddress(addressEntity);
 
+        //Check for CustomerAddressEntity Null for negative scenario
+        if (customerAddressEntity == null){
+            throw new AddressNotFoundException("ANF-003","No address by this id");
+        }
+
         // the address must belong to the requested customer
         if(customerAddressEntity.getCustomer().getUuid() == customerEntity.getUuid()){
             return addressEntity;
