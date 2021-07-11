@@ -296,16 +296,16 @@ public class RestaurantController {
         //Access the accessToken from the request Header
         final String accessToken = authorization.split("Bearer ")[1];
 
-        //Calls customerService getCustomerMethod to check the validity of the customer.this methods returns the customerEntity.
+        // fetching the customer entity using the token
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
-        //Calls restaurantByUUID method of restaurantService to get the restaurant entity.
+        //fetching the restaurant enity using the restaurant id
         RestaurantEntity restaurantEntity = restaurantService.restaurantByUUID(restaurantUuid);
 
-        //Calls updateRestaurantRating and passes restaurantentity found and customer rating and return the updated entity.
+        // calling service method to updating the rating
         RestaurantEntity updatedRestaurantEntity = restaurantService.updateRestaurantRating(restaurantEntity,customerRating);
 
-        //Creating RestaurantUpdatedResponse containing the UUID of the updated Restaurant and the success message.
+        //Creating the final response
         RestaurantUpdatedResponse restaurantUpdatedResponse = new RestaurantUpdatedResponse()
                 .id(UUID.fromString(restaurantUuid))
                 .status("RESTAURANT RATING UPDATED SUCCESSFULLY");

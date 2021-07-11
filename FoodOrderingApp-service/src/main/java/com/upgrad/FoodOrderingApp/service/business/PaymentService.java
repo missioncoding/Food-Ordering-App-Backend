@@ -18,7 +18,7 @@ import java.util.UUID;
 public class PaymentService {
 
     @Autowired
-    PaymentDao paymentDao; //Handles all data related to the PaymentEntity.
+    PaymentDao paymentDao;
 
 
     /**

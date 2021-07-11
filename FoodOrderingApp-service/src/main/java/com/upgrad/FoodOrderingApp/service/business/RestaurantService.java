@@ -123,18 +123,18 @@ public class RestaurantService {
         if(!applicationUtil.validateCustomerRating(customerRating.toString())){
             throw new InvalidRatingException("IRE-001","Restaurant should be in the range of 1 to 5");
         }
-        // Finding the new Customer rating adn updating it.
+        // calculating the new rating
         DecimalFormat format = new DecimalFormat("##.0");
-        double restaurantRating = restaurantEntity.getCustomerRating();
-        Integer restaurantNoOfCustomerRated = restaurantEntity.getNumberCustomersRated();
-        restaurantEntity.setNumberCustomersRated(restaurantNoOfCustomerRated+1);
+        double curr_restaurantRating = restaurantEntity.getCustomerRating();
+        Integer totalcustomersrated = restaurantEntity.getNumberCustomersRated();
 
-        //calculating the new customer rating
-        double newCustomerRating = (restaurantRating*(restaurantNoOfCustomerRated.doubleValue())+customerRating)/restaurantEntity.getNumberCustomersRated();
+        //calculating the weighted average of the entire rating
+        // formula ((current_rating*no.of customers) + 1 * currentcustomerrating) / 1+ no.of customers
+        double newRating = ((curr_restaurantRating * totalcustomersrated) + customerRating) / (1 + totalcustomersrated);
+        restaurantEntity.setNumberCustomersRated(totalcustomersrated+1);
+        restaurantEntity.setCustomerRating(Double.parseDouble(format.format(newRating)));
 
-        restaurantEntity.setCustomerRating(Double.parseDouble(format.format(newCustomerRating)));
-
-        //Updating the restaurant in the db using the method updateRestaurantRating of restaurantDao.
+        // merging the resturant entity with current entity in db
         RestaurantEntity updatedRestaurantEntity = restaurantDao.updateRating(restaurantEntity);
 
         return updatedRestaurantEntity;
