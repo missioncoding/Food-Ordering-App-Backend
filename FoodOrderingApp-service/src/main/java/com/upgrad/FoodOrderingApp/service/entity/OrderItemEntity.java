@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 
 @NamedQueries({
-    @NamedQuery(name = "order_item.fetchByOrder",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :orders ORDER BY LOWER(o.item.itemName) ASC"),
+    @NamedQuery(name = "order_item.fetchByOrder",query = "SELECT o FROM OrderItemEntity o WHERE o.order = :order ORDER BY LOWER(o.item.itemName) ASC"),
 })
 
 @Entity

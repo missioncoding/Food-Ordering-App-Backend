@@ -37,7 +37,7 @@ public class OrderItemDao {
      */
     public List<OrderItemEntity> fetchByOrder(OrdersEntity ordersEntity) {
         try{
-            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("order_item.fetchByOrder", OrderItemEntity.class).setParameter("ordersEntity",ordersEntity).getResultList();
+            List<OrderItemEntity> orderItemEntities = entityManager.createNamedQuery("order_item.fetchByOrder", OrderItemEntity.class).setParameter("order",ordersEntity).getResultList();
             return orderItemEntities;
         }catch (NoResultException nre) {
             return null;
