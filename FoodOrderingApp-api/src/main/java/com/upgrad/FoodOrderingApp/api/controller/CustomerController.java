@@ -140,7 +140,9 @@ public class CustomerController {
         CustomerEntity newCustomerEntity = customerService.updateCustomer(customerEntity);
         // generating the final response
         UpdateCustomerResponse updateCustomerResponse = new UpdateCustomerResponse().id(newCustomerEntity.getUuid())
-                .status("USER DETAILS SUCCESSFULLY UPDATED");
+                .status("USER DETAILS SUCCESSFULLY UPDATED")
+                .firstName(newCustomerEntity.getFirstName())
+                .lastName(newCustomerEntity.getLastName());
         return new ResponseEntity<UpdateCustomerResponse>(updateCustomerResponse, HttpStatus.OK);
     }
 
