@@ -194,7 +194,6 @@ public class CustomerService {
             throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint.");
         }
         final ZonedDateTime now = ZonedDateTime.now();
-        System.out.println("Current time is " + now);
         if (customerAuthEntity.getExpiresAt().compareTo(now) < 0) {
             throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint.");
         }
